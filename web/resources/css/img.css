@@ -5,3 +5,10 @@
     width: auto;
     height: auto;
 }
+.imgSmall {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    height: 100%;
+}

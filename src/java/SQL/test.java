@@ -5,12 +5,7 @@
  */
 package SQL;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.Statement;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -41,15 +36,29 @@ public class test {
         return resultSet;
     }
     
-    public static void main(String[] args) {
+    public static void insert(String tableName, String [] columns, String values[]){
         try {
-            Connection connect = connectToDatabase();
-            ResultSet resultSet = query(connect, "*", "User");
-            while (resultSet.next()){
-                System.out.println("ID: " + resultSet.getString(1) + " Login:"+ resultSet.getString(2) + " Password:"+ resultSet.getString(3));
+            Connection conn = connectToDatabase();
+            String query = "insert into " + tableName + " (";
+            for(String s : columns){
+                query += s + ", ";
             }
+            query = query.substring(0, query.length() - 2);
+            query += ") values (";
+            for(int i = 0; i < columns.length; i++){
+                query += "?, ";
+            }
+            query = query.substring(0, query.length() - 2);
+            query += ")";
+            PreparedStatement preparedStmt = conn.prepareStatement(query);
+            for(int i = 0; i < values.length; i++){
+                preparedStmt.setString(i + 1, values[i]);
+            }
+            preparedStmt.execute();
+            conn.close();
         } catch (Exception ex) {
-            Logger.getLogger(test.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
+       
     }
 }

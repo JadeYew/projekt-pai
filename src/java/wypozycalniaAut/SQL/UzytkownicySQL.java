@@ -3,12 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package SQL;
+package wypozycalniaAut.SQL;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import wypozyczalniaAut.main.java.BCrypt;
 
 /**
  *
@@ -42,5 +43,19 @@ public class UzytkownicySQL {
             ex.printStackTrace();
         }
         return null;
+    }
+    
+    public static String hashPassword(String id){
+        ResultSet rs = select("password, salt", new String("uzytkownik.id = " + id + ";"));
+        try {
+            rs.next();
+            String password = rs.getString(1);
+            password = BCrypt.hashpw(password, rs.getString(2));
+            
+            test.update("uzytkownik", "password", new String("\"" + password + "\""), new String("uzytkownik.id = " + id));
+        } catch (SQLException ex) {
+            Logger.getLogger(UzytkownicySQL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "";
     }
 }

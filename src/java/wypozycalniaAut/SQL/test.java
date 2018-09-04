@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package SQL;
+package wypozycalniaAut.SQL;
 
 import java.sql.*;
 import java.util.logging.Level;
@@ -61,4 +61,28 @@ public class test {
         }
        
     }
+    
+    public static void update(String tableName, String [] columns, String [] values, String where){
+        try {
+            Connection conn = connectToDatabase();
+            String update = "UPDATE " + tableName + " SET ";
+            for(int i = 0; i < columns.length; i++){
+                update += columns[i] + " = " + values[i] + ", ";
+            }
+            update = update.substring(0, update.length() - 2);
+            update += " WHERE " + where + ";";
+            PreparedStatement preparedStmt = conn.prepareStatement(update);
+            preparedStmt.execute();
+            conn.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    public static void update(String tableName, String column, String value, String where){
+        String [] columns = {column};
+        String [] values = {value};
+        update(tableName, columns, values, where);
+    }
+        
 }

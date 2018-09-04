@@ -1,0 +1,14 @@
+INSERT INTO akcesorium (ID, nazwa, ilosc, ilosc_dostepna, cena) 
+VALUES ('1', 'Nawigacja GPS', '100', '90', '38');
+
+INSERT INTO akcesorium (ID, nazwa, ilosc, ilosc_dostepna, cena) 
+VALUES ('2', 'Asekuracja PL', '60', '60', '198');
+
+INSERT INTO akcesorium (ID, nazwa, ilosc, ilosc_dostepna, cena) 
+VALUES ('3', 'Fotelik 15-36kg', '50', '45', '45');
+
+INSERT INTO akcesorium (ID, nazwa, ilosc, ilosc_dostepna, cena) 
+VALUES ('4', 'Fotelik isofix 9-36kg', '40', '38', '50');
+
+INSERT INTO akcesorium (ID, nazwa, ilosc, ilosc_dostepna, cena) 
+VALUES ('5', 'Lancuchy na kola', '60', '60', '70');

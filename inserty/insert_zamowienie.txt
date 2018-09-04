@@ -1,0 +1,8 @@
+INSERT INTO zamowienie (ID, id_klient, id_pojazd, cena, data_zakonczenia, oplacone, zamkniete, data_rozpoczecia) 
+VALUES ('1', '5', '3', '470', '04-09-18', '1', '0', '03-09-18');
+
+INSERT INTO zamowienie (ID, id_klient, id_pojazd, cena, data_zakonczenia, oplacone, zamkniete, data_rozpoczecia) 
+VALUES ('2', '3', '5', '649', '01-08-18', '1', '1', '04-08-18');
+
+INSERT INTO zamowienie (ID, id_klient, id_pojazd, cena, data_zakonczenia, oplacone, zamkniete, data_rozpoczecia) 
+VALUES ('3', '1', '8', '457', '20-08-18', '1', '1', '22-08-18');

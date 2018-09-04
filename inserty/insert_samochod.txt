@@ -1,0 +1,32 @@
+INSERT INTO samochod (ID, marka, model, centralny_zamek, komputer_pokladowy, elektryczne_szyby, elektryczne_lusterka, klimatyzacja_reczna, klimatyzacja_automatyczna, podgrzewane_lusterka, abs, automatyczna_skrzynia, poduszki_powietrzne, ilosc_miejsc, ilosc_drzwi, rodzaj_paliwa, pojemnosc_silnika, moc, zuzycie_miasto, zuzycie_90, cena_podstawowa, cena_przygotowania, typ) 
+VALUES ('1', 'Seat', 'Ibiza', '1', '1', '1', '1', '1', '0', '0', '1', '0', '4', '5', '5', 'PB 95/98', '999', '75', '5.2', '4.8', '99', '49', '1');
+
+INSERT INTO samochod (ID, marka, model, centralny_zamek, komputer_pokladowy, elektryczne_szyby, elektryczne_lusterka, klimatyzacja_reczna, klimatyzacja_automatyczna, podgrzewane_lusterka, abs, automatyczna_skrzynia, poduszki_powietrzne, ilosc_miejsc, ilosc_drzwi, rodzaj_paliwa, pojemnosc_silnika, moc, zuzycie_miasto, zuzycie_90, cena_podstawowa, cena_przygotowania, typ) 
+VALUES ('2', 'Skoda', 'Octavia', '1', '1', '1', '1', '0', '1', '1', '1', '0', '6', '5', '5', 'PB 95/98', '1395', '150', '5.8', '5.4', '150', '49', '1');
+
+INSERT INTO samochod (ID, marka, model, centralny_zamek, komputer_pokladowy, elektryczne_szyby, elektryczne_lusterka, klimatyzacja_reczna, klimatyzacja_automatyczna, podgrzewane_lusterka, abs, automatyczna_skrzynia, poduszki_powietrzne, ilosc_miejsc, ilosc_drzwi, rodzaj_paliwa, pojemnosc_silnika, moc, zuzycie_miasto, zuzycie_90, cena_podstawowa, cena_przygotowania, typ) 
+VALUES ('3', 'Toyota', 'Corolla', '1', '1', '1', '1', '0', '1', '0', '1', '1', '4', '5', '5', 'PB 95/98', '1598', '132', '7.3', '5.6', '170', '49', '1');
+
+INSERT INTO samochod (ID, marka, model, centralny_zamek, komputer_pokladowy, elektryczne_szyby, elektryczne_lusterka, klimatyzacja_reczna, klimatyzacja_automatyczna, podgrzewane_lusterka, abs, automatyczna_skrzynia, poduszki_powietrzne, ilosc_miejsc, ilosc_drzwi, rodzaj_paliwa, pojemnosc_silnika, moc, zuzycie_miasto, zuzycie_90, cena_podstawowa, cena_przygotowania, typ) 
+VALUES ('4', 'Opel', 'Insignia', '1', '1', '1', '1', '0', '1', '1', '0', '1', '4', '5', '5', 'PB 95/98', '1461', '165', '8.1', '7.3', '185', '49', '1');
+
+INSERT INTO samochod (ID, marka, model, centralny_zamek, komputer_pokladowy, elektryczne_szyby, elektryczne_lusterka, klimatyzacja_reczna, klimatyzacja_automatyczna, podgrzewane_lusterka, abs, automatyczna_skrzynia, poduszki_powietrzne, ilosc_miejsc, ilosc_drzwi, rodzaj_paliwa, pojemnosc_silnika, moc, zuzycie_miasto, zuzycie_90, cena_podstawowa, cena_przygotowania, typ) 
+VALUES ('5', 'Mercedes', 'GLC 220d', '1', '1', '1', '1', '0', '1', '0', '1', '0', '8', '5', '5', 'ON', '2143', '190', '5.0', '5.5', '210', '49', '1');
+
+INSERT INTO samochod (ID, marka, model, centralny_zamek, komputer_pokladowy, elektryczne_szyby, elektryczne_lusterka, klimatyzacja_reczna, klimatyzacja_automatyczna, podgrzewane_lusterka, abs, automatyczna_skrzynia, poduszki_powietrzne, ilosc_miejsc, ilosc_drzwi, rodzaj_paliwa, pojemnosc_silnika, moc, zuzycie_miasto, zuzycie_90, cena_podstawowa, cena_przygotowania, typ) 
+VALUES ('6', 'Nissan', 'Qashqai', '1', '1', '1', '1', '0', '1', '1', '1', '1', '6', '5', '5', 'PB 95/98', '1197', '115', '6.5', '5.2', '140', '49', '1');
+
+INSERT INTO samochod (ID, marka, model, centralny_zamek, komputer_pokladowy, elektryczne_szyby, elektryczne_lusterka, klimatyzacja_reczna, klimatyzacja_automatyczna, podgrzewane_lusterka, abs, automatyczna_skrzynia, poduszki_powietrzne, ilosc_miejsc, ilosc_drzwi, rodzaj_paliwa, pojemnosc_silnika, moc, zuzycie_miasto, zuzycie_90, cena_podstawowa, cena_przygotowania, typ) 
+VALUES ('7', 'Volvo', 'S90', '1', '1', '1', '1', '0', '1', '0', '0', '0', '8', '5', '4', 'ON', '1998', '190', '7.0', '5.0', '150', '49', '1');
+
+INSERT INTO samochod (ID, marka, model, centralny_zamek, komputer_pokladowy, elektryczne_szyby, elektryczne_lusterka, klimatyzacja_reczna, klimatyzacja_automatyczna, podgrzewane_lusterka, abs, automatyczna_skrzynia, poduszki_powietrzne, ilosc_miejsc, ilosc_drzwi, rodzaj_paliwa, pojemnosc_silnika, moc, zuzycie_miasto, zuzycie_90, cena_podstawowa, cena_przygotowania, typ) 
+VALUES ('8', 'Renault', 'Trafic9', '1', '1', '1', '1', '1', '0', '0', '1', '0', '4', '9', '5', 'ON', '1598', '115', '8.8', '6.5', '180', '49', '3');
+
+INSERT INTO samochod (ID, marka, model, centralny_zamek, komputer_pokladowy, elektryczne_szyby, elektryczne_lusterka, klimatyzacja_reczna, klimatyzacja_automatyczna, podgrzewane_lusterka, abs, automatyczna_skrzynia, poduszki_powietrzne, ilosc_miejsc, ilosc_drzwi, rodzaj_paliwa, pojemnosc_silnika, moc, zuzycie_miasto, zuzycie_90, cena_podstawowa, cena_przygotowania, typ) 
+VALUES ('9', 'Seat', 'Alhambra7', '1', '1', '1', '1', '0', '1', '1', '1', '0', '7', '7', '5', 'ON', '1968', '150', '6.0', '4.5', '160', '49', '2');
+
+INSERT INTO samochod (ID, marka, model, centralny_zamek, komputer_pokladowy, elektryczne_szyby, elektryczne_lusterka, klimatyzacja_reczna, klimatyzacja_automatyczna, podgrzewane_lusterka, abs, automatyczna_skrzynia, poduszki_powietrzne, ilosc_miejsc, ilosc_drzwi, rodzaj_paliwa, pojemnosc_silnika, moc, zuzycie_miasto, zuzycie_90, cena_podstawowa, cena_przygotowania, typ) 
+VALUES ('10', 'Renault', 'Kangoo', '1', '1', '1', '1', '1', '0', '0', '1', '0', '4', '2', '5', 'ON', '1461', '75', '5.8', '4.8', '120', '49', '2');
+
+INSERT INTO samochod (ID, marka, model, centralny_zamek, komputer_pokladowy, elektryczne_szyby, elektryczne_lusterka, klimatyzacja_reczna, klimatyzacja_automatyczna, podgrzewane_lusterka, abs, automatyczna_skrzynia, poduszki_powietrzne, ilosc_miejsc, ilosc_drzwi, rodzaj_paliwa, pojemnosc_silnika, moc, zuzycie_miasto, zuzycie_90, cena_podstawowa, cena_przygotowania, typ) 
+VALUES ('11', 'Renault', 'Master Furgon', '1', '1', '1', '1', '1', '0', '0', '1', '0', '4', '3', '5', 'ON', '2299', '125', '9.6', '8.6', '200', '49', '3');

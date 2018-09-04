@@ -1,0 +1,14 @@
+INSERT INTO klient (id, id_uzytkownik, imie, nazwisko, adres, kod_pocztowy, miejscowosc, wojewodztwo) 
+VALUES ('1', '4', 'Kamil', 'Nowak', 'Wrotowa 12', '25-345', 'Kielce', 'Swietokrzyskie');
+
+INSERT INTO klient (id, id_uzytkownik, imie, nazwisko, adres, kod_pocztowy, miejscowosc, wojewodztwo) 
+VALUES ('2', '2', 'Patryk', 'Wolski', 'Seminaryjna 1', '23-535', 'Warszawa', 'Mazowieckie');
+
+INSERT INTO klient (id, id_uzytkownik, imie, nazwisko, adres, kod_pocztowy, miejscowosc, wojewodztwo) 
+VALUES ('3', '10', 'Robert', 'Bilski', 'Sobieskiego 34', '20-121', 'Krakow', 'Malopolskie');
+
+INSERT INTO klient (id, id_uzytkownik, imie, nazwisko, adres, kod_pocztowy, miejscowosc, wojewodztwo) 
+VALUES ('4', '6', 'Jakub', 'Blasczyk', 'Pancerna 45', '12-602', 'Gdynia', 'Pomorskie');
+
+INSERT INTO klient (id, id_uzytkownik, imie, nazwisko, adres, kod_pocztowy, miejscowosc, wojewodztwo) 
+VALUES ('5', '3', 'Karol', 'Tomczyk', 'Focha 23', '27-400', 'Ostrowiec', 'Swietokrzyskie');

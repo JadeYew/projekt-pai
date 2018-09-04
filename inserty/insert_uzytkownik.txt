@@ -1,0 +1,29 @@
+INSERT INTO uzytkownik (id, login, password, e_mail) 
+VALUES ('1', 'admin', 'admin1234', 'admin@gmail.com');
+
+INSERT INTO uzytkownik (id, login, password, e_mail) 
+VALUES ('2', 'klient1', 'klient01', 'klient@gmail.com');
+
+INSERT INTO uzytkownik (id, login, password, e_mail) 
+VALUES ('3', 'klient2', 'klient02', 'klient2@gmail.com');
+
+INSERT INTO uzytkownik (id, login, password, e_mail) 
+VALUES ('4', 'klient3', 'klient01', 'klient3@gmail.com');
+
+INSERT INTO uzytkownik (id, login, password, e_mail) 
+VALUES ('5', 'chetny', 'chetny1234', 'chetny@gmail.com');
+
+INSERT INTO uzytkownik (id, login, password, e_mail) 
+VALUES ('6', 'klient4', 'klient04', 'klient4@gmail.com');
+
+INSERT INTO uzytkownik (id, login, password, e_mail) 
+VALUES ('7', 'klient5', 'klient05', 'klient5@gmail.com');
+
+INSERT INTO uzytkownik (id, login, password, e_mail) 
+VALUES ('8', 'klient6', 'klient06', 'klient6@gmail.com');
+
+INSERT INTO uzytkownik (id, login, password, e_mail) 
+VALUES ('9', 'klient7', 'klient07', 'klient7@gmail.com');
+
+INSERT INTO uzytkownik (id, login, password, e_mail) 
+VALUES ('10', 'klient8', 'klient08', 'klient8@gmail.com');

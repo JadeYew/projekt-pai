@@ -1,0 +1,2 @@
+INSERT INTO admin (id, id_uzytkownik) 
+VALUES ('1', '1');

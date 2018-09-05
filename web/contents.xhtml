@@ -16,60 +16,7 @@ and open the template in the editor.
     </head>
     <body>
         <ui:composition>
-            <link rel="stylesheet" type="text/css" href="resources/css/contents.css"></link> 
-            <section id="main" class="no-margin">
-                <div class="item" style="background-image: url(resources/images/background.jpg)">
-                    <h2>Wyszukaj Samochód</h2>
-                    <div class="szukanie">
-                        <h:form>
-                          
-                          <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-                              
-                            <p:outputLabel for="typ" value="Typ:" />
-                            <p:selectOneMenu id="typ" value="#{sesja.wyszukiwanie.typ}" style="width:125px">
-                                <f:selectItem itemLabel="Osobowy" itemValue="1" />
-                                <f:selectItem itemLabel="Van" itemValue="2" />
-                                <f:selectItem itemLabel="Dostawczy" itemValue="3" />
-                            </p:selectOneMenu>
-                            
-                           </h:panelGrid> 
-                            
-                           <p:commandButton value="Submit" update="display" oncomplete="PF('dlg').show()" icon="ui-icon-check" />
-                           
-                           <p:dialog header="Values" modal="true" showEffect="bounce" widgetVar="dlg" resizable="false">
-                                <p:panelGrid columns="2" id="display" columnClasses="label,value">
-                                    <h:outputText value="Basic:" />
-                                    <h:outputText value="#{sesja.wyszukiwanie.typ}" />
-                                </p:panelGrid>
-                            </p:dialog>            
-                        </h:form>
-                    </div>
-                </div>
-            </section>
             
-            <section class="about">
-                
-            </section>
-            <h1>Sprawdź odpowiedzi na najczęściej zadawane pytania</h1>
-            
-            <h2>Czego potrzebuję, żeby wynająć samochód?</h2>
-            <h6>    W celu dokonania rezerwacji auta potrzebują Państwo swojej karty kredytowej lub debetowej. Do odbioru auta będą Państwo potrzebować:</h6>
-            <h6>    -Twój kupon rezerwacji/ekupon, który potwierdza opłacenie wynajmu, należy go przedstawić przy odbiorze auta.</h6>
-            <h6>    -Karta kredytowa/ debetowa na imię i nazwisko głównego kierowcy z wystarczającymi dostępnymi środkami, które umożliwią zablokowanie depozytu przez wypożyczalnię.</h6>
-            <h6>    -Ważne i pełne prawo jazdy każdego z kierowców. Każdy kierowca musi posiadać swoje prawo jazdy przynajmniej pełne 12 miesięcy(w niektórych przypadkach 24 miesiące).</h6>
-            <h6>    -Państwa paszport i/lub Państwa dowód osobisty lub inny dowód tożsamości, którego okazanie jest wymagane w wypożyczalni.</h6>
-            
-            <h2>Ile muszę mieć lat, żeby wynająć samochód?</h2>
-            <h6>Większość wypożyczalni wymaga, aby wiek kierowcy mieścił się w przedziale pomiędzy 21 a 70 lat. Jeżeli masz mniej niż 25 lat lub więcej niż 70 lat najprawdopodobniej będziesz musiał zapłacić dodatkową opłatę.</h6>
-            
-            <h2>Czy mogę dokonać rezerwacji dla kogoś innego?</h2>  
-            <h6>Tak, o ile spełniają wszystkie wymagania. Po prostu wypełnij wymagane pola podczas dokonywania rezerwacji.</h6>
-            
-            <h2>Na co należy zwrócić uwagę przy wyborze samochodu?</h2>
-            <h6>-Przestrzeń: Będą Państwo mogli cieszyc się wygodą podróźy wybierając większy samochodu z większą pojemnością na bagaż.</h6>
-            <h6>-Paliwo: Nie planują Państwo dalekich podróźy? Opcja 'odbiór z pełnym - zwrot z pełnym' pozwoli zaoszczędzić pieniądze.</h6>
-            <h6>-Lokalizacja: Nie ma wygodniejszej opcji niż odbiór na lotnisku, jednakże odbiór poza lotniskiem z zapewnionym transportem jest o wiele tańszy.</h6>
-            <h2>pusta linia</h2>
         </ui:composition>	
         
         

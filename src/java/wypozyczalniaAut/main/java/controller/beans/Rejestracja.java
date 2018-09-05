@@ -1,37 +1,24 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package wypozyczalniaAut.main.java.controller.beans;
 
 import java.util.Random;
 import javax.inject.Named;
-import javax.enterprise.context.Dependent;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.Query;
 import wypozyczalniaAut.main.java.controller.Connect;
 import wypozyczalniaAut.main.java.model.Uzytkownik;
 
-/**
- *
- * @author Iwo Ryszkowski
- */
-@Named(value = "resjestracja")
+
+@Named(value = "rejestracja")
 @ManagedBean
 @RequestScoped
-public class Resjestracja {
-    @Inject
+public class Rejestracja {
     private Uzytkownik uzytkownik;
     private String passwordAgain;
-    private String testString = "hihihi";
     
     public void setUzytkownik(Uzytkownik uzytkownik){
         this.uzytkownik = uzytkownik;
@@ -57,7 +44,7 @@ public class Resjestracja {
         Query q;
         Random r = new Random();
         do{
-            uzytkownik.setId(new Integer(r.nextInt(1000000000)));
+            uzytkownik.setId(new Integer(r.nextInt(2100000000)));
             q = em.createNamedQuery("Uzytkownik.findById").setParameter("id", uzytkownik.getId());
         }while(!q.getResultList().isEmpty());
         em.getTransaction().begin();
@@ -86,18 +73,5 @@ public class Resjestracja {
         EntityManager em = Connect.getConnect().createEntityManager();
         Query q = em.createNamedQuery("Uzytkownik.findByLogin").setParameter("login", uzytkownik.getLogin());
         return !q.getResultList().isEmpty();
-    }
-    
-    public void setTestString(String testString){
-        this.testString = testString;
-    }
-    
-    public String getTestString(){
-        return this.testString;
-    }
-    
-    public String test(){
-        testString = "hahaha";
-        return "test";
     }
 }

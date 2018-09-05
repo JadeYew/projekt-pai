@@ -16,3 +16,15 @@ and open the template in the editor.
   margin: 0;
   padding: 0;
 }
+
+.form{
+  margin: 0;
+  padding: 10px;
+  color: #fff;
+}
+
+.item{
+background-position: 50%;
+background-repeat: no-repeat;
+background-size: cover;
+}

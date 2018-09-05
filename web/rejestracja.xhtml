@@ -7,29 +7,53 @@ and open the template in the editor.
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-    <head>
-        <title>TODO supply a title</title>
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Wyporzyczalnia - rejestracjas</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
+    </h:head>
     <body>
         <ui:composition template="default.xhtml">
             <ui:define name="contents">
                 <h:form>
                     <h3>REJESTRACJA</h3>
                     <h:panelGrid columns="3">
-                        <h:outputLabel for="ulogin">Login:</h:outputLabel>
-                        <h:inputText value="#{uzytkownik.login}" id="ulogin"/>
-                        <br/>
-                        <br/><h:outputLabel for="upassword">Password:</h:outputLabel>
-                        <h:inputSecret value="#{uzytkownik.password}" id="upassword"/>
-                        <br/>
-                        <br/>
-                        <h:outputLabel for="ueMail">E-mail:</h:outputLabel>
-                        <h:inputSecret value="#{uzytkownik.eMail}" id="ueMail"/>
+                        <p:outputLabel for="ulogin" value="Login:"/>
+                        <p:inputText value="#{resjestracja.uzytkownik.login}" 
+                                     id="ulogin" required="true" 
+                                     requiredMessage="Podaj login"/>
                         <br/>
                         <br/>
-                        <h:commandButton action="viewdetails" value="Rejestruj"/>
+                        <p:outputLabel for="ueMail" value="E-mail:"/>
+                        <p:inputText value="#{resjestracja.uzytkownik.eMail}" 
+                                     id="ueMail" required="true" 
+                                     requiredMessage="Podaj e-mail"/>
+                        <br/>
+                        <br/>
+                        <p:outputLabel for="upassword" value="Hasło:"/>
+                        <p:password value="#{resjestracja.uzytkownik.password}" 
+                                    id="upassword" required="true" 
+                                    requiredMessage="Podaj hasło" 
+                                    match="upasswordAgain" validatorMessage="Hasła nie są identyczne"
+                                    feedback="true"/>
+                        <br/>
+                        <br/>
+                        <p:outputLabel for="upasswordAgain" value="Powtórz hasło:"/>
+                        <p:password value="#{resjestracja.passwordAgain}" 
+                                    id="upasswordAgain" required="true" 
+                                    requiredMessage="Podaj ponownie hasło" 
+                                    validatorMessage="Hasła nie są identyczne"
+                                    feedback="true"/>
+                        <br/>
+                        <br/>
+                        <p:commandButton value="Sprawdz Dane" id="ajax"
+                                             update="upasswordAgain,upassword,ulogin,ueMail"
+                                             actionListener="#{resjestracja.sprawdzDane}"/>
+                        <br/>
+                        <br/>
+                        <p:commandButton action="#{resjestracja.addUser}" value="Rejestruj"/>
                     </h:panelGrid>
                 </h:form>
             </ui:define>

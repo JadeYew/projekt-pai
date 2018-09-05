@@ -5,13 +5,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-
 @Named
-public class Connect {
+public class Connect{
 
 
     private static EntityManagerFactory factory;
     private static Connect instance;
+    
     public synchronized static Connect getConnect() {
         if (instance == null) {
             instance = new Connect();
@@ -21,7 +21,7 @@ public class Connect {
 
     public EntityManagerFactory createEntityManagerFactory() {
         if (factory == null) {
-            factory = Persistence.createEntityManagerFactory("NewPersistenceUnit");
+            factory = Persistence.createEntityManagerFactory("ProjektPai2PU");
         }
         return factory;
     }
@@ -37,6 +37,4 @@ public class Connect {
             factory.close();
         }
     }
-
-
 }

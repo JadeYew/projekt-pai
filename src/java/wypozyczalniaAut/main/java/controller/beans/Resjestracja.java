@@ -5,14 +5,18 @@
  */
 package wypozyczalniaAut.main.java.controller.beans;
 
+import java.util.Random;
 import javax.inject.Named;
 import javax.enterprise.context.Dependent;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import wypozyczalniaAut.main.java.controller.Connect;
 import wypozyczalniaAut.main.java.model.Uzytkownik;
 
@@ -21,7 +25,6 @@ import wypozyczalniaAut.main.java.model.Uzytkownik;
  * @author Iwo Ryszkowski
  */
 @Named(value = "resjestracja")
-@Dependent
 @ManagedBean
 @RequestScoped
 public class Resjestracja {
@@ -62,20 +65,39 @@ public class Resjestracja {
         return passwordAgain;
     }
     
-    public boolean addUser(){
+    public void addUser(){
         EntityManager em = Connect.getConnect().createEntityManager();
-        Uzytkownik wynikId = (Uzytkownik)em.createNamedQuery("Uzytkownik.findById")
-                .setParameter("id", uzytkownik.getId())
-                .getSingleResult();
-        Uzytkownik wynikLogin = (Uzytkownik)em.createNamedQuery("Uzytkownik.dinfByLogin")
-                .setParameter("login", uzytkownik.getLogin())
-                .getSingleResult();
-        if(uzytkownik.equals(wynikId) || uzytkownik.equals(wynikLogin)){
-            return false;
-        }
+        Query q;
+        Random r = new Random();
+        do{
+            uzytkownik.setId(new Integer(r.nextInt(1000000000)));
+            q = em.createNamedQuery("Uzytkownik.findById").setParameter("id", uzytkownik.getId());
+        }while(!q.getResultList().isEmpty());
         em.getTransaction().begin();
+        em.find(Uzytkownik.class, uzytkownik.getId());
         em.persist(uzytkownik);
         em.getTransaction().commit();
-        return true;
+    }
+    
+    public String sprawdzDane(){
+        if(sprawdzLogin()){
+            FacesContext.getCurrentInstance().addMessage(null,  new FacesMessage(FacesMessage.SEVERITY_WARN, "Podany login Juz Istnieje", uzytkownik.getLogin()));
+        }
+        if(sprawdzEMail()){
+            FacesContext.getCurrentInstance().addMessage(null,  new FacesMessage(FacesMessage.SEVERITY_WARN, "Podany e-mail Juz Istnieje", uzytkownik.geteMail()));
+        }
+        return "";
+    }
+    
+    public boolean sprawdzEMail(){
+        EntityManager em = Connect.getConnect().createEntityManager();
+        Query q = em.createNamedQuery("Uzytkownik.findByEMail").setParameter("eMail", uzytkownik.geteMail());
+        return !q.getResultList().isEmpty();
+    }
+    
+    public boolean sprawdzLogin(){
+        EntityManager em = Connect.getConnect().createEntityManager();
+        Query q = em.createNamedQuery("Uzytkownik.findByLogin").setParameter("login", uzytkownik.getLogin());
+        return !q.getResultList().isEmpty();
     }
 }

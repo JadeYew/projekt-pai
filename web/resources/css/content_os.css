@@ -25,6 +25,13 @@ and open the template in the editor.
     width: 47%;
 }
 
+.box_two {
+    float: left;
+    margin-right: 3%;
+    margin-bottom: 10px;
+    width: 47%;
+}
+
 .box_one h2, .box_two h2 {
     font-family: "Roboto-Light";
     margin-top: 30px;
@@ -32,4 +39,87 @@ and open the template in the editor.
 
 h2, .h2 {
     font-size: 30px;
+}
+
+h1, .h1, h2, .h2, h3, .h3 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.switch-type.current, .switch-group.current {
+    background-color: blue !important;
+}
+
+.pick_type label, .pick_class label, .pick_page label, .switch-type, .switch-group {
+    cursor: pointer;
+    width: 100px;
+    height: 45px;
+    margin-left: -22px;
+    background-color: lightblue;
+    color: #a7a7a7;
+    transition: all 0.3s ease;
+}
+
+.switch-type, .switch-group {
+    text-align: center;
+    line-height: 45px;
+    margin-left: 10px !important;
+}
+
+.pick_type {
+    float: left;
+    width: 101px;
+    height: 47px;
+    margin: 6px;
+        margin-left: 6px;
+}
+
+input, a, select, .hider, #button_poland, #button_world {
+    cursor: pointer;
+}
+
+a, a:hover, a:active {
+    text-decoration: none;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}
+
+a {
+    background: transparent;
+}
+
+#putdata {
+    position: relative;
+}
+
+.lista .car_display:nth-child(2n+1) .car_display_width {
+    float: right;
+}
+
+.lista div.car_display_width {
+    width: 70% !important;
+    margin: 0 15px 0 15px !important;
+}
+
+div.contains {
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+.car_display_height {
+    height: 400px;
+    width: 100%;
+}
+
+.alignleft {
+    margin-left: 8%;
+    float: left;
+}
+
+.alignleft {
+    margin-left: 8%;
+    float: left;
 }

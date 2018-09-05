@@ -12,16 +12,22 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
     <body>
-        <ui:insert id="header">
-            <ui:include src="defaultHeader.xhtml" />
-        </ui:insert>
-        
-        <ui:insert id="contents">
-            <ui:include src="contents.xhtml" />
-        </ui:insert>
-        
-        <ui:insert id="footer">
-            <ui:include src="footer.xhtml" />
-        </ui:insert>
+        <div id="header">
+            <ui:insert name="tresc">
+                <ui:include src="defaultHeader.xhtml" />
+            </ui:insert>
+        </div>
+
+        <div id="contents">
+            <ui:insert name="contents">
+                <ui:include src="contents.xhtml" />
+            </ui:insert>
+        </div>
+
+        <div id="footer">
+            <ui:insert name="footer">
+                <ui:include src="footer.xhtml" />
+            </ui:insert>
+        </div>
     </body>
 </html>

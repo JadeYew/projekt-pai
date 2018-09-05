@@ -23,6 +23,7 @@ import wypozyczalniaAut.main.java.model.Uzytkownik;
 public class Sesja implements Serializable {
     Rejestracja rejestracja;
     Uzytkownik zalogowanyUzytkownik;
+    Wyszukiwanie wyszukiwanie;
     boolean zalogowany;
     
     public String mojeKontoPrzcisk(){
@@ -60,6 +61,17 @@ public class Sesja implements Serializable {
             this.zalogowanyUzytkownik = new Uzytkownik();
         }
         return this.zalogowanyUzytkownik;
+    }
+    
+    public void setWyszukiwanie(Wyszukiwanie wyszukiwanie){
+        this.wyszukiwanie = wyszukiwanie;
+    }
+    
+    public Wyszukiwanie getWyszukiwanie(){
+        if(this.wyszukiwanie == null){
+            this.wyszukiwanie = new Wyszukiwanie();
+        }
+        return this.wyszukiwanie;
     }
     
     public String addUser(){

@@ -43,8 +43,7 @@ public class Rejestracja {
     
     public String addUser(){
         if(dobreDane){
-            Connect con = Connect.getConnect();
-            EntityManager em = con.createEntityManager();
+            EntityManager em = Connect.getConnect().createEntityManager();
             em.clear();
             Query q;
             Random r = new Random();
@@ -55,7 +54,7 @@ public class Rejestracja {
             em.getTransaction().begin();
             em.persist(uzytkownik);
             em.getTransaction().commit();
-            con.closeEntityManagerFactory();
+            Connect.getConnect().closeEntityManagerFactory();
             return "footer";
         }
         return "rejestracja";
@@ -79,21 +78,15 @@ public class Rejestracja {
     }
     
     public boolean sprawdzEMail(){
-        Connect con = Connect.getConnect();
-        EntityManager em = con.createEntityManager();
+        EntityManager em = Connect.getConnect().createEntityManager();
         Query q = em.createNamedQuery("Uzytkownik.findByEMail").setParameter("eMail", uzytkownik.geteMail());
-        boolean result = !q.getResultList().isEmpty();
-        con.closeEntityManagerFactory();
-        return result;
+        return !q.getResultList().isEmpty();
     }
     
     public boolean sprawdzLogin(){
-        Connect con = Connect.getConnect();
-        EntityManager em = con.createEntityManager();
+        EntityManager em = Connect.getConnect().createEntityManager();
         Query q = em.createNamedQuery("Uzytkownik.findByLogin").setParameter("login", uzytkownik.getLogin());
-        boolean result = !q.getResultList().isEmpty();
-        con.closeEntityManagerFactory();
-        return result;
+        return !q.getResultList().isEmpty();
     }
     
     public boolean sprawdzHasla(){

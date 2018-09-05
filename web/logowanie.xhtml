@@ -10,15 +10,15 @@ and open the template in the editor.
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
-    <h:head>
-        <title>Wyporzyczalnia - rejestracja</title>
+    <head>
+        <title>Wyporzyczalnia - logowanie</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </h:head>
+    </head>
     <body>
         <ui:composition template="default.xhtml">
             <ui:define name="contents">
                 <h:form>
-                    <h3>REJESTRACJA</h3>
+                    <h3>LOGOWANIE</h3>
                     <h:panelGrid columns="3">
                         <p:outputLabel for="ulogin" value="Login:"/>
                         <p:inputText value="#{sesja.rejestracja.uzytkownik.login}" 
@@ -26,31 +26,15 @@ and open the template in the editor.
                                      requiredMessage="Podaj login"/>
                         <br/>
                         <br/>
-                        <p:outputLabel for="ueMail" value="E-mail:"/>
-                        <p:inputText value="#{sesja.rejestracja.uzytkownik.eMail}" 
-                                     id="ueMail" required="true" 
-                                     requiredMessage="Podaj e-mail"/>
-                        <br/>
-                        <br/>
                         <p:outputLabel for="upassword" value="Hasło:"/>
                         <p:password value="#{sesja.rejestracja.uzytkownik.password}" 
                                     id="upassword" required="true" 
                                     requiredMessage="Podaj hasło" 
-                                    match="upasswordAgain" validatorMessage="Hasła nie są identyczne"
                                     feedback="true"/>
                         <br/>
                         <br/>
-                        <p:outputLabel for="upasswordAgain" value="Powtórz hasło:"/>
-                        <p:password value="#{sesja.rejestracja.passwordAgain}" 
-                                    id="upasswordAgain" required="true" 
-                                    requiredMessage="Podaj ponownie hasło" 
-                                    validatorMessage="Hasła nie są identyczne"
-                                    feedback="true"/>
-                        <br/>
-                        <br/>
-                        <br/>
-                        <br/>
-                        <p:commandButton actionListener="#{sesja.rejestracja.sprawdzDane}" action="#{sesja.addUser}" value="Rejestruj" ajax="false"/>
+                        <p:commandButton value="Sprawdz Dane" ajax="false"                                            
+                                             actionListener="#{sesja.rejestracja.sprawdzDane}"/>
                     </h:panelGrid>
                 </h:form>
             </ui:define>

@@ -23,12 +23,21 @@ and open the template in the editor.
         <ui:composition> 
          <link rel="stylesheet" type="text/css" href="resources/css/footer.css"></link> 
             <div class ="footer">
-                <div class="divid left"><h:button class="footer_drop" value="O nas" outcome="index"/></div>
-                <div class="divid left"><h:button class="footer_drop" value="Kontakt" outcome="index"/></div>
+                <div class="popup left" onclick="myFunction()">Kontakt
+                    <span class="popuptext" id="myPopup">wypożyczalnia@gmail.com
+                723-213-732</span>
+                       </div> 
                 <div class ="right">
                 <p>Projekt wykonany na Projektowanie Aplikacji Internetowych 2</p>
             </div>
             </div>
+         <script>
+        // Skrypt wywołany po kliknieciu
+        function myFunction() {
+            var popup = document.getElementById("myPopup");
+            popup.classList.toggle("show");
+        }
+        </script>
       </ui:composition>	
     </body>
 </html>

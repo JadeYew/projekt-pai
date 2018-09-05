@@ -7,17 +7,6 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        <ui:insert id="header">
-            <ui:include src="defaultHeader.xhtml" />
-        </ui:insert>
-        
-        <ui:insert id="contents">
-            <ui:include src="contents.xhtml" />
-        </ui:insert>
-        
-        <ui:insert id="footer">
-            <ui:include src="footer.xhtml" />
-        </ui:insert>
-        
+        <ui:composition template="default.xhtml"/>
     </h:body>
 </html>

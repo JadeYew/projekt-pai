@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <head>
+        <title>TODO supply a title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <body>
+        <ui:composition template="default.xhtml">
+            <ui:define name="contents">
+                <h:form>
+                    <h3>REJESTRACJA</h3>
+                    <h:panelGrid columns="3">
+                        <h:outputLabel for="ulogin">Login:</h:outputLabel>
+                        <h:inputText value="#{uzytkownik.login}" id="ulogin"/>
+                        <br/>
+                        <br/><h:outputLabel for="upassword">Password:</h:outputLabel>
+                        <h:inputSecret value="#{uzytkownik.password}" id="upassword"/>
+                        <br/>
+                        <br/>
+                        <h:outputLabel for="ueMail">E-mail:</h:outputLabel>
+                        <h:inputSecret value="#{uzytkownik.eMail}" id="ueMail"/>
+                        <br/>
+                        <br/>
+                        <h:commandButton action="viewdetails" value="Rejestruj"/>
+                    </h:panelGrid>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

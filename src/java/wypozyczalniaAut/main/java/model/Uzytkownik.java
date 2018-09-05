@@ -11,6 +11,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -21,6 +23,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import wypozyczalniaAut.main.java.BCrypt;
 
 /**
  *
@@ -43,6 +46,7 @@ public class Uzytkownik implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     @Size(max = 32)
     @Column(name = "login")
@@ -103,7 +107,10 @@ public class Uzytkownik implements Serializable {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        if(salt == null){
+            setSalt(BCrypt.gensalt());
+        }
+        this.password = BCrypt.hashpw(password, salt);
     }
 
     public String getEMail() {
@@ -148,12 +155,14 @@ public class Uzytkownik implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Uzytkownik)) {
             return false;
         }
         Uzytkownik other = (Uzytkownik) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        if ((this.login == null && other.login != null) || (this.login != null && !this.login.equals(other.login))) {
             return false;
         }
         return true;

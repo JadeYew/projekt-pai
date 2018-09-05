@@ -5,6 +5,7 @@
  */
 package wypozyczalniaAut.main.java.controller.beans;
 
+import java.util.ArrayList;
 import java.util.Random;
 import javax.inject.Named;
 import javax.enterprise.context.Dependent;
@@ -28,7 +29,7 @@ public class Wyszukiwanie {
 
     private String typ;
     
-    public void setUzytkownik(Samochod typ){
+    public void setUzytkownik(String typ){
         this.typ = typ;
     }
     
@@ -42,6 +43,7 @@ public class Wyszukiwanie {
     
     public Wyszukiwanie(){
         EntityManager em = Connect.getConnect().createEntityManager();
-        Query q = em.createNamedQuery("Samochod.findByTyp").setParameter("typ", samochod.gettyp());
+        Query q = em.createNamedQuery("Samochod.findByTyp").setParameter("typ", typ);
+        ArrayList <Samochod> wyniki = (ArrayList)q.getResultList();
     }
 }

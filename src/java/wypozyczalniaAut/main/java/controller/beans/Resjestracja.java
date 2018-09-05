@@ -31,6 +31,7 @@ public class Resjestracja {
     @Inject
     private Uzytkownik uzytkownik;
     private String passwordAgain;
+    private String testString = "hihihi";
     
     public void setUzytkownik(Uzytkownik uzytkownik){
         this.uzytkownik = uzytkownik;
@@ -85,5 +86,18 @@ public class Resjestracja {
         EntityManager em = Connect.getConnect().createEntityManager();
         Query q = em.createNamedQuery("Uzytkownik.findByLogin").setParameter("login", uzytkownik.getLogin());
         return !q.getResultList().isEmpty();
+    }
+    
+    public void setTestString(String testString){
+        this.testString = testString;
+    }
+    
+    public String getTestString(){
+        return this.testString;
+    }
+    
+    public String test(){
+        testString = "hahaha";
+        return "test";
     }
 }

@@ -30,16 +30,10 @@ import wypozyczalniaAut.main.java.model.Uzytkownik;
 public class Resjestracja {
     @Inject
     private Uzytkownik uzytkownik;
-    @Inject
-    private Uzytkownik uzytkownikDuo;
     private String passwordAgain;
     
     public void setUzytkownik(Uzytkownik uzytkownik){
         this.uzytkownik = uzytkownik;
-    }
-    
-    public void setUzytkownikDuo(Uzytkownik uzytkownikDuo){
-        this.uzytkownikDuo = uzytkownikDuo;
     }
     
     public void setPasswordAgain(String passwordAgain){
@@ -51,14 +45,6 @@ public class Resjestracja {
             uzytkownik =  new Uzytkownik();
         }
         return this.uzytkownik;
-    }
-    
-    public Uzytkownik getUzytkownikDuo(){
-        
-        if(uzytkownikDuo == null){
-            uzytkownikDuo =  new Uzytkownik();
-        }
-        return this.uzytkownikDuo;
     }
     
     public String getPasswordAgain(){

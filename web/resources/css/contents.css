@@ -28,3 +28,11 @@ background-position: 50%;
 background-repeat: no-repeat;
 background-size: cover;
 }
+
+h2, .h2{
+  color: #fff;
+}
+
+.szukanie{
+    width: 50%;
+}

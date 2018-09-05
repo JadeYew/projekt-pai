@@ -8,3 +8,11 @@ and open the template in the editor.
     Author     : Kamil
 */
 
+#main {
+  position: relative;
+}
+
+.no-margin {
+  margin: 0;
+  padding: 0;
+}

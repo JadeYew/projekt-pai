@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Vector;
-import javax.inject.Named;
 import javax.enterprise.context.Dependent;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -22,7 +21,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import wypozyczalniaAut.main.java.controller.Connect;
 import wypozyczalniaAut.main.java.model.Samochod;
-import wypozyczalniaAut.main.java.model.Uzytkownik;
 
 
 /**
@@ -36,65 +34,73 @@ import wypozyczalniaAut.main.java.model.Uzytkownik;
 
 public class Wyszukiwanie implements Serializable{
 
-    private Samochod samochod;
-    private String typ;
+    private String samochod;
+    private Short typ;
     private String marka;
-    private List<String> typList=new ArrayList<>();
-    private List<String> markaList=new ArrayList<>();
+    private List<Short> typList = new ArrayList<Short>();
+    private List<String> markaList = new ArrayList<>();
     
+    public void uzupelnijTypList(){
+        
+            EntityManager em = Connect.createEntityManager();
+            Query q = em.createNamedQuery("Samochod.findByTyp").setParameter("typ",typ);
+            Vector <Samochod> samochody = (Vector)q.getResultList();
+            for(Samochod s: samochody){
+                typList.add(s.getTyp());
+            }
+            em.close();
+    }
     
-    public String getTyp() {
+    public void uzupelnijMarkaList(){
+        
+            EntityManager em = Connect.createEntityManager();
+            Query q = em.createNamedQuery("Samochod.findByMarka").setParameter("marka",marka);
+            Vector <Samochod> samochody = (Vector)q.getResultList();
+            for(Samochod s: samochody){
+                markaList.add(s.getMarka());
+            }
+            em.close();
+    }
+    
+    public Wyszukiwanie(){
+    }
+    
+    public Short getTyp() {
         return typ;
     }
     
-    public String getMarka() {
-        return marka;
-    }
-    
-    public List<String> getTypList(){
+    public List<Short> getTypList(){
+        if(typList.isEmpty()){
+            uzupelnijTypList();
+        }
         return typList;
     }
     
-    public List<String> getMarkaList(){
-        return markaList;
-    }
- 
-    public void setTyp(String typ) {
+    public void setTyp(Short typ) {
         this.typ = typ;
     }
     
+    public void setTypList(List<Short> typ_list){
+       this.typList = typ_list;
+   }
+    
+    public String getMarka(){
+        return marka;
+    }
+    
+    public List<String> getMarkaList(){
+        if(markaList.isEmpty()){
+            uzupelnijMarkaList();
+        }
+        return markaList;
+    }
+    
     public void setMarka(String marka){
-        this.marka = marka;
+        this.marka=marka;
     }
     
-   public void setMarka_list(List<String> marka_list){
-       this.typList = typList;
-   }
-   
-   public void setTyp_list(List<String> typ_list){
-       this.markaList = markaList;
-   }
-    
-    public Wyszukiwanie(){
-        EntityManager em = Connect.createEntityManager();
-        Query q = em.createNamedQuery("Samochod.findByTyp").setParameter("typ", typ);
-        Vector <Samochod> wyniki = (Vector)q.getResultList();
-    }
-    
-    public List<String> get_typ(){
-        
-            EntityManager em = Connect.createEntityManager();
-            Query q = em.createNamedQuery("Samochod.findByTyp").setParameter("typ",samochod.getTyp());
-            Vector <String> samochod = (Vector)q.getResultList();
-            return typList;
-    }
-    
-    public List<String> get_marka(){
-        
-            EntityManager em = Connect.createEntityManager();
-            Query q = em.createNamedQuery("Samochod.findByMarka").setParameter("marka",samochod.getMarka());
-            Vector <String> samochod = (Vector)q.getResultList();
-            return markaList;
+    public void setMarkaList(List<String> marka_list){
+        this.markaList = marka_list;
     }
                
 }

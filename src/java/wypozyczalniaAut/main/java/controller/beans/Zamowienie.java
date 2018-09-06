@@ -45,20 +45,26 @@ public class Zamowienie implements Serializable{
     private List<String> markaList = new ArrayList<>();
     private List<String> modelList = new ArrayList<>();
     
-    public List<String> get_marka(){
+    public void uzupelnijMarkaList(){
         
             EntityManager em = Connect.createEntityManager();
-            Query q = em.createNamedQuery("Samochod.findByMarka").setParameter("marka",samochod.getMarka());
-            Vector <String> samochod = (Vector)q.getResultList();
-            return markaList;
+            Query q = em.createNamedQuery("Samochod.findAll");
+            Vector <Samochod> samochody = (Vector)q.getResultList();
+            for(Samochod s: samochody){
+                markaList.add(s.getMarka());
+            }
+            em.close();
     }
     
-    public List<String> get_model(){
+    public void uzupelnijModelList(){
         
-        EntityManager em = Connect.createEntityManager();
-        Query q = em.createNamedQuery("Samochod.findByModel") .setParameter("model", samochod.getModel());
-        Vector <String> samochod = (Vector)q.getResultList();
-        return modelList;
+            EntityManager em = Connect.createEntityManager();
+            Query q = em.createNamedQuery("Samochod.findByMarka").setParameter("marka",marka);
+            Vector <Samochod> samochody = (Vector)q.getResultList();
+            for(Samochod s: samochody){
+                modelList.add(s.getModel());
+            }
+            em.close();
     }
     
     public void onDateSelect(SelectEvent event) {
@@ -75,6 +81,9 @@ public class Zamowienie implements Serializable{
     }
     
     public List<String> getMarkaList(){
+        if(markaList.isEmpty()){
+            uzupelnijMarkaList();
+        }
         return markaList;
     }
     
@@ -91,7 +100,7 @@ public class Zamowienie implements Serializable{
    }
    
    public List<String> getModelList(){
-       List <String> ret = new ArrayList();
+       uzupelnijModelList();
        return modelList;
    }
    
@@ -104,6 +113,10 @@ public class Zamowienie implements Serializable{
     }
     
     public Date getDate1() {
+        if(date1 == null){
+            Calendar c = Calendar.getInstance();
+            date1 = c.getTime();
+        }
         return date1;
     }
  

@@ -17,7 +17,7 @@ and open the template in the editor.
     <body>
         <ui:composition template="default.xhtml">
             <ui:define name="contents">
-                <h:form>
+                <h:form id="noweZamowienie">
                     <h3>ZAMOWIENIE</h3>
                     <h:panelGrid columns="2">
                             <h:selectOneMenu id="marka" value="#{zamowienie.marka}">
@@ -28,32 +28,16 @@ and open the template in the editor.
                             
                             <h:selectOneMenu id="model" value="#{zamowienie.model}">
                                 <f:selectItem  itemLabel="wybiarz model" noSelectionOption="true"/>
-                                <f:selectItems value="#{zamowienie.modelList(zamowienie.marka)}" var="wybranomodel"/>
+                                <f:selectItems value="#{zamowienie.modelList}" var="wybranomodel"/>
                             </h:selectOneMenu>
                         
-                        <p:outputLabel for="popup" value="Data rozpoczecia:" />
-                        <p:calendar id="popup" value="#{zamowienie.date1}" />
+                        <p:outputLabel for="popup1" value="Data rozpoczecia:" />
+                        <p:calendar id="popup1" value="#{zamowienie.date1}" />
                         
-                        <p:outputLabel for="popup" value="Data zakonczenia:" />
-                        <p:calendar mindate="#{zamowienie.minDate}" id="popup" value="#{zamowienie.date2}" />  
+                        <p:outputLabel for="popup2" value="Data zakonczenia:" />
+                        <p:calendar mindate="#{zamowienie.minDate()}" id="popup2" value="#{zamowienie.date2}" />  
                     </h:panelGrid>
-                    
-                    
-                    
-                    <p:dialog modal="true" resizable="false" header="Values" widgetVar="dlg" showEffect="fold">
-                        <p:panelGrid id="display" columns="2" columnClasses="label,value">
-                            <h:outputText value="Data rozpoczecia:" />
-                            <h:outputText value="#{zamowienie.date1}">
-                                <f:convertDateTime pattern="MM/dd/yyyy" />
-                            </h:outputText>
-                            
-                            <h:outputText value="Data zakonczenia:" />
-                            <h:outputText value="#{zamowienie.date2}">
-                                <f:convertDateTime pattern="MM/dd/yyyy" />
-                            </h:outputText>
-                        </p:panelGrid>
-                    </p:dialog>
-                    <p:commandButton action="#{success}" value="Kontynuuj"/>
+                    <p:commandButton action="index" value="Kontynuuj"/>
                 </h:form>
             </ui:define>
         </ui:composition>

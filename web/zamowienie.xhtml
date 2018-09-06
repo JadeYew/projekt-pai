@@ -21,7 +21,7 @@ and open the template in the editor.
             <ui:define name="contents">
                 <h:form>
                     <h3>ZAMOWIENIE</h3>
-                    <h:panelGrid columns="4">
+                    <h:panelGrid columns="2">
                         <p:outputLabel for="ueMail" value="E-mail:"/>
                         <p:inputText value="#{zamowienie.uzytkownik.eMail}" 
                                      id="ueMail" required="true" 
@@ -30,8 +30,15 @@ and open the template in the editor.
                         <br/>
                         <h:form>
                             Marka
-                            <h:selectOneMenu value="#{form_data.marka}">
-                                <f:selectItems value="#{form_data.get_marka_name()}"></f:selectItems>
+                            <h:selectOneMenu id="marka" value="#{zamowienie.marka}">
+                                <f:selectItem  itemLabel="wybiarz marke" noSelectionOption="true"/>
+                                <f:selectItems value="#{zamowienie.marka_list}" var="wybranomarke" itemLabel="#{wybranomarke.toString}"/>
+                                <p:ajax update="model"/>
+                            </h:selectOneMenu>
+                            
+                            <h:selectOneMenu id="model" value="#{zamowienie.model}">
+                                <f:selectItem  itemLabel="wybiarz model" noSelectionOption="true"/>
+                                <f:selectItems value="#{zamowienie.get_model(zamowienie.marka)}" var="wybranomodel" itemLabel="#{wybranomodel.toString}"/>
                             </h:selectOneMenu>
                         <p:commandButton action="#{success}" value="Kontynuuj"/>
                     </h:panelGrid>

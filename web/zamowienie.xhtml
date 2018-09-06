@@ -22,13 +22,13 @@ and open the template in the editor.
                     <h:panelGrid columns="2">
                             <h:selectOneMenu id="marka" value="#{zamowienie.marka}">
                                 <f:selectItem  itemLabel="wybiarz marke" noSelectionOption="true"/>
-                                <f:selectItems value="#{zamowienie.marka_list}" var="wybranomarke" itemLabel="#{wybranomarke.toString}"/>
+                                <f:selectItems value="#{zamowienie.markaList}" var="wybranomarke" itemLabel="#{wybranomarke.toString}"/>
                                 <p:ajax update="model"/>
                             </h:selectOneMenu>
                             
                             <h:selectOneMenu id="model" value="#{zamowienie.model}">
                                 <f:selectItem  itemLabel="wybiarz model" noSelectionOption="true"/>
-                                <f:selectItems value="#{zamowienie.get_model(zamowienie.marka)}" var="wybranomodel" itemLabel="#{wybranomodel.toString}"/>
+                                <f:selectItems value="#{zamowienie.modelList(zamowienie.marka)}" var="wybranomodel" itemLabel="#{wybranomodel.toString}"/>
                             </h:selectOneMenu>
                         <p:commandButton action="#{success}" value="Kontynuuj"/>
                     </h:panelGrid>

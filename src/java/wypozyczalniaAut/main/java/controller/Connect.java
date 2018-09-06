@@ -9,32 +9,11 @@ import javax.persistence.Persistence;
 public class Connect{
 
 
-    private static EntityManagerFactory factory;
-    private static Connect instance;
-    
-    public synchronized static Connect getConnect() {
-        if (instance == null) {
-            instance = new Connect();
-        }
-        return instance;
+    public static EntityManagerFactory createEntityManagerFactory() {
+        return Persistence.createEntityManagerFactory("ProjektPai2PU");
     }
 
-    public EntityManagerFactory createEntityManagerFactory() {
-        if (factory == null) {
-            factory = Persistence.createEntityManagerFactory("ProjektPai2PU");
-        }
-        return factory;
-    }
-
-    public EntityManager createEntityManager() {
-        return this.createEntityManagerFactory().createEntityManager();
-    }
-
-
-
-    public void closeEntityManagerFactory() {
-        if (factory != null) {
-            factory.close();
-        }
+    public static EntityManager createEntityManager() {
+        return Connect.createEntityManagerFactory().createEntityManager();
     }
 }

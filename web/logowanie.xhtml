@@ -34,7 +34,9 @@ and open the template in the editor.
                         <br/>
                         <br/>
                         <p:commandButton value="Sprawdz Dane" ajax="false"                                            
-                                             actionListener="#{sesja.rejestracja.sprawdzDane}"/>
+                                             actionListener="#{sesja.login.sprawdzDane}"/>
+                        <p:commandButton value="Rejestracja" ajax="false" action="${sesja.nowaRejstracja}"
+                                         
                     </h:panelGrid>
                 </h:form>
             </ui:define>

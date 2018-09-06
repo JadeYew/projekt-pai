@@ -41,7 +41,7 @@ public class Wyszukiwanie {
     }
     
     public Wyszukiwanie(){
-        EntityManager em = Connect.getConnect().createEntityManager();
+        EntityManager em = Connect.createEntityManager();
         Query q = em.createNamedQuery("Samochod.findByTyp").setParameter("typ", typ);
         Vector <Samochod> wyniki = (Vector)q.getResultList();
     }

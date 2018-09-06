@@ -24,7 +24,9 @@ public class Sesja implements Serializable {
     Rejestracja rejestracja;
     Uzytkownik zalogowanyUzytkownik;
     Wyszukiwanie wyszukiwanie;
-    boolean zalogowany;
+    Login login;
+    boolean zalogowany = false;
+    int pageId = 0;
     
     public String mojeKontoPrzcisk(){
         if(zalogowany != true){
@@ -44,12 +46,31 @@ public class Sesja implements Serializable {
         return this.rejestracja;
     }
     
+    public void setLogin(Login login){
+        this.login = login;
+    }
+    
+    public Login getLogin(){
+        if(this.login == null){
+            this.login = new Login();
+        }
+        return this.login;
+    }
+    
     public void setZalogowany(boolean zalogowany){
         this.zalogowany = zalogowany;
     }
     
     public boolean getZalogowany(){
         return this.zalogowany;
+    }
+    
+    public void setPageId(int pageId){
+        this.pageId = pageId;
+    }
+    
+    public int getPageId(){
+        return this.pageId;
     }
     
     public void setZalogowanyUzytkownik(Uzytkownik zalogowanyUzytkownik){
@@ -75,7 +96,46 @@ public class Sesja implements Serializable {
     }
     
     public String addUser(){
-        rejestracja.addUser();
-        return "index";
+        String ret = rejestracja.addUser();
+        if(ret != null){
+            zalogowanyUzytkownik = rejestracja.getUzytkownik();
+            rejestracja.setUzytkownik(null);
+            zalogowany = true;
+        }
+        return ret;
+    }
+    
+    public String nowaRejstracja(){
+        wyloguj();
+        return "rejestracja";
+    }
+    
+    public void wyloguj(){
+        if(zalogowany == true){
+            zalogowany = false;
+            zalogowanyUzytkownik = null;
+        }
+    }
+    
+    public String zaloguj(){
+        zalogowany = login.zaloguj();
+        if(zalogowany){
+            zalogowanyUzytkownik = login.getUzytkownik();
+            login.setUzytkownik(null);
+            switch(pageId){
+                case 1:
+                    return "mojeKonto";
+                default:
+                    return "index";
+            }
+        }
+        return null;
+    }
+    
+    public String getLoginUzytkownika(){
+        if(zalogowany){
+            return zalogowanyUzytkownik.getLogin();
+        }
+        return "gościu";
     }
 }

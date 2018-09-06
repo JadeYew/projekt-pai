@@ -43,7 +43,7 @@ public class Rejestracja {
     
     public String addUser(){
         if(dobreDane){
-            EntityManager em = Connect.getConnect().createEntityManager();
+            EntityManager em = Connect.createEntityManager();
             em.clear();
             Query q;
             Random r = new Random();
@@ -54,13 +54,13 @@ public class Rejestracja {
             em.getTransaction().begin();
             em.persist(uzytkownik);
             em.getTransaction().commit();
-            Connect.getConnect().closeEntityManagerFactory();
+            em.close();
             return "footer";
         }
-        return "rejestracja";
+        return null;
     }
     
-    public String sprawdzDane(){
+    public void sprawdzDane(){
         dobreDane = true;
         if(sprawdzLogin()){
             FacesContext.getCurrentInstance().addMessage(null,  new FacesMessage(FacesMessage.SEVERITY_WARN, "Podany login Juz Istnieje", uzytkownik.getLogin()));
@@ -70,27 +70,18 @@ public class Rejestracja {
             FacesContext.getCurrentInstance().addMessage(null,  new FacesMessage(FacesMessage.SEVERITY_WARN, "Podany e-mail Juz Istnieje", uzytkownik.geteMail()));
             dobreDane = false;
         }
-        if(sprawdzHasla()){
-            FacesContext.getCurrentInstance().addMessage(null,  new FacesMessage(FacesMessage.SEVERITY_WARN, "Podano różne hasła", ""));
-            dobreDane = false;
-        }
-        return "";
     }
     
     public boolean sprawdzEMail(){
-        EntityManager em = Connect.getConnect().createEntityManager();
+        EntityManager em = Connect.createEntityManager();
         Query q = em.createNamedQuery("Uzytkownik.findByEMail").setParameter("eMail", uzytkownik.geteMail());
         return !q.getResultList().isEmpty();
     }
     
     public boolean sprawdzLogin(){
-        EntityManager em = Connect.getConnect().createEntityManager();
+        EntityManager em = Connect.createEntityManager();
         Query q = em.createNamedQuery("Uzytkownik.findByLogin").setParameter("login", uzytkownik.getLogin());
         return !q.getResultList().isEmpty();
-    }
-    
-    public boolean sprawdzHasla(){
-        return !uzytkownik.getPassword().equals(BCrypt.hashpw(passwordAgain, uzytkownik.getSalt()));
     }
     
     public void setDobreDane(boolean dobreDane){

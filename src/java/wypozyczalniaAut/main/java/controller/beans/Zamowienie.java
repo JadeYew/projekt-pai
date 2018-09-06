@@ -119,4 +119,11 @@ public class Zamowienie implements Serializable{
         this.date2 = date2;
     }
     
+    public Date minDate(){
+        Calendar c = Calendar.getInstance();
+        c.setTime(date1);
+        c.add(Calendar.DATE, 1);
+        return c.getTime();
+    }
+    
 }

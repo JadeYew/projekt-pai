@@ -33,14 +33,14 @@ public class Zamowienie implements Serializable{
     private Samochod samochod;
     private String marka;
     private String model;
-    private List<String> marka_list = new ArrayList<>();
-    private List<String> model_list = new ArrayList<>();
+    private List<String> markaList = new ArrayList<>();
+    private List<String> modelList = new ArrayList<>();
     public List<String> get_marka(){
         
             EntityManager em = Connect.createEntityManager();
             Query q = em.createNamedQuery("Samochod.findByMarka").setParameter("marka",samochod.getMarka());
             Vector <String> samochod = (Vector)q.getResultList();
-            return marka_list;
+            return markaList;
     }
     
     public List<String> get_model(){
@@ -48,7 +48,7 @@ public class Zamowienie implements Serializable{
         EntityManager em = Connect.createEntityManager();
         Query q = em.createNamedQuery("Samochod.findByModel") .setParameter("model", samochod.getModel());
         Vector <String> samochod = (Vector)q.getResultList();
-        return model_list;
+        return modelList;
     }
     
     public Zamowienie(){        
@@ -59,7 +59,7 @@ public class Zamowienie implements Serializable{
     }
     
     public List<String> getMarka_list(){
-        return marka_list;
+        return markaList;
     }
     
     public void setMarka(String marka){
@@ -67,7 +67,7 @@ public class Zamowienie implements Serializable{
     }
     
     public void setMarka_list(List<String> marka_list){
-        this.marka_list = marka_list;
+        this.markaList = marka_list;
     }
     
    public String getModel(){
@@ -75,7 +75,7 @@ public class Zamowienie implements Serializable{
    }
    
    public List<String> getModel_list(){
-       return model_list;
+       return modelList;
    }
    
    public void setModel(String model){
@@ -83,6 +83,6 @@ public class Zamowienie implements Serializable{
    }
    
     public void setModel_list(List<String> model_list){
-        this.model_list = model_list;
+        this.modelList = model_list;
     }
 }

@@ -28,7 +28,7 @@ and open the template in the editor.
                             
                             <h:selectOneMenu id="model" value="#{zamowienie.model}">
                                 <f:selectItem  itemLabel="wybiarz model" noSelectionOption="true"/>
-                                <f:selectItems value="#{zamowienie.get_model(zamowienie.marka)}" var="wybranomodel" itemLabel="#{wybranomodel.toString}"/>
+                                <f:selectItems value="#{zamowienie.model_list(zamowienie.marka)}" var="wybranomodel" itemLabel="#{wybranomodel.toString}"/>
                             </h:selectOneMenu>
                         <p:commandButton action="#{success}" value="Kontynuuj"/>
                     </h:panelGrid>

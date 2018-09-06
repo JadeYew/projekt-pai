@@ -1,22 +1,26 @@
 package wypozyczalniaAut.main.java.controller.beans;
 
+import java.util.List;
 import java.util.Random;
 import javax.inject.Named;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import wypozyczalniaAut.main.java.BCrypt;
 import wypozyczalniaAut.main.java.controller.Connect;
+import wypozyczalniaAut.main.java.model.Pojazd;
+import wypozyczalniaAut.main.java.model.Samochod;
 import wypozyczalniaAut.main.java.model.Uzytkownik;
 
 
 @Named(value = "rejestracja")
 @ManagedBean
-@RequestScoped
+@ViewScoped
 public class Rejestracja {
     private Uzytkownik uzytkownik;
     private String passwordAgain;
@@ -45,18 +49,17 @@ public class Rejestracja {
     public String addUser(){
         if(dobreDane){
             EntityManager em = Connect.createEntityManager();
-            em.clear();
             Query q;
             Random r = new Random();
             do{
-                uzytkownik.setId(new Integer(r.nextInt(2100000000)));
+                uzytkownik.setId(r.nextInt(2100000000));
                 q = em.createNamedQuery("Uzytkownik.findById").setParameter("id", uzytkownik.getId());
             }while(!q.getResultList().isEmpty());
             em.getTransaction().begin();
             em.persist(uzytkownik);
             em.getTransaction().commit();
             em.close();
-            return "index";
+            return "uzupelnijDane";
         }
         return null;
     }

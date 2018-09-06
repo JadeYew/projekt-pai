@@ -20,7 +20,7 @@ and open the template in the editor.
                 <div class="divider rigth"><h:button outcome="index" image="resources/images/logoo.png"/></div> 
                 <div class="divider left bottom"><h:button class="dropbtn" value="${sesja.zalogujWylogujWiadomosc()}" outcome="${sesja.zalogujWyloguj()}"/></div>
                 <div class="divider left bottom"><h:button class="dropbtn" value="Moje Konto" outcome="${sesja.mojeKontoPrzcisk()}"/></div>
-                <div class="divider left bottom"><h:button class="dropbtn" value="Złóż Zamówienie" outcome="index"/></div>
+                <div class="divider left bottom"><h:button class="dropbtn" value="Złóż Zamówienie" outcome="${sesja.zamowieniePrzcisk()}"/></div>
                 <div class="dropdown left bottom">
                     <h:button class="dropbtn" value="Flota"/>
                     <div class="dropdown-content">

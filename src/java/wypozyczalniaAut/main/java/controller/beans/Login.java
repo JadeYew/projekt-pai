@@ -10,6 +10,7 @@ import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.List;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -22,7 +23,7 @@ import wypozyczalniaAut.main.java.model.Uzytkownik;
  * @author Iwo Ryszkowski
  */
 @Named(value = "login")
-@SessionScoped
+@ViewScoped
 public class Login implements Serializable {
     Uzytkownik uzytkownik;
     String password;

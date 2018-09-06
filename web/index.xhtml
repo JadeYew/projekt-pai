@@ -23,27 +23,86 @@
                               
                             <p:outputLabel for="typ" value="Typ:" />
                             <p:selectOneMenu id="typ" value="#{sesja.wyszukiwanie.typ}" style="width:125px">
-                                <f:selectItem itemLabel="Osobowy" itemValue="1" />
-                                <f:selectItem itemLabel="Van" itemValue="2" />
-                                <f:selectItem itemLabel="Dostawczy" itemValue="3" />
+                                <f:selectItems value="#{sesja.wyszukiwanie.get_typ()}" />
+                            </p:selectOneMenu>
+                            
+                            <p:outputLabel for="marka" value="Marka:" />
+                            <p:selectOneMenu id="marka" value="#{sesja.wyszukiwanie.marka}" style="width:125px">
+                                <f:selectItem itemLabel="Mercedes" itemValue="Mercedes" />
+                                <f:selectItem itemLabel="Nissan" itemValue="Nissan" />
+                                <f:selectItem itemLabel="Opel" itemValue="Opel" />
+                                <f:selectItem itemLabel="Renault" itemValue="Renault" />
+                                <f:selectItem itemLabel="Seat" itemValue="Seat" />
+                                <f:selectItem itemLabel="Skoda" itemValue="Skoda" />
+                                <f:selectItem itemLabel="Toyota" itemValue="Toyota" />
+                                <f:selectItem itemLabel="Volvo" itemValue="Volvo" />
                             </p:selectOneMenu>
                             
                            </h:panelGrid> 
                             
-                           <p:commandButton value="Submit" update="display" oncomplete="PF('dlg').show()" icon="ui-icon-check" />
+                           <p:commandButton value="Szukaj" update="display" oncomplete="PF('dlg').show()" icon="ui-icon-check" />
                            
-                           <p:dialog header="Values" modal="true" showEffect="bounce" widgetVar="dlg" resizable="false">
+                           <p:dialog header="Wybór" modal="true" showEffect="bounce" widgetVar="dlg" resizable="false">
                                 <p:panelGrid columns="2" id="display" columnClasses="label,value">
                                     <h:outputText value="Typ:" />
                                     <h:outputText value="#{sesja.wyszukiwanie.typ}" />
+                                    
+                                    <h:outputText value="Marka:" />
+                                    <h:outputText value="#{sesja.wyszukiwanie.marka}" />
+                                    
                                 </p:panelGrid>
                             </p:dialog>            
                         </h:form>
                     </div>
                 </div>
             </section>
-            
+                
             <section class="about">
+                
+                <p:dataTable var="Samochod" value="#{sesja.wyszukiwanie.samochody}">
+                     
+                    <p:column headerText="Obraz">
+                        <h:graphicImage value="#{samochod.obrazPlik}" />
+                    </p:column>
+                    <p:column headerText="Marka">
+                        <h:outputText value="#{samochod.marka}" />
+                    </p:column>
+                    <p:column headerText="Model">
+                        <h:outputText value="#{samochod.model}" />
+                    </p:column>
+                    <p:column headerText="AutomatycznaSkrzynia">
+                        <h:outputText value="#{samochod.automatycznaSkrzynia}" />
+                    </p:column>
+                    <p:column headerText="IloscMiejsc">
+                        <h:outputText value="#{samochod.iloscMiejsc}" />
+                    </p:column>
+                    <p:column headerText="IloscDrzwi">
+                        <h:outputText value="#{samochod.iloscDrzwi}" />
+                    </p:column>
+                    <p:column headerText="RodzajPaliwa">
+                        <h:outputText value="#{samochod.rodzajPaliwa}" />
+                    </p:column>
+                    <p:column headerText="PojemnoscSilnika">
+                        <h:outputText value="#{samochod.pojemnoscSilnika}" />
+                    </p:column>
+                    <p:column headerText="Moc">
+                        <h:outputText value="#{samochod.moc}" />
+                    </p:column>
+                    <p:column headerText="ZuzycieMiasto">
+                        <h:outputText value="#{samochod.zuzycieMiasto}" />
+                    </p:column>
+                    <p:column headerText="Zuzycie90">
+                        <h:outputText value="#{samochod.zuzycie90}" />
+                    </p:column>
+                    <p:column headerText="CenaPodstawowa">
+                        <h:outputText value="#{samochod.cenaPodstawowa}" />
+                    </p:column>
+                    <p:column headerText="CenaPrzygotowania">
+                        <h:outputText value="#{samochod.cenaPrzygotowania}" />
+                    </p:column>
+                    
+                </p:dataTable>
+               
                 
             </section>
             <h1>Sprawdź odpowiedzi na najczęściej zadawane pytania</h1>

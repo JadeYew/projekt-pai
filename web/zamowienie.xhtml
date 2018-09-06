@@ -20,14 +20,6 @@ and open the template in the editor.
                 <h:form>
                     <h3>ZAMOWIENIE</h3>
                     <h:panelGrid columns="2">
-                        <p:outputLabel for="ueMail" value="E-mail:"/>
-                        <p:inputText value="#{zamowienie.uzytkownik.eMail}" 
-                                     id="ueMail" required="true" 
-                                     requiredMessage="Podaj e-mail"/>
-                        <br/>
-                        <br/>
-                        <h:form>
-                            Marka
                             <h:selectOneMenu id="marka" value="#{zamowienie.marka}">
                                 <f:selectItem  itemLabel="wybiarz marke" noSelectionOption="true"/>
                                 <f:selectItems value="#{zamowienie.marka_list}" var="wybranomarke" itemLabel="#{wybranomarke.toString}"/>
@@ -43,5 +35,5 @@ and open the template in the editor.
                 </h:form>
             </ui:define>
         </ui:composition>
-    <body>
+    </body>
 </html>

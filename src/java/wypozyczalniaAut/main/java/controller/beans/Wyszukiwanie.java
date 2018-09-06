@@ -5,18 +5,24 @@
  */
 package wypozyczalniaAut.main.java.controller.beans;
 
+import java.io.IOException;
+import java.io.Serializable;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import java.util.Vector;
 import javax.inject.Named;
 import javax.enterprise.context.Dependent;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import wypozyczalniaAut.main.java.controller.Connect;
 import wypozyczalniaAut.main.java.model.Samochod;
-import java.util.List;
-import javax.faces.bean.ViewScoped;
+import wypozyczalniaAut.main.java.model.Uzytkownik;
 
 
 /**
@@ -27,14 +33,14 @@ import javax.faces.bean.ViewScoped;
 @Dependent
 @ManagedBean
 @RequestScoped
-@ViewScoped
 
-public class Wyszukiwanie {
+public class Wyszukiwanie implements Serializable{
 
+    private Samochod samochod;
     private String typ;
     private String marka;
-    private List<String> typ_list=new ArrayList<>();
-    private List<String> marka_list;
+    private List<String> typList=new ArrayList<>();
+    private List<String> markaList=new ArrayList<>();
     
     
     public String getTyp() {
@@ -45,12 +51,12 @@ public class Wyszukiwanie {
         return marka;
     }
     
-    public List<String> getTyp_list(){
-        return typ_list;
+    public List<String> getTypList(){
+        return typList;
     }
     
-    public List<String> getMarka_list(){
-        return marka_list;
+    public List<String> getMarkaList(){
+        return markaList;
     }
  
     public void setTyp(String typ) {
@@ -62,11 +68,11 @@ public class Wyszukiwanie {
     }
     
    public void setMarka_list(List<String> marka_list){
-       this.typ_list = typ_list;
+       this.typList = typList;
    }
    
    public void setTyp_list(List<String> typ_list){
-       this.marka_list = marka_list;
+       this.markaList = markaList;
    }
     
     public Wyszukiwanie(){
@@ -76,15 +82,19 @@ public class Wyszukiwanie {
     }
     
     public List<String> get_typ(){
-        try{
+        
             EntityManager em = Connect.createEntityManager();
-            Query q = em.createNamedQuery("Samochod.findByTyp").setParameter("typ", typ);
-            Vector <Samochod> wyniki = (Vector)q.getResultList();
-                
-        }catch(Exception e){
-            System.out.println(e);
-        }
-        return typ_list;
+            Query q = em.createNamedQuery("Samochod.findByTyp").setParameter("typ",samochod.getTyp());
+            Vector <String> samochod = (Vector)q.getResultList();
+            return typList;
     }
     
+    public List<String> get_marka(){
+        
+            EntityManager em = Connect.createEntityManager();
+            Query q = em.createNamedQuery("Samochod.findByMarka").setParameter("marka",samochod.getMarka());
+            Vector <String> samochod = (Vector)q.getResultList();
+            return markaList;
+    }
+               
 }

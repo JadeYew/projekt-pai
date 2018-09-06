@@ -23,19 +23,14 @@
                               
                             <p:outputLabel for="typ" value="Typ:" />
                             <p:selectOneMenu id="typ" value="#{sesja.wyszukiwanie.typ}" style="width:125px">
-                                <f:selectItems value="#{sesja.wyszukiwanie.get_typ()}" />
+                                <f:selectItems value="#{sesja.wyszukiwanie.typList}" var="wybranotyp" itemLabel="#{wybranotyp.toString}" />
+                                <p:ajax update="typ"/>
                             </p:selectOneMenu>
                             
                             <p:outputLabel for="marka" value="Marka:" />
                             <p:selectOneMenu id="marka" value="#{sesja.wyszukiwanie.marka}" style="width:125px">
-                                <f:selectItem itemLabel="Mercedes" itemValue="Mercedes" />
-                                <f:selectItem itemLabel="Nissan" itemValue="Nissan" />
-                                <f:selectItem itemLabel="Opel" itemValue="Opel" />
-                                <f:selectItem itemLabel="Renault" itemValue="Renault" />
-                                <f:selectItem itemLabel="Seat" itemValue="Seat" />
-                                <f:selectItem itemLabel="Skoda" itemValue="Skoda" />
-                                <f:selectItem itemLabel="Toyota" itemValue="Toyota" />
-                                <f:selectItem itemLabel="Volvo" itemValue="Volvo" />
+                                <f:selectItems value="#{sesja.wyszukiwanie.markaList}" var="wybranomarke" itemLabel="#{wybranomarka.toString}" />
+                                <p:ajax update="marka"/>
                             </p:selectOneMenu>
                             
                            </h:panelGrid> 

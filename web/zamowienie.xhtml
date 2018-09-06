@@ -31,11 +31,14 @@ and open the template in the editor.
                                 <f:selectItems value="#{zamowienie.modelList}" var="wybranomodel"/>
                             </h:selectOneMenu>
                         
-                        <p:outputLabel for="popup1" value="Data rozpoczecia:" />
-                        <p:calendar id="popup1" value="#{zamowienie.date1}" />
-                        
-                        <p:outputLabel for="popup2" value="Data zakonczenia:" />
-                        <p:calendar mindate="#{zamowienie.minDate()}" id="popup2" value="#{zamowienie.date2}" />  
+                        <p:outputLabel id="dataRozpoczecia" value="Data rozpoczecia:"/>
+                        <p:calendar id="popup1" value="#{zamowienie.date1}" mindate="#{zamowienie.date1}">
+                            <p:ajax event="dateSelect" update="popup2"/>
+                        </p:calendar>
+                        <p:outputLabel id="dataZakonczenia" value="Data zakonczenia:" />
+                        <p:calendar mindate="#{zamowienie.minDate()}" id="popup2" value="#{zamowienie.date2}" >
+                            <p:ajax event="dateSelect"/>
+                        </p:calendar> 
                     </h:panelGrid>
                     <p:commandButton action="index" value="Kontynuuj"/>
                 </h:form>

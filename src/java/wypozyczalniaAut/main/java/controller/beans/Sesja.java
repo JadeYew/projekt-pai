@@ -25,24 +25,15 @@ public class Sesja implements Serializable {
     Rejestracja rejestracja;
     Uzytkownik zalogowanyUzytkownik;
     Wyszukiwanie wyszukiwanie;
-    UzupelnijDane uzupelnijDane;
     Login login;
     boolean zalogowany = false;
     int pageId = 0;
     
     public String mojeKontoPrzcisk(){
         if(zalogowany == true){
-            return "mojeKonto";
+            return "index";
         }
         pageId = 1;
-        return "logowanie";
-    }
-    
-    public String zamowieniePrzcisk(){
-        if(zalogowany == true){
-            return "zamowienie";
-        }
-        pageId = 2;
         return "logowanie";
     }
     
@@ -83,17 +74,6 @@ public class Sesja implements Serializable {
     public int getPageId(){
         return this.pageId;
     }
-
-    public UzupelnijDane getUzupelnijDane() {
-        if(this.uzupelnijDane == null){
-            this.uzupelnijDane = new UzupelnijDane();
-        }
-        return uzupelnijDane;
-    }
-
-    public void setUzupelnijDane(UzupelnijDane uzupelnijDane) {
-        this.uzupelnijDane = uzupelnijDane;
-    }
     
     public void setZalogowanyUzytkownik(Uzytkownik zalogowanyUzytkownik){
         this.zalogowanyUzytkownik = zalogowanyUzytkownik;
@@ -121,7 +101,7 @@ public class Sesja implements Serializable {
         String ret = rejestracja.addUser();
         if(ret != null){
             zalogowanyUzytkownik = rejestracja.getUzytkownik();
-            //rejestracja.setUzytkownik(null);
+            rejestracja.setUzytkownik(null);
             zalogowany = true;
         }
         return ret;
@@ -129,7 +109,7 @@ public class Sesja implements Serializable {
     
     public String nowaRejstracja(){
         wyloguj();
-        return "rejestracja"; 
+        return "rejestracja";
     }
     
     public void wyloguj(){
@@ -147,8 +127,6 @@ public class Sesja implements Serializable {
             switch(pageId){
                 case 1:
                     return "mojeKonto";
-                case 2:
-                    return "zamowienie";
                 default:
                     return "index";
             }
@@ -177,17 +155,5 @@ public class Sesja implements Serializable {
             return "index";
         }
         return "logowanie";
-    }
-    
-    public String aktualizujDane(){
-        uzupelnijDane.aktualizujDane(zalogowanyUzytkownik);
-        switch(pageId){
-                case 1:
-                    return "mojeKonto";
-                case 2:
-                    return "zamowienie";
-                default:
-                    return "index";
-        }
     }
 }

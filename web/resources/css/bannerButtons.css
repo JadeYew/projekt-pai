@@ -17,6 +17,7 @@
 
 /* Dropdown Content (Hidden by Default) */
 .dropdown-content {
+    color: white;
     display: none;
     position: absolute;
     min-width: 160px;
@@ -26,7 +27,7 @@
 
 /* Links inside the dropdown */
 .dropdown-content a {
-    color: black;
+    color: white;
     padding: 12px 16px;
     background-color: #423e3e;
     text-decoration: none;
@@ -42,7 +43,7 @@
 }
 
 .parent{
-    padding: 0px, auto;
+    padding: 0px;
     width: 605px;
   height:200px;
   border:solid 1px #f00;

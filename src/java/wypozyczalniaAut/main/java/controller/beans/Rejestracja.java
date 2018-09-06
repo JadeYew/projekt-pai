@@ -20,6 +20,7 @@ import wypozyczalniaAut.main.java.model.Uzytkownik;
 public class Rejestracja {
     private Uzytkownik uzytkownik;
     private String passwordAgain;
+    private String password;
     private boolean dobreDane = false;
     
     public void setUzytkownik(Uzytkownik uzytkownik){
@@ -55,7 +56,7 @@ public class Rejestracja {
             em.persist(uzytkownik);
             em.getTransaction().commit();
             em.close();
-            return "footer";
+            return "index";
         }
         return null;
     }
@@ -90,5 +91,19 @@ public class Rejestracja {
     
     public boolean getDobreDane(){
         return this.dobreDane;
+    }
+    
+    public void setPassword(String password){
+        this.password = password;
+        setUserPassword();
+    }
+    
+    public String getPassword(){
+        return password;
+    }
+    
+    public void setUserPassword(){
+        getUzytkownik().setSalt(BCrypt.gensalt());
+        uzytkownik.setPassword(BCrypt.hashpw(password, uzytkownik.getSalt()));
     }
 }

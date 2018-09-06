@@ -5,6 +5,7 @@
  */
 package wypozyczalniaAut.main.java.controller.beans;
 
+import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
@@ -29,10 +30,11 @@ public class Sesja implements Serializable {
     int pageId = 0;
     
     public String mojeKontoPrzcisk(){
-        if(zalogowany != true){
-            return "logowanie";
+        if(zalogowany == true){
+            return "index";
         }
-        return "rejestracja";
+        pageId = 1;
+        return "logowanie";
     }
     
     public void setRejestracja(Rejestracja rejestracja){
@@ -118,9 +120,9 @@ public class Sesja implements Serializable {
     }
     
     public String zaloguj(){
-        zalogowany = login.zaloguj();
+        zalogowany = getLogin().zaloguj();
         if(zalogowany){
-            zalogowanyUzytkownik = login.getUzytkownik();
+            zalogowanyUzytkownik = getLogin().getUzytkownik();
             login.setUzytkownik(null);
             switch(pageId){
                 case 1:
@@ -132,10 +134,26 @@ public class Sesja implements Serializable {
         return null;
     }
     
-    public String getLoginUzytkownika(){
+    public String podajLoginUzytkownika(){
         if(zalogowany){
             return zalogowanyUzytkownik.getLogin();
         }
         return "gościu";
+    }
+    
+    public String zalogujWylogujWiadomosc(){
+        if(zalogowany){
+            return "Wyloguj się";
+        }
+        return "Zaloguj się";
+    }
+    
+    public String zalogujWyloguj(){
+        if(zalogowany){
+            zalogowanyUzytkownik = null;
+            zalogowany = false;
+            return "index";
+        }
+        return "logowanie";
     }
 }

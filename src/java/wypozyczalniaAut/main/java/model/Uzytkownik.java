@@ -95,10 +95,7 @@ public class Uzytkownik implements Serializable {
     }
 
     public void setPassword(String password) {
-        if(salt == null){
-            setSalt(BCrypt.gensalt());
-        }
-        this.password = BCrypt.hashpw(password, salt);
+        this.password = password;
     }
 
     public String geteMail() {

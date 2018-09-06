@@ -35,6 +35,7 @@ public class Zamowienie implements Serializable{
     private String model;
     private List<String> markaList = new ArrayList<>();
     private List<String> modelList = new ArrayList<>();
+    
     public List<String> get_marka(){
         
             EntityManager em = Connect.createEntityManager();
@@ -58,7 +59,7 @@ public class Zamowienie implements Serializable{
         return marka;
     }
     
-    public List<String> getMarka_list(){
+    public List<String> getMarkaList(){
         return markaList;
     }
     
@@ -66,7 +67,7 @@ public class Zamowienie implements Serializable{
         this.marka=marka;
     }
     
-    public void setMarka_list(List<String> marka_list){
+    public void setMarkaList(List<String> marka_list){
         this.markaList = marka_list;
     }
     
@@ -74,7 +75,8 @@ public class Zamowienie implements Serializable{
        return model;
    }
    
-   public List<String> getModel_list(){
+   public List<String> getModelList(){
+       List <String> ret = new ArrayList();
        return modelList;
    }
    
@@ -82,7 +84,7 @@ public class Zamowienie implements Serializable{
        this.model=model;
    }
    
-    public void setModel_list(List<String> model_list){
+    public void setModelList(List<String> model_list){
         this.modelList = model_list;
     }
 }

@@ -21,24 +21,22 @@ and open the template in the editor.
                     <h3>LOGOWANIE</h3>
                     <h:panelGrid columns="3">
                         <p:outputLabel for="ulogin" value="Login:"/>
-                        <p:inputText value="#{sesja.rejestracja.uzytkownik.login}" 
+                        <p:inputText value="#{sesja.login.uzytkownik.login}" 
                                      id="ulogin" required="true" 
                                      requiredMessage="Podaj login"/>
                         <br/>
                         <br/>
                         <p:outputLabel for="upassword" value="Hasło:"/>
-                        <p:password value="#{sesja.rejestracja.uzytkownik.password}" 
+                        <p:password value="#{sesja.login.password}" 
                                     id="upassword" required="true" 
                                     requiredMessage="Podaj hasło" 
                                     feedback="true"/>
                         <br/>
                         <br/>
-                        <p:commandButton value="Sprawdz Dane" ajax="false"                                            
-                                             actionListener="#{sesja.login.sprawdzDane}"/>
-                        <p:commandButton value="Rejestracja" ajax="false" action="${sesja.nowaRejstracja}"
-                                         
+                        <p:commandButton value="Zaloguj się" ajax="false" action="${sesja.zaloguj()}"/>                
                     </h:panelGrid>
                 </h:form>
+                <h:form><p:commandButton value="Zarejsetruj się" ajax="false" action="rejestracja"/></h:form>
             </ui:define>
         </ui:composition>
     </body>

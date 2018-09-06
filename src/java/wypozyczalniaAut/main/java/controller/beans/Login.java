@@ -52,13 +52,14 @@ public class Login implements Serializable {
         Query q = em.createNamedQuery("Uzytkownik.findByLogin").setParameter("login", uzytkownik.getLogin());
         List <Uzytkownik> list = q.getResultList();
         if(!list.isEmpty()){
-            uzytkownik = list.get(0);
+            uzytkownik = (Uzytkownik)q.getSingleResult();
+            
             password = BCrypt.hashpw(password, uzytkownik.getSalt());
             if(password.equals(uzytkownik.getPassword())){
                 return true;
             }
         }
-        FacesContext.getCurrentInstance().addMessage(null,  new FacesMessage(FacesMessage.SEVERITY_WARN, "Nieprawidłowy login lub hasło", uzytkownik.geteMail()));
+        FacesContext.getCurrentInstance().addMessage(null,  new FacesMessage(FacesMessage.SEVERITY_WARN, password + " : " + uzytkownik.getPassword(), ""));
         return false;
     }
 }

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+        <title>Facelet Title</title>
+    </h:head>
+    <body>
+        <ui:composition template="default.xhtml">
+            <ui:define name="contents">
+                <h:form>
+                    <h3>ZAMOWIENIE</h3>
+                    <h:panelGrid columns="2">
+                            <h:selectOneMenu id="marka" value="#{zamowienie.marka}">
+                                <f:selectItem  itemLabel="wybiarz marke" noSelectionOption="true"/>
+                                <f:selectItems value="#{zamowienie.marka_list}" var="wybranomarke" itemLabel="#{wybranomarke.toString}"/>
+                                <p:ajax update="model"/>
+                            </h:selectOneMenu>
+                            
+                            <h:selectOneMenu id="model" value="#{zamowienie.model}">
+                                <f:selectItem  itemLabel="wybiarz model" noSelectionOption="true"/>
+                                <f:selectItems value="#{zamowienie.get_model(zamowienie.marka)}" var="wybranomodel" itemLabel="#{wybranomodel.toString}"/>
+                            </h:selectOneMenu>
+                        <p:commandButton action="#{success}" value="Kontynuuj"/>
+                    </h:panelGrid>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

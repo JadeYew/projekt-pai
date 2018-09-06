@@ -17,8 +17,9 @@ and open the template in the editor.
             <link rel="stylesheet" type="text/css" href="resources/css/bannerButtons.css"></link> 
             <link rel="stylesheet" type="text/css" href="resources/css/img.css"></link> 
             <div style="background-color: #423e3e">
-                <div class="divider rigth"><h:graphicImage library="images" name="logoo.png" styleClass="imgCenter" ></h:graphicImage></div>
-                <div class="divider left bottom"><h:button class="dropbtn" value="Moje Konto" outcome="${sesja.mojeKontoPrzcisk}"/></div>
+                <div class="divider rigth"><h:button outcome="index" image="resources/images/logoo.png"/></div> 
+                <div class="divider left bottom"><h:button class="dropbtn" value="${sesja.zalogujWylogujWiadomosc()}" outcome="${sesja.zalogujWyloguj()}"/></div>
+                <div class="divider left bottom"><h:button class="dropbtn" value="Moje Konto" outcome="${sesja.mojeKontoPrzcisk()}"/></div>
                 <div class="divider left bottom"><h:button class="dropbtn" value="Złóż Zamówienie" outcome="index"/></div>
                 <div class="dropdown left bottom">
                     <h:button class="dropbtn" value="Flota"/>
@@ -29,7 +30,6 @@ and open the template in the editor.
                         <h:link value="dostawcze" outcome="index"><h:graphicImage library="images" name="dostawczy.jpg" styleClass="imgSmall" /></h:link>
                     </div>
                 </div>
-                <div class="divider left bottom"><h:button class="dropbtn" value="Strona Główna" outcome="index"/></div> 
             </div>
         </ui:composition>
     </body>

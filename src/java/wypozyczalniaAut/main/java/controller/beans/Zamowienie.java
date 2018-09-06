@@ -37,7 +37,7 @@ public class Zamowienie implements Serializable{
     private List<String> model_list = new ArrayList<>();
     public List<String> get_marka(){
         
-            EntityManager em = Connect.getConnect().createEntityManager();
+            EntityManager em = Connect.createEntityManager();
             Query q = em.createNamedQuery("Samochod.findByMarka").setParameter("marka",samochod.getMarka());
             Vector <String> samochod = (Vector)q.getResultList();
             return marka_list;
@@ -45,7 +45,7 @@ public class Zamowienie implements Serializable{
     
     public List<String> get_model(){
         
-        EntityManager em = Connect.getConnect().createEntityManager();
+        EntityManager em = Connect.createEntityManager();
         Query q = em.createNamedQuery("Samochod.findByModel") .setParameter("model", samochod.getModel());
         Vector <String> samochod = (Vector)q.getResultList();
         return model_list;

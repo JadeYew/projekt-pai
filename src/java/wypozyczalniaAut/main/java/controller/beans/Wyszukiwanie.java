@@ -77,13 +77,9 @@ public class Wyszukiwanie {
     
     public List<String> get_typ(){
         try{
-            EntityManager em = Connect.getConnect().createEntityManager();
+            EntityManager em = Connect.createEntityManager();
             Query q = em.createNamedQuery("Samochod.findByTyp").setParameter("typ", typ);
             Vector <Samochod> wyniki = (Vector)q.getResultList();
-            
-            while(){
-                
-            }
                 
         }catch(Exception e){
             System.out.println(e);

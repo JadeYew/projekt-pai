@@ -5,10 +5,10 @@
  */
 package wypozyczalniaAut.main.java.controller.beans;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.io.IOException;
 import java.io.Serializable;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -25,6 +25,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import org.primefaces.event.SelectEvent;
 import wypozyczalniaAut.main.java.controller.Connect;
+import wypozyczalniaAut.main.java.model.Klient;
+import wypozyczalniaAut.main.java.model.Pojazd;
 import wypozyczalniaAut.main.java.model.Samochod;
 import wypozyczalniaAut.main.java.model.Uzytkownik;
 
@@ -44,6 +46,7 @@ public class Zamowienie implements Serializable{
     private Date date2;
     private List<String> markaList = new ArrayList<>();
     private List<String> modelList = new ArrayList<>();
+    
     
     public void uzupelnijMarkaList(){
         
@@ -139,4 +142,40 @@ public class Zamowienie implements Serializable{
         return c.getTime();
     }
     
+    public void dateDiff(SelectEvent event){
+        if(date1!= null && date2!=null){
+            
+            try{
+                                
+                long diff = date2.getTime() - date1.getTime();
+                
+                long diffDays = diff/(24*60*60*1000);
+                
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    public int znajdzIdPojazd(Samochod s){
+        Pojazd [] listaPojazdow = (Pojazd [])s.getPojazdCollection().toArray();
+        for(Pojazd p: listaPojazdow){
+                if(p.dostepnosc){
+                return p.id;
+                }
+        }
+        return 0;
+    }
+    
+    public int cena(Samochod s){
+        return s.getCenaPodstawowa();
+    }
+    
+    public int idKlient(Klient k){
+        return k.getId();
+    }
+    
+    
 }
+    
+

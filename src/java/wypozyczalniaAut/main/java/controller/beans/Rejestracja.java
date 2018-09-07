@@ -1,10 +1,13 @@
 package wypozyczalniaAut.main.java.controller.beans;
 
+import java.io.Serializable;
 import java.util.Random;
+import javax.enterprise.context.Dependent;
 import javax.inject.Named;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -16,8 +19,9 @@ import wypozyczalniaAut.main.java.model.Uzytkownik;
 
 @Named(value = "rejestracja")
 @ManagedBean
-@RequestScoped
-public class Rejestracja {
+@Dependent
+@ViewScoped
+public class Rejestracja implements Serializable{
     private Uzytkownik uzytkownik;
     private String passwordAgain;
     private String password;

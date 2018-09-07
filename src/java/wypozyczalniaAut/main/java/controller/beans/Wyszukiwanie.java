@@ -16,6 +16,7 @@ import java.util.Vector;
 import javax.enterprise.context.Dependent;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -30,31 +31,20 @@ import wypozyczalniaAut.main.java.model.Samochod;
 @Named(value = "wyszukiwanie")
 @Dependent
 @ManagedBean
-@RequestScoped
+@ViewScoped
 
 public class Wyszukiwanie implements Serializable{
 
-    private String samochod;
-    private Short typ;
+    private List <Samochod> samochodList = new ArrayList<>();
+    private String typ;
     private String marka;
-    private List<Short> typList = new ArrayList<Short>();
+    private List<String> typList = new ArrayList<>();
     private List<String> markaList = new ArrayList<>();
-    
-    public void uzupelnijTypList(){
-        
-            EntityManager em = Connect.createEntityManager();
-            Query q = em.createNamedQuery("Samochod.findByTyp").setParameter("typ",typ);
-            Vector <Samochod> samochody = (Vector)q.getResultList();
-            for(Samochod s: samochody){
-                typList.add(s.getTyp());
-            }
-            em.close();
-    }
     
     public void uzupelnijMarkaList(){
         
             EntityManager em = Connect.createEntityManager();
-            Query q = em.createNamedQuery("Samochod.findByMarka").setParameter("marka",marka);
+            Query q = em.createNamedQuery("Samochod.findAll");
             Vector <Samochod> samochody = (Vector)q.getResultList();
             for(Samochod s: samochody){
                 markaList.add(s.getMarka());
@@ -62,25 +52,63 @@ public class Wyszukiwanie implements Serializable{
             em.close();
     }
     
+    public void uzupelnijSamochodList(){
+        EntityManager em = Connect.createEntityManager();
+        Query q;
+        samochodList = new ArrayList<>();
+        if(marka != null){
+            q = em.createNamedQuery("Samochod.findByMarka").setParameter("marka", marka);
+        }else{
+            q = em.createNamedQuery("Samochod.findAll");
+        }
+        List <Samochod> tmp = q.getResultList();
+        if(typ != null){
+            short typInt = 0;
+            switch(typ){
+                case "Osobowy":
+                    typInt = 1;
+                    break;
+                case "Van":
+                    typInt = 2;
+                    break;
+                case "Dostawczy":
+                    typInt = 3;
+                    break;
+                default:
+                    break;
+            }
+            for(Samochod s : tmp){
+                if(s.getTyp() == typInt){
+                    samochodList.add(s);
+                }
+            }
+        }
+        else{
+            samochodList = tmp;
+        }
+    }
+
     public Wyszukiwanie(){
     }
     
-    public Short getTyp() {
+    public String getTyp() {
         return typ;
     }
     
-    public List<Short> getTypList(){
+    public List<String> getTypList(){
         if(typList.isEmpty()){
-            uzupelnijTypList();
+            typList.add("Osobowy");
+            typList.add("Van");
+            typList.add("Dostawczy");
         }
         return typList;
     }
     
-    public void setTyp(Short typ) {
+    public void setTyp(String typ) {
         this.typ = typ;
     }
     
-    public void setTypList(List<Short> typ_list){
+    public void setTypList(List<String> typ_list){
        this.typList = typ_list;
    }
     
@@ -102,5 +130,19 @@ public class Wyszukiwanie implements Serializable{
     public void setMarkaList(List<String> marka_list){
         this.markaList = marka_list;
     }
-               
+    public List<Samochod> getSamochodList() {
+        if(samochodList.isEmpty()){
+            uzupelnijSamochodList();
+        }
+        return samochodList;
+    }
+
+    public void setSamochodList(List<Samochod> samochodList) {
+        this.samochodList = samochodList;
+    }
+    
+    public String wyszukaj(){
+        uzupelnijSamochodList();
+        return null;
+    }
 }

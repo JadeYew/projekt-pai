@@ -5,13 +5,15 @@
  */
 package wypozyczalniaAut.main.java.controller.beans;
 
-import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
-import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import wypozyczalniaAut.main.java.controller.Connect;
+import wypozyczalniaAut.main.java.model.Samochod;
 import wypozyczalniaAut.main.java.model.Uzytkownik;
 
 /**
@@ -22,10 +24,16 @@ import wypozyczalniaAut.main.java.model.Uzytkownik;
 @ManagedBean
 @SessionScoped
 public class Sesja implements Serializable {
+    @Inject
     Rejestracja rejestracja;
     Uzytkownik zalogowanyUzytkownik;
+    @Inject
     Wyszukiwanie wyszukiwanie;
+    @Inject
     Login login;
+    @Inject
+    WyswietlSamochod wyswietlSamochod;
+
     boolean zalogowany = false;
     int pageId = 0;
     
@@ -46,6 +54,18 @@ public class Sesja implements Serializable {
             this.rejestracja = new Rejestracja();
         }
         return this.rejestracja;
+    }
+    
+    
+    public WyswietlSamochod getWyswietlSamochod() {
+        if(this.wyswietlSamochod == null){
+            this.wyswietlSamochod = new WyswietlSamochod();
+        }
+        return wyswietlSamochod;
+    }
+
+    public void setWyswietlSamochod(WyswietlSamochod wyswietlSamochod) {
+        this.wyswietlSamochod = wyswietlSamochod;
     }
     
     public void setLogin(Login login){
@@ -155,5 +175,12 @@ public class Sesja implements Serializable {
             return "index";
         }
         return "logowanie";
+    }
+    
+    public String wyswietlanieSamochodu(int id){
+        EntityManager em = Connect.createEntityManager();
+        Query q = em.createNamedQuery("Samochod.findById").setParameter("id",id);
+        wyswietlSamochod.samochod = (Samochod)q.getSingleResult();
+        return "wyswietlSamochod";
     }
 }

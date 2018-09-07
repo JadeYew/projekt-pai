@@ -23,19 +23,19 @@
                               
                             <p:outputLabel for="typ" value="Typ:" />
                             <p:selectOneMenu id="typ" value="#{sesja.wyszukiwanie.typ}" style="width:125px">
+                                <f:selectItem  itemLabel="wybiarz typ" noSelectionOption="true"/>
                                 <f:selectItems value="#{sesja.wyszukiwanie.typList}" var="wybranotyp"/>
-                                <p:ajax update="typ"/>
                             </p:selectOneMenu>
                             
                             <p:outputLabel for="marka" value="Marka:" />
                             <p:selectOneMenu id="marka" value="#{sesja.wyszukiwanie.marka}" style="width:125px">
+                                <f:selectItem  itemLabel="wybiarz marke" noSelectionOption="true"/>
                                 <f:selectItems value="#{sesja.wyszukiwanie.markaList}" var="wybranomarke"/>
-                                <p:ajax update="marka"/>
                             </p:selectOneMenu>
                             
                            </h:panelGrid> 
                             
-                           <p:commandButton value="Szukaj" oncomplete="PF('dlg').show()" icon="ui-icon-check" />
+                           <p:commandButton value="Szukaj" action="#{sesja.wyszukiwanie.wyszukaj}" ajax="false" icon="ui-icon-check" />
                            
                         </h:form>
                     </div>
@@ -43,52 +43,15 @@
             </section>
                 
             <section class="about">
-                
-                <p:dataTable var="samochod" >
-                     
-                    <p:column headerText="Obraz">
-                        <h:graphicImage value="#{samochod.obrazPlik}" />
-                    </p:column>
-                    <p:column headerText="Marka">
-                        <h:outputText value="#{samochod.marka}" />
-                    </p:column>
-                    <p:column headerText="Model">
-                        <h:outputText value="#{samochod.model}" />
-                    </p:column>
-                    <p:column headerText="AutomatycznaSkrzynia">
-                        <h:outputText value="#{samochod.automatycznaSkrzynia}" />
-                    </p:column>
-                    <p:column headerText="IloscMiejsc">
-                        <h:outputText value="#{samochod.iloscMiejsc}" />
-                    </p:column>
-                    <p:column headerText="IloscDrzwi">
-                        <h:outputText value="#{samochod.iloscDrzwi}" />
-                    </p:column>
-                    <p:column headerText="RodzajPaliwa">
-                        <h:outputText value="#{samochod.rodzajPaliwa}" />
-                    </p:column>
-                    <p:column headerText="PojemnoscSilnika">
-                        <h:outputText value="#{samochod.pojemnoscSilnika}" />
-                    </p:column>
-                    <p:column headerText="Moc">
-                        <h:outputText value="#{samochod.moc}" />
-                    </p:column>
-                    <p:column headerText="ZuzycieMiasto">
-                        <h:outputText value="#{samochod.zuzycieMiasto}" />
-                    </p:column>
-                    <p:column headerText="Zuzycie90">
-                        <h:outputText value="#{samochod.zuzycie90}" />
-                    </p:column>
-                    <p:column headerText="CenaPodstawowa">
-                        <h:outputText value="#{samochod.cenaPodstawowa}" />
-                    </p:column>
-                    <p:column headerText="CenaPrzygotowania">
-                        <h:outputText value="#{samochod.cenaPrzygotowania}" />
-                    </p:column>
-                    
-                </p:dataTable>
-               
-                
+                <p:dataGrid value="#{sesja.wyszukiwanie.samochodList}" var="s" paginator="true" rows="9" columns="3">
+                    <f:facet name="header">
+                        Nasze Samochody
+                    </f:facet>
+                    <div style="padding: 10px; text-align: center">
+                        <h4>#{s.marka} #{s.model}<br/>Cena od: #{s.cenaPodstawowa}zł/dzien</h4><br/>
+                        <h:form><h:commandLink  action="#{sesja.wyswietlanieSamochodu(s.id)}"><p:graphicImage  value="resources/images/cars/#{s.obrazPlik}"/></h:commandLink></h:form>
+                    </div>
+                </p:dataGrid>
             </section>
             <h1>Sprawdź odpowiedzi na najczęściej zadawane pytania</h1>
             

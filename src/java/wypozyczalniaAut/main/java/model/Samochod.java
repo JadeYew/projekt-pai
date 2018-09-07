@@ -6,20 +6,16 @@
 package wypozyczalniaAut.main.java.model;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -89,10 +85,8 @@ public class Samochod implements Serializable {
     private Boolean podgrzewaneLusterka;
     @Column(name = "abs")
     private Boolean abs;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "automatyczna_skrzynia")
-    private short automatycznaSkrzynia;
+    private Boolean automatycznaSkrzynia;
     @Column(name = "poduszki_powietrzne")
     private Boolean poduszkiPowietrzne;
     @Basic(optional = false)
@@ -142,8 +136,6 @@ public class Samochod implements Serializable {
     @Size(max = 128)
     @Column(name = "obraz_plik")
     private String obrazPlik;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSamochod")
-    private Collection<Pojazd> pojazdCollection;
 
     public Samochod() {
     }
@@ -152,11 +144,10 @@ public class Samochod implements Serializable {
         this.id = id;
     }
 
-    public Samochod(Integer id, String marka, String model, short automatycznaSkrzynia, short iloscMiejsc, short iloscDrzwi, String rodzajPaliwa, short pojemnoscSilnika, short moc, float zuzycieMiasto, float zuzycie90, short cenaPodstawowa, short cenaPrzygotowania, short typ) {
+    public Samochod(Integer id, String marka, String model, short iloscMiejsc, short iloscDrzwi, String rodzajPaliwa, short pojemnoscSilnika, short moc, float zuzycieMiasto, float zuzycie90, short cenaPodstawowa, short cenaPrzygotowania, short typ) {
         this.id = id;
         this.marka = marka;
         this.model = model;
-        this.automatycznaSkrzynia = automatycznaSkrzynia;
         this.iloscMiejsc = iloscMiejsc;
         this.iloscDrzwi = iloscDrzwi;
         this.rodzajPaliwa = rodzajPaliwa;
@@ -257,11 +248,11 @@ public class Samochod implements Serializable {
         this.abs = abs;
     }
 
-    public short getAutomatycznaSkrzynia() {
+    public Boolean getAutomatycznaSkrzynia() {
         return automatycznaSkrzynia;
     }
 
-    public void setAutomatycznaSkrzynia(short automatycznaSkrzynia) {
+    public void setAutomatycznaSkrzynia(Boolean automatycznaSkrzynia) {
         this.automatycznaSkrzynia = automatycznaSkrzynia;
     }
 
@@ -367,15 +358,6 @@ public class Samochod implements Serializable {
 
     public void setObrazPlik(String obrazPlik) {
         this.obrazPlik = obrazPlik;
-    }
-
-    @XmlTransient
-    public Collection<Pojazd> getPojazdCollection() {
-        return pojazdCollection;
-    }
-
-    public void setPojazdCollection(Collection<Pojazd> pojazdCollection) {
-        this.pojazdCollection = pojazdCollection;
     }
 
     @Override

@@ -72,14 +72,14 @@ public class Rejestracja implements Serializable{
             dobreDane = false;
         }
         if(sprawdzEMail()){
-            FacesContext.getCurrentInstance().addMessage(null,  new FacesMessage(FacesMessage.SEVERITY_WARN, "Podany e-mail Juz Istnieje", uzytkownik.geteMail()));
+            FacesContext.getCurrentInstance().addMessage(null,  new FacesMessage(FacesMessage.SEVERITY_WARN, "Podany e-mail Juz Istnieje", uzytkownik.getEMail()));
             dobreDane = false;
         }
     }
     
     public boolean sprawdzEMail(){
         EntityManager em = Connect.createEntityManager();
-        Query q = em.createNamedQuery("Uzytkownik.findByEMail").setParameter("eMail", uzytkownik.geteMail());
+        Query q = em.createNamedQuery("Uzytkownik.findByEMail").setParameter("eMail", uzytkownik.getEMail());
         return !q.getResultList().isEmpty();
     }
     

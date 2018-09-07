@@ -160,8 +160,8 @@ public class Zamowienie implements Serializable{
     public int znajdzIdPojazd(Samochod s){
         Pojazd [] listaPojazdow = (Pojazd [])s.getPojazdCollection().toArray();
         for(Pojazd p: listaPojazdow){
-                if(p.dostepnosc){
-                return p.id;
+                if(p.getDostepnosc()){
+                    return p.getId();
                 }
         }
         return 0;

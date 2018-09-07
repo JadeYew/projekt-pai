@@ -16,19 +16,96 @@ and open the template in the editor.
     </head>
     <body>
         <ui:composition template="default.xhtml"> 
+            <link rel="stylesheet" type="text/css" href="resources/css/table.css"></link> 
             <ui:define name="contents">
                 <div id="title" style="align-content: center; text-align: center">
                     <h4>#{sesja.wyswietlSamochod.samochod.marka} #{sesja.wyswietlSamochod.samochod.model}<br/>Cena od: #{sesja.wyswietlSamochod.samochod.cenaPodstawowa}zł/dzien</h4><br/>
                     <p:graphicImage  value="resources/images/cars/#{sesja.wyswietlSamochod.samochod.obrazPlik}"/>
                 </div>
-                <table>
+                <table class="wyswietlSamochod">
                     <tr>
                         <td>Typ:</td>
-                        <td><p:graphicImage  value="resources/images/yes.png" rendered="#{s.automatycznaSkrzynia}"/><p:graphicImage  value="resources/images/no.png" rendered="#{!s.automatycznaSkrzynia}"/></td>
+                        <td>#{sesja.wyswietlSamochod.typSamochodu()}</td>
+                        <td>Rodzaj paliwa:</td>
+                        <td>#{sesja.wyswietlSamochod.samochod.rodzajPaliwa}</td>
                     </tr>
                     <tr>
-                        <td>Automatyczna skrzynia biegów</td>
-                        <td><p:graphicImage  value="resources/images/yes.png" rendered="#{s.automatycznaSkrzynia}"/><p:graphicImage  value="resources/images/no.png" rendered="#{!s.automatycznaSkrzynia}"/></td>
+                        <td>Jazda miejska:</td>
+                        <td>#{sesja.wyswietlSamochod.samochod.zuzycieMiasto}l/100km</td>
+                        <td>Jazda w trasie(90km/h):</td>
+                        <td>#{sesja.wyswietlSamochod.samochod.zuzycie90}l/100km</td>
+                    </tr>
+                    <tr>
+                        <td>ABS:</td>
+                        <td>
+                            <p:graphicImage value="resources/images/yes.png" rendered="#{sesja.wyswietlSamochod.samochod.abs}"/>
+                            <p:graphicImage value="resources/images/no.png" rendered="#{!sesja.wyswietlSamochod.samochod.abs}"/>
+                        </td>
+                        <td>Automatyczna skrzynia biegów:</td>
+                        <td>
+                            <p:graphicImage value="resources/images/yes.png" rendered="#{sesja.wyswietlSamochod.samochod.automatycznaSkrzynia}"/>
+                            <p:graphicImage value="resources/images/no.png" rendered="#{!sesja.wyswietlSamochod.samochod.automatycznaSkrzynia}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Pojemność silnika:</td>
+                        <td>#{sesja.wyswietlSamochod.samochod.pojemnoscSilnika}</td>
+                        <td>Moc:</td>
+                        <td>#{sesja.wyswietlSamochod.samochod.moc}</td>
+                    </tr>
+                    <tr>
+                        <td>Ilość miejsc:</td>
+                        <td>#{sesja.wyswietlSamochod.samochod.iloscMiejsc}</td>
+                        <td>Ilość drzwi:</td>
+                        <td>#{sesja.wyswietlSamochod.samochod.iloscDrzwi}</td>
+                    </tr>
+                    <tr>
+                        <td>Poduszki powietrzne</td>
+                        <td>
+                            <p:graphicImage value="resources/images/yes.png" rendered="#{sesja.wyswietlSamochod.samochod.poduszkiPowietrzne}"/>
+                            <p:graphicImage value="resources/images/no.png" rendered="#{!sesja.wyswietlSamochod.samochod.poduszkiPowietrzne}"/>
+                        </td>
+                        <td>Komputer pokładowy:</td>
+                        <td>
+                            <p:graphicImage value="resources/images/yes.png" rendered="#{sesja.wyswietlSamochod.samochod.komputerPokladowy}"/>
+                            <p:graphicImage value="resources/images/no.png" rendered="#{!sesja.wyswietlSamochod.samochod.komputerPokladowy}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Klimatyzacja ręczna:</td>
+                        <td>
+                            <p:graphicImage value="resources/images/yes.png" rendered="#{sesja.wyswietlSamochod.samochod.klimatyzacjaReczna}"/>
+                            <p:graphicImage value="resources/images/no.png" rendered="#{!sesja.wyswietlSamochod.samochod.klimatyzacjaReczna}"/>
+                        </td>
+                        <td>Klimatyzacja automatyczna:</td>
+                        <td>
+                            <p:graphicImage value="resources/images/yes.png" rendered="#{sesja.wyswietlSamochod.samochod.klimatyzacjaAutomatyczna}"/>
+                            <p:graphicImage value="resources/images/no.png" rendered="#{!sesja.wyswietlSamochod.samochod.klimatyzacjaAutomatyczna}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Elektryczne lusterka:</td>
+                        <td>
+                            <p:graphicImage value="resources/images/yes.png" rendered="#{sesja.wyswietlSamochod.samochod.elektryczneLusterka}"/>
+                            <p:graphicImage value="resources/images/no.png" rendered="#{!sesja.wyswietlSamochod.samochod.elektryczneLusterka}"/>
+                        </td>
+                        <td>Podrzewane lusterka:</td>
+                        <td>
+                            <p:graphicImage value="resources/images/yes.png" rendered="#{sesja.wyswietlSamochod.samochod.podgrzewaneLusterka}"/>
+                            <p:graphicImage value="resources/images/no.png" rendered="#{!sesja.wyswietlSamochod.samochod.podgrzewaneLusterka}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Elektryczne szyby:</td>
+                        <td>
+                            <p:graphicImage value="resources/images/yes.png" rendered="#{sesja.wyswietlSamochod.samochod.elektryczneSzyby}"/>
+                            <p:graphicImage value="resources/images/no.png" rendered="#{!sesja.wyswietlSamochod.samochod.elektryczneSzyby}"/>
+                        </td>
+                        <td>Zamek centralny:</td>
+                        <td>
+                            <p:graphicImage value="resources/images/yes.png" rendered="#{sesja.wyswietlSamochod.samochod.centralnyZamek}"/>
+                            <p:graphicImage value="resources/images/no.png" rendered="#{!sesja.wyswietlSamochod.samochod.centralnyZamek}"/>
+                        </td>
                     </tr>
                 </table>
             </ui:define>

@@ -31,4 +31,17 @@ public class WyswietlSamochod implements Serializable {
     public void setSamochod(Samochod samochod) {
         this.samochod = samochod;
     }
+    
+    public String typSamochodu(){
+        switch(samochod.getTyp()){
+            case 1:
+                return "osobowy";
+            case 2:
+                return "van";
+            case 3:
+                return "dostawczy";
+            default:
+                return "błąd";
+        }
+    }
 }

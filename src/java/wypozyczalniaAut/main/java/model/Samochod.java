@@ -6,16 +6,20 @@
 package wypozyczalniaAut.main.java.model;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -136,6 +140,8 @@ public class Samochod implements Serializable {
     @Size(max = 128)
     @Column(name = "obraz_plik")
     private String obrazPlik;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSamochod")
+    private Collection<Pojazd> pojazdCollection;
 
     public Samochod() {
     }
@@ -358,6 +364,15 @@ public class Samochod implements Serializable {
 
     public void setObrazPlik(String obrazPlik) {
         this.obrazPlik = obrazPlik;
+    }
+
+    @XmlTransient
+    public Collection<Pojazd> getPojazdCollection() {
+        return pojazdCollection;
+    }
+
+    public void setPojazdCollection(Collection<Pojazd> pojazdCollection) {
+        this.pojazdCollection = pojazdCollection;
     }
 
     @Override

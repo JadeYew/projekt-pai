@@ -14,9 +14,11 @@ import java.util.List;
 import java.util.Random;
 import java.util.Vector;
 import javax.enterprise.context.Dependent;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
+import javax.faces.flow.FlowScoped;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -28,11 +30,9 @@ import wypozyczalniaAut.main.java.model.Samochod;
  *
  * @author Kamil
  */
-@Named(value = "wyszukiwanie")
-@Dependent
+@Named("wyszukiwanie")
+@SessionScoped
 @ManagedBean
-@ViewScoped
-
 public class Wyszukiwanie implements Serializable{
 
     private List <Samochod> samochodList = new ArrayList<>();
@@ -46,9 +46,9 @@ public class Wyszukiwanie implements Serializable{
             EntityManager em = Connect.createEntityManager();
             Query q = em.createNamedQuery("Samochod.findAll");
             Vector <Samochod> samochody = (Vector)q.getResultList();
-            for(Samochod s: samochody){
+            samochody.forEach((s) -> {
                 markaList.add(s.getMarka());
-            }
+        });
             em.close();
     }
     

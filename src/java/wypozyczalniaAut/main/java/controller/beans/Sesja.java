@@ -8,11 +8,14 @@ package wypozyczalniaAut.main.java.controller.beans;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import wypozyczalniaAut.main.java.controller.Connect;
+import wypozyczalniaAut.main.java.model.Klient;
 import wypozyczalniaAut.main.java.model.Samochod;
 import wypozyczalniaAut.main.java.model.Uzytkownik;
 
@@ -24,24 +27,28 @@ import wypozyczalniaAut.main.java.model.Uzytkownik;
 @ManagedBean
 @SessionScoped
 public class Sesja implements Serializable {
-    @Inject
+    @ManagedProperty(value ="#{rejestracja}")
     Rejestracja rejestracja;
-    Uzytkownik zalogowanyUzytkownik;
-    @Inject
+    @ManagedProperty(value ="#{wyszukiwanie}")
     Wyszukiwanie wyszukiwanie;
-    @Inject
+    @ManagedProperty(value ="#{login}")
     Login login;
-    @Inject
+    @ManagedProperty(value ="#{wyswietlSamochod}")
     WyswietlSamochod wyswietlSamochod;
+    @ManagedProperty(value ="#{uzupelnijDane}")
+    UzupelnijDane uzupelnijDane;
+    @ManagedProperty(value ="#{noweZamowienie}")
+    wypozyczalniaAut.main.java.controller.beans.Zamowienie noweZamowienie;
 
-    boolean zalogowany = false;
+    Uzytkownik zalogowanyUzytkownik;
+    Klient klient;
+    boolean zalogowany;
     int pageId = 0;
     
     public String mojeKontoPrzcisk(){
         if(zalogowany == true){
-            return "index";
+            return "mojeKonto";
         }
-        pageId = 1;
         return "logowanie";
     }
     
@@ -56,6 +63,16 @@ public class Sesja implements Serializable {
         return this.rejestracja;
     }
     
+    public Zamowienie getNoweZamowienie() {
+        if(this.noweZamowienie == null){
+            this.noweZamowienie = new Zamowienie();
+        }
+        return noweZamowienie;
+    }
+
+    public void setNoweZamowienie(Zamowienie noweZamowienie) {
+        this.noweZamowienie = noweZamowienie;
+    }
     
     public WyswietlSamochod getWyswietlSamochod() {
         if(this.wyswietlSamochod == null){
@@ -100,9 +117,6 @@ public class Sesja implements Serializable {
     }
     
     public Uzytkownik getZalogowanyUzytkownik(){
-        if(this.zalogowanyUzytkownik == null){
-            this.zalogowanyUzytkownik = new Uzytkownik();
-        }
         return this.zalogowanyUzytkownik;
     }
     
@@ -118,13 +132,12 @@ public class Sesja implements Serializable {
     }
     
     public String addUser(){
-        String ret = rejestracja.addUser();
-        if(ret != null){
+        zalogowany = rejestracja.addUser();
+        if(zalogowany){
             zalogowanyUzytkownik = rejestracja.getUzytkownik();
-            rejestracja.setUzytkownik(null);
-            zalogowany = true;
+            return "uzupelnijDane";
         }
-        return ret;
+        return null;
     }
     
     public String nowaRejstracja(){
@@ -140,16 +153,11 @@ public class Sesja implements Serializable {
     }
     
     public String zaloguj(){
-        zalogowany = getLogin().zaloguj();
+        zalogowany = login.zaloguj();
         if(zalogowany){
-            zalogowanyUzytkownik = getLogin().getUzytkownik();
-            login.setUzytkownik(null);
-            switch(pageId){
-                case 1:
-                    return "mojeKonto";
-                default:
-                    return "index";
-            }
+            zalogowany = true;
+            zalogowanyUzytkownik =login.getUzytkownik();
+            return "index";
         }
         return null;
     }
@@ -169,9 +177,8 @@ public class Sesja implements Serializable {
     }
     
     public String zalogujWyloguj(){
+        pageId = 0;
         if(zalogowany){
-            zalogowanyUzytkownik = null;
-            zalogowany = false;
             return "index";
         }
         return "logowanie";
@@ -182,5 +189,42 @@ public class Sesja implements Serializable {
         Query q = em.createNamedQuery("Samochod.findById").setParameter("id",id);
         wyswietlSamochod.samochod = (Samochod)q.getSingleResult();
         return "wyswietlSamochod";
+    }
+    
+    public String zlozZamowienie(){
+        if(!zalogowany){
+            pageId = 2;
+            return "logowanie";
+        }
+        return "zamowienie";
+    }
+    
+    public String zmienDane(){
+        uzupelnijDane.uzupelnijDane();
+        klient = uzupelnijDane.getKlient();
+        return "index";
+    }
+
+    public UzupelnijDane getUzupelnijDane() {
+        if(this.uzupelnijDane == null){
+            this.uzupelnijDane = new UzupelnijDane();
+        }
+        return uzupelnijDane;
+    }
+
+    public void setUzupelnijDane(UzupelnijDane uzupelnijDane) {
+        this.uzupelnijDane = uzupelnijDane;
+    }
+
+    public Klient getKlient() {
+        return klient;
+    }
+
+    public void setKlient(Klient klient) {
+        this.klient = klient;
+    }
+    
+    public void wczytajKlienta(){
+        getUzupelnijDane().wczytajKlienta(zalogowanyUzytkownik);
     }
 }

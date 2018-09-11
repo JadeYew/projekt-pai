@@ -29,8 +29,7 @@ and open the template in the editor.
                         <p:outputLabel for="upassword" value="Hasło:"/>
                         <p:password value="#{sesja.login.password}" 
                                     id="upassword" required="true" 
-                                    requiredMessage="Podaj hasło" 
-                                    feedback="true"/>
+                                    requiredMessage="Podaj hasło"/>
                         <br/>
                         <br/>
                         <p:commandButton value="Zaloguj się" ajax="false" action="${sesja.zaloguj()}"/>                

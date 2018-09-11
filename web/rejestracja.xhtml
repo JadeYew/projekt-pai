@@ -27,9 +27,12 @@ and open the template in the editor.
                         <br/>
                         <br/>
                         <p:outputLabel for="ueMail" value="E-mail:"/>
-                        <p:inputText value="#{sesja.rejestracja.uzytkownik.eMail}" 
+                        <p:inputText value="#{sesja.rejestracja.uzytkownik.EMail}" 
                                      id="ueMail" required="true" 
-                                     requiredMessage="Podaj e-mail"/>
+                                     requiredMessage="Podaj e-mail"
+                                     validatorMessage="Nieprawidłowy format e-mail">
+                            <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                        </p:inputText>
                         <br/>
                         <br/>
                         <p:outputLabel for="upassword" value="Hasło:"/>
@@ -37,15 +40,15 @@ and open the template in the editor.
                                     id="upassword" required="true" 
                                     requiredMessage="Podaj hasło" 
                                     match="upasswordAgain" validatorMessage="Hasła nie są identyczne"
-                                    feedback="true"/>
+                                    feedback="true"
+                                    inline="true"/>
                         <br/>
                         <br/>
                         <p:outputLabel for="upasswordAgain" value="Powtórz hasło:"/>
                         <p:password value="#{sesja.rejestracja.passwordAgain}" 
                                     id="upasswordAgain" required="true" 
                                     requiredMessage="Podaj ponownie hasło" 
-                                    validatorMessage="Hasła nie są identyczne"
-                                    feedback="true"/>
+                                    validatorMessage="Hasła nie są identyczne"/>
                         <br/>
                         <br/>
                         <p:commandButton actionListener="#{sesja.rejestracja.sprawdzDane}" action="#{sesja.addUser}" value="Rejestruj" ajax="false"/>

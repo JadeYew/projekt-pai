@@ -13,6 +13,7 @@ import javax.enterprise.context.Dependent;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.flow.FlowScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import wypozyczalniaAut.main.java.BCrypt;
@@ -23,9 +24,8 @@ import wypozyczalniaAut.main.java.model.Uzytkownik;
  *
  * @author Iwo Ryszkowski
  */
-@Named(value = "login")
-@Dependent
-@ViewScoped
+@Named("login")
+@SessionScoped
 public class Login implements Serializable {
     Uzytkownik uzytkownik;
     String password;
@@ -62,7 +62,7 @@ public class Login implements Serializable {
                 return true;
             }
         }
-        FacesContext.getCurrentInstance().addMessage(null,  new FacesMessage(FacesMessage.SEVERITY_WARN, password + " : " + uzytkownik.getPassword(), ""));
+        FacesContext.getCurrentInstance().addMessage(null,  new FacesMessage(FacesMessage.SEVERITY_ERROR, "nieprawidłowy login lub hasło", ""));
         return false;
     }
 }

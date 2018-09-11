@@ -16,10 +16,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.Vector;
+import javax.enterprise.context.Dependent;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.flow.FlowScoped;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -35,15 +38,16 @@ import wypozyczalniaAut.main.java.model.Uzytkownik;
  *
  * @author Pato
  */
-@Named(value = "zamowienie")
+@Named("zamowienie")
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class Zamowienie implements Serializable{
-    private Samochod samochod;
     private String marka;
     private String model;
     private Date date1;
     private Date date2;
+    private int PojazdId;
+    private boolean dostepnosc;
     private List<String> markaList = new ArrayList<>();
     private List<String> modelList = new ArrayList<>();
     
@@ -96,6 +100,14 @@ public class Zamowienie implements Serializable{
     
     public void setMarkaList(List<String> marka_list){
         this.markaList = marka_list;
+    }
+
+    public int getPojazdId() {
+        return PojazdId;
+    }
+
+    public void setPojazdId(int PojazdId) {
+        this.PojazdId = PojazdId;
     }
     
    public String getModel(){
@@ -175,7 +187,42 @@ public class Zamowienie implements Serializable{
         return k.getId();
     }
     
+    public void sprawdzDostepnosc(){
+        EntityManager em = Connect.createEntityManager();
+        Query q = em.createNamedQuery("Samochod.findByMarka").setParameter("marka", marka);
+        Samochod []res = (Samochod[])q.getResultList().toArray();
+        Samochod samochod = new Samochod();
+        for(Samochod s : res){
+            if(s.getModel().equals(model)){
+                samochod = s;
+                break;
+            }
+        }
+        Pojazd []pojazdy = (Pojazd [])samochod.getPojazdCollection().toArray();
+        ArrayList <Pojazd> dostepnePojazdy = new ArrayList();
+        for(Pojazd p : pojazdy){
+            if(dostepnyWCzasie(p)){
+                dostepnePojazdy.add(p);
+            }
+        }
+        if(dostepnePojazdy.isEmpty()){
+            FacesContext.getCurrentInstance().addMessage(null,  new FacesMessage(FacesMessage.SEVERITY_WARN, "Niestety nie ma dostępnych samochodów tego modelu w podanym przedziale czasowym", ""));
+            dostepnosc = false;
+        }else{
+            PojazdId = dostepnePojazdy.get(0).getId();
+        }
+        dostepnosc = true;
+        em.close();
+    }
     
+    private boolean dostepnyWCzasie(Pojazd p){
+        for(Zamowienie z : (Zamowienie [])p.getZamowienieCollection().toArray()){
+            if(!(z.getDate2().after(date1) && z.getDate1().before(date2))){
+                return false;
+            }
+        }
+        return true;
+    }
 }
     
 

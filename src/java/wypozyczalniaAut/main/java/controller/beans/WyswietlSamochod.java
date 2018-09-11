@@ -8,19 +8,19 @@ package wypozyczalniaAut.main.java.controller.beans;
 import java.io.Serializable;
 import javax.inject.Named;
 import javax.enterprise.context.Dependent;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.flow.FlowScoped;
 import wypozyczalniaAut.main.java.model.Samochod;
 
 /**
  *
  * @author Iwo Ryszkowski
  */
-@Named(value = "wyswietlSamochod")
-@Dependent
+@Named("wyswietlSamochod")
+@SessionScoped
 @ManagedBean
-@ViewScoped
-
 public class WyswietlSamochod implements Serializable {
     Samochod samochod;
     

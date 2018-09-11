@@ -20,27 +20,27 @@ and open the template in the editor.
                 <h:form id="noweZamowienie">
                     <h3>ZAMOWIENIE</h3>
                     <h:panelGrid columns="2">
-                            <h:selectOneMenu id="marka" value="#{zamowienie.marka}">
+                        <h:selectOneMenu id="marka" value="#{zamowienie.marka}" required="true" requiredMessage="Musisz podac markę zamochodu">
                                 <f:selectItem  itemLabel="wybiarz marke" noSelectionOption="true"/>
                                 <f:selectItems value="#{zamowienie.markaList}" var="wybranomarke"/>
                                 <p:ajax update="model"/>
                             </h:selectOneMenu>
                             
-                            <h:selectOneMenu id="model" value="#{zamowienie.model}">
+                            <h:selectOneMenu id="model" value="#{zamowienie.model}" required="true" requiredMessage="Musisz podac model zamochodu">
                                 <f:selectItem  itemLabel="wybiarz model" noSelectionOption="true"/>
                                 <f:selectItems value="#{zamowienie.modelList}" var="wybranomodel"/>
                             </h:selectOneMenu>
                         
                         <p:outputLabel id="dataRozpoczecia" value="Data rozpoczecia:"/>
-                        <p:calendar id="popup1" value="#{zamowienie.date1}" mindate="#{zamowienie.date1}">
+                        <p:calendar id="popup1" value="#{zamowienie.date1}" mindate="#{zamowienie.date1}" required="true" requiredMessage="Musisz podac datę rozpoczęcia wynajmu">
                             <p:ajax event="dateSelect" update="popup2"/>
                         </p:calendar>
                         <p:outputLabel id="dataZakonczenia" value="Data zakonczenia:" />
-                        <p:calendar mindate="#{zamowienie.minDate()}" id="popup2" value="#{zamowienie.date2}" >
+                        <p:calendar mindate="#{zamowienie.minDate()}" id="popup2" value="#{zamowienie.date2}" requiredMessage="Musisz podac datę zakończenia wynajmu">
                             <p:ajax event="dateSelect"/>
                         </p:calendar> 
                     </h:panelGrid>
-                    <p:commandButton action="index" value="Kontynuuj"/>
+                    <p:commandButton actionListener="#{zamowienie.sprawdzDostepnosc()}" action="index" value="Kontynuuj"/>
                 </h:form>
             </ui:define>
         </ui:composition>

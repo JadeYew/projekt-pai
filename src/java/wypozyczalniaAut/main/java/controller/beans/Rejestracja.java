@@ -3,12 +3,14 @@ package wypozyczalniaAut.main.java.controller.beans;
 import java.io.Serializable;
 import java.util.Random;
 import javax.enterprise.context.Dependent;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.flow.FlowScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -17,10 +19,9 @@ import wypozyczalniaAut.main.java.controller.Connect;
 import wypozyczalniaAut.main.java.model.Uzytkownik;
 
 
-@Named(value = "rejestracja")
+@Named("rejestracja")
 @ManagedBean
-@Dependent
-@ViewScoped
+@SessionScoped
 public class Rejestracja implements Serializable{
     private Uzytkownik uzytkownik;
     private String passwordAgain;
@@ -46,23 +47,23 @@ public class Rejestracja implements Serializable{
         return passwordAgain;
     }
     
-    public String addUser(){
+    public boolean addUser(){
         if(dobreDane){
             EntityManager em = Connect.createEntityManager();
             em.clear();
             Query q;
             Random r = new Random();
             do{
-                uzytkownik.setId(new Integer(r.nextInt(2100000000)));
+                uzytkownik.setId(r.nextInt(10000000));
                 q = em.createNamedQuery("Uzytkownik.findById").setParameter("id", uzytkownik.getId());
             }while(!q.getResultList().isEmpty());
             em.getTransaction().begin();
             em.persist(uzytkownik);
             em.getTransaction().commit();
             em.close();
-            return "index";
+            return true;
         }
-        return null;
+        return false;
     }
     
     public void sprawdzDane(){

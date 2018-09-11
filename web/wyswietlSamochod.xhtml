@@ -16,13 +16,13 @@ and open the template in the editor.
     </head>
     <body>
         <ui:composition template="default.xhtml"> 
-            <link rel="stylesheet" type="text/css" href="resources/css/table.css"></link> 
             <ui:define name="contents">
+            <link rel="stylesheet" type="text/css" href="resources/css/table.css"></link> 
                 <div id="title" style="align-content: center; text-align: center">
                     <h4>#{sesja.wyswietlSamochod.samochod.marka} #{sesja.wyswietlSamochod.samochod.model}<br/>Cena od: #{sesja.wyswietlSamochod.samochod.cenaPodstawowa}zł/dzien</h4><br/>
                     <p:graphicImage  value="resources/images/cars/#{sesja.wyswietlSamochod.samochod.obrazPlik}"/>
                 </div>
-                <table class="wyswietlSamochod">
+            <table class="wyswietlSamochod" cellpadding="10">
                     <tr>
                         <td>Typ:</td>
                         <td>#{sesja.wyswietlSamochod.typSamochodu()}</td>
@@ -31,9 +31,9 @@ and open the template in the editor.
                     </tr>
                     <tr>
                         <td>Jazda miejska:</td>
-                        <td>#{sesja.wyswietlSamochod.samochod.zuzycieMiasto}l/100km</td>
+                        <td>  #{sesja.wyswietlSamochod.samochod.zuzycieMiasto}l/100km</td>
                         <td>Jazda w trasie(90km/h):</td>
-                        <td>#{sesja.wyswietlSamochod.samochod.zuzycie90}l/100km</td>
+                        <td>  #{sesja.wyswietlSamochod.samochod.zuzycie90}l/100km</td>
                     </tr>
                     <tr>
                         <td>ABS:</td>

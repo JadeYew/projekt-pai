@@ -87,17 +87,6 @@ public class Klient implements Serializable {
         this.imie = imie;
         this.nazwisko = nazwisko;
     }
-    
-    public Klient(Klient klient){
-        this.id = klient.id;
-        this.imie = new String(klient.imie);
-        this.nazwisko = new String(klient.nazwisko);
-        this.adres = new String(klient.adres);
-        this.kodPocztowy = new String(klient.kodPocztowy);
-        this.miejscowosc = new String(klient.miejscowosc);
-        this.wojewodztwo = new String(klient.wojewodztwo);
-        this.idUzytkownik = klient.idUzytkownik;
-    }
 
     public Integer getId() {
         return id;

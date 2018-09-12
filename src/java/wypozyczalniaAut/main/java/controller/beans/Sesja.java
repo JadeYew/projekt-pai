@@ -8,13 +8,18 @@ package wypozyczalniaAut.main.java.controller.beans;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import org.apache.commons.lang3.tuple.MutablePair;
 import wypozyczalniaAut.main.java.controller.Connect;
+import wypozyczalniaAut.main.java.model.Akcesorium;
 import wypozyczalniaAut.main.java.model.Klient;
 import wypozyczalniaAut.main.java.model.Samochod;
 import wypozyczalniaAut.main.java.model.Uzytkownik;
@@ -157,6 +162,9 @@ public class Sesja implements Serializable {
         if(zalogowany){
             zalogowany = true;
             zalogowanyUzytkownik =login.getUzytkownik();
+            if(!zalogowanyUzytkownik.getKlientCollection().isEmpty()){
+                klient = (Klient)(zalogowanyUzytkownik.getKlientCollection().toArray())[0];
+            }
             return "index";
         }
         return null;
@@ -179,6 +187,9 @@ public class Sesja implements Serializable {
     public String zalogujWyloguj(){
         pageId = 0;
         if(zalogowany){
+            zalogowany = false;
+            zalogowanyUzytkownik = null;
+            klient = null;
             return "index";
         }
         return "logowanie";
@@ -187,7 +198,7 @@ public class Sesja implements Serializable {
     public String wyswietlanieSamochodu(int id){
         EntityManager em = Connect.createEntityManager();
         Query q = em.createNamedQuery("Samochod.findById").setParameter("id",id);
-        wyswietlSamochod.samochod = (Samochod)q.getSingleResult();
+        getWyswietlSamochod().samochod = (Samochod)q.getSingleResult();
         return "wyswietlSamochod";
     }
     
@@ -226,5 +237,34 @@ public class Sesja implements Serializable {
     
     public void wczytajKlienta(){
         getUzupelnijDane().wczytajKlienta(zalogowanyUzytkownik);
+    }
+    
+    public String wystietlZamowienia(){
+        return "index";
+    }
+    
+    public String dodajZamowienie(){
+        if(noweZamowienie.isDostepnosc()){
+            return "dodajAkcesoria";
+        }
+        return null;
+    }
+    
+    public String dodajAkcesoria(List<MutablePair<Akcesorium, Boolean>>akcesoria){
+        getNoweZamowienie().getAkcesoria();
+        for(int i = 0; i < akcesoria.size(); i++){
+            if(akcesoria.get(i).right){
+                noweZamowienie.dodajAkcesorium(akcesoria.get(i).left);
+            }
+        }
+        return "wyswietlZamowienie.xhtml";
+    }
+    
+    public String anulujPotwierdzZamowienie(boolean decyzja){
+        if(decyzja){
+            noweZamowienie.zapisz(klient);
+        }
+        noweZamowienie = new Zamowienie();
+        return "index.xhtml";
     }
 }

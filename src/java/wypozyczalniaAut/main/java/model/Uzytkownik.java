@@ -63,6 +63,8 @@ public class Uzytkownik implements Serializable {
     @Size(min = 1, max = 30)
     @Column(name = "salt")
     private String salt;
+    @OneToOne(mappedBy = "idUzytkownik")
+    private Pracownik pracownik;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "idUzytkownik")
     private Admin admin;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUzytkownik")
@@ -120,6 +122,14 @@ public class Uzytkownik implements Serializable {
 
     public void setSalt(String salt) {
         this.salt = salt;
+    }
+
+    public Pracownik getPracownik() {
+        return pracownik;
+    }
+
+    public void setPracownik(Pracownik pracownik) {
+        this.pracownik = pracownik;
     }
 
     public Admin getAdmin() {

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <head>
+        <title>TODO supply a title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <body>
+        <ui:composition template="default.xhtml"> 
+            <ui:define name="contents">
+                <link rel="stylesheet" type="text/css" href="resources/css/table.css"></link> 
+                <div style="text-align: center"><h3>Twoje Zmowienie:</h3></div>
+            <table class="wyswietlSamochod" style="font-size: 20px">
+                        <tr>
+                            <td>Samochod:</td>
+                            <td>#{sesja.noweZamowienie.marka} #{sesja.noweZamowienie.model}</td>
+                        </tr>
+                        <tr>
+                            <td>Data rozpoczęcia wynajmu:</td>
+                            <td>#{sesja.noweZamowienie.date1}</td>
+                        </tr>
+                        <tr>
+                            <td>Data zakończenia wynajmu: </td>
+                            <td>#{sesja.noweZamowienie.date2}</td>
+                        </tr>
+                        <tr>
+                            <td>Wybrane akcesoria:</td>
+                            <td><p:dataGrid value="#{sesja.noweZamowienie.akcesoria}" var="a" columns="1">
+                                    <div style="font-size: 16px">#{a.nazwa}</div>
+                                </p:dataGrid></td>
+                        </tr>
+                        <tr>
+                            <td>Cena wynajmu: </td>
+                            <td>#{sesja.noweZamowienie.obliczCene()} zł</td>
+                        </tr>
+                        <tr>
+                            <h:form>
+                                <td><p:commandButton value="Anuluj" ajax="false" action="${sesja.anulujPotwierdzZamowienie(false)}"/></td>
+                            <td><p:commandButton value="Potwierdź" ajax="false" action="${sesja.anulujPotwierdzZamowienie(true)}"/></td>
+                            </h:form>
+                        </tr>
+                    </table>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

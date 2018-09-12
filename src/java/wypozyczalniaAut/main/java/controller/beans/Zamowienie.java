@@ -28,6 +28,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import org.primefaces.event.SelectEvent;
 import wypozyczalniaAut.main.java.controller.Connect;
+import wypozyczalniaAut.main.java.model.Akcesorium;
+import wypozyczalniaAut.main.java.model.AkcesoriumDoZamowienia;
+import wypozyczalniaAut.main.java.model.AkcesoriumDoZamowieniaPK;
 import wypozyczalniaAut.main.java.model.Klient;
 import wypozyczalniaAut.main.java.model.Pojazd;
 import wypozyczalniaAut.main.java.model.Samochod;
@@ -48,9 +51,10 @@ public class Zamowienie implements Serializable{
     private Date date2;
     private int PojazdId;
     private boolean dostepnosc;
-    private List<String> markaList = new ArrayList<>();
-    private List<String> modelList = new ArrayList<>();
-    
+    private List<String> markaList = new ArrayList();
+    private List<String> modelList = new ArrayList();
+    private List<Akcesorium> akcesoria = new ArrayList();
+
     
     public void uzupelnijMarkaList(){
         
@@ -64,7 +68,7 @@ public class Zamowienie implements Serializable{
     }
     
     public void uzupelnijModelList(){
-        
+            modelList = new ArrayList();
             EntityManager em = Connect.createEntityManager();
             Query q = em.createNamedQuery("Samochod.findByMarka").setParameter("marka",marka);
             Vector <Samochod> samochody = (Vector)q.getResultList();
@@ -96,6 +100,25 @@ public class Zamowienie implements Serializable{
     
     public void setMarka(String marka){
         this.marka=marka;
+    }
+    
+        public boolean isDostepnosc() {
+        return dostepnosc;
+    }
+
+    public void setDostepnosc(boolean dostepnosc) {
+        this.dostepnosc = dostepnosc;
+    }
+
+    public List<Akcesorium> getAkcesoria() {
+        if(akcesoria == null){
+            akcesoria = new ArrayList();
+        }
+        return akcesoria;
+    }
+
+    public void setAkcesoria(List<Akcesorium> akcesoria) {
+        this.akcesoria = akcesoria;
     }
     
     public void setMarkaList(List<String> marka_list){
@@ -179,10 +202,6 @@ public class Zamowienie implements Serializable{
         return 0;
     }
     
-    public int cena(Samochod s){
-        return s.getCenaPodstawowa();
-    }
-    
     public int idKlient(Klient k){
         return k.getId();
     }
@@ -190,7 +209,7 @@ public class Zamowienie implements Serializable{
     public void sprawdzDostepnosc(){
         EntityManager em = Connect.createEntityManager();
         Query q = em.createNamedQuery("Samochod.findByMarka").setParameter("marka", marka);
-        Samochod []res = (Samochod[])q.getResultList().toArray();
+         Vector <Samochod> res = (Vector<Samochod>)q.getResultList();
         Samochod samochod = new Samochod();
         for(Samochod s : res){
             if(s.getModel().equals(model)){
@@ -198,7 +217,7 @@ public class Zamowienie implements Serializable{
                 break;
             }
         }
-        Pojazd []pojazdy = (Pojazd [])samochod.getPojazdCollection().toArray();
+        Vector<Pojazd> pojazdy = (Vector<Pojazd>)samochod.getPojazdCollection();
         ArrayList <Pojazd> dostepnePojazdy = new ArrayList();
         for(Pojazd p : pojazdy){
             if(dostepnyWCzasie(p)){
@@ -208,6 +227,7 @@ public class Zamowienie implements Serializable{
         if(dostepnePojazdy.isEmpty()){
             FacesContext.getCurrentInstance().addMessage(null,  new FacesMessage(FacesMessage.SEVERITY_WARN, "Niestety nie ma dostępnych samochodów tego modelu w podanym przedziale czasowym", ""));
             dostepnosc = false;
+            return;
         }else{
             PojazdId = dostepnePojazdy.get(0).getId();
         }
@@ -216,12 +236,80 @@ public class Zamowienie implements Serializable{
     }
     
     private boolean dostepnyWCzasie(Pojazd p){
-        for(Zamowienie z : (Zamowienie [])p.getZamowienieCollection().toArray()){
-            if(!(z.getDate2().after(date1) && z.getDate1().before(date2))){
+        Vector<wypozyczalniaAut.main.java.model.Zamowienie> zamowienia = (Vector<wypozyczalniaAut.main.java.model.Zamowienie>)p.getZamowienieCollection();
+        for(wypozyczalniaAut.main.java.model.Zamowienie z : zamowienia){
+            if(!(z.getDataZakonczenia().after(date1) && z.getDataRozpoczecia().before(date2))){
                 return false;
             }
         }
         return true;
+    }
+    
+    public void dodajAkcesorium(Akcesorium a){
+        akcesoria.add(a);
+    }
+    
+    public short obliczCene(){
+        EntityManager em = Connect.createEntityManager();
+        Query q = em.createNamedQuery("Samochod.findByMarka").setParameter("marka", marka);
+        Vector <Samochod> res = (Vector<Samochod>)q.getResultList();
+        Samochod samochod = new Samochod();
+        for(Samochod s : res){
+            if(s.getModel().equals(model)){
+                samochod = s;
+                break;
+            }
+        }
+        em.close();
+        long diff = date2.getTime() - date1.getTime();
+        diff = diff/(1000 * 60 * 60 * 24);
+        short cena = (short)(samochod.getCenaPodstawowa() * diff);
+        if(!akcesoria.isEmpty()){
+            for(Akcesorium a: akcesoria){
+                cena += (short)a.getCena();
+            }
+        }
+        return cena;
+    }
+
+    public void zapisz(Klient klient){
+        EntityManager em = Connect.createEntityManager();
+        Query q = em.createNamedQuery("Pojazd.findById").setParameter("id", PojazdId);
+        wypozyczalniaAut.main.java.model.Zamowienie z = new wypozyczalniaAut.main.java.model.Zamowienie();
+        z.setIdPojazd((Pojazd) q.getSingleResult());
+        z.setIdKlient(klient);
+        z.setDataRozpoczecia(date1);
+        z.setDataZakonczenia(date2);
+        z.setCena(obliczCene());
+        z.setOplacone(false);
+        z.setZamkniete(false);
+        z.setAnulowane(false);
+        Random r = new Random();
+        do{
+            z.setId(r.nextInt(10000000));
+            q = em.createNamedQuery("Zamowienie.findById").setParameter("id", z.getId());
+        }while(!q.getResultList().isEmpty());
+        em.getTransaction().begin();
+        em.persist(z);
+        em.getTransaction().commit();
+        em.close();
+        if(!akcesoria.isEmpty()){
+            for(Akcesorium a : akcesoria){
+                em = Connect.createEntityManager();
+                AkcesoriumDoZamowienia tmp = new AkcesoriumDoZamowienia();
+                AkcesoriumDoZamowieniaPK tmpPK = new AkcesoriumDoZamowieniaPK();
+                tmpPK.setIdAkcesorium(a.getId());
+                tmpPK.setIdZamowienia(z.getId());
+                tmp.setAkcesoriumDoZamowieniaPK(tmpPK);
+                tmp.setAkcesorium(a);
+                tmp.setZamowienie(z);
+                tmp.setIlosc((short)1);
+                em.getTransaction().begin();
+                em.persist(tmp);
+                em.getTransaction().commit();
+                em.close();
+            }
+        }
     }
 }
     

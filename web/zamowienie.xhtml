@@ -20,27 +20,29 @@ and open the template in the editor.
                 <h:form id="noweZamowienie">
                     <h3>ZAMOWIENIE</h3>
                     <h:panelGrid columns="2">
-                        <h:selectOneMenu id="marka" value="#{zamowienie.marka}" required="true" requiredMessage="Musisz podac markę zamochodu">
+                        <h:selectOneMenu id="marka" value="#{sesja.noweZamowienie.marka}" required="true" requiredMessage="Musisz podac markÃÂ samochodu" style="font-size: 18px">
                                 <f:selectItem  itemLabel="wybiarz marke" noSelectionOption="true"/>
-                                <f:selectItems value="#{zamowienie.markaList}" var="wybranomarke"/>
+                                <f:selectItems value="#{sesja.noweZamowienie.markaList}" var="wybranomarke"/>
                                 <p:ajax update="model"/>
                             </h:selectOneMenu>
+                        <br/>
                             
-                            <h:selectOneMenu id="model" value="#{zamowienie.model}" required="true" requiredMessage="Musisz podac model zamochodu">
+                            <h:selectOneMenu id="model" value="#{sesja.noweZamowienie.model}" required="true" requiredMessage="Musisz podac model samochodu" style="font-size: 18px">
                                 <f:selectItem  itemLabel="wybiarz model" noSelectionOption="true"/>
-                                <f:selectItems value="#{zamowienie.modelList}" var="wybranomodel"/>
+                                <f:selectItems value="#{sesja.noweZamowienie.modelList}" var="wybranomodel"/>
                             </h:selectOneMenu>
+                        <br/>
                         
                         <p:outputLabel id="dataRozpoczecia" value="Data rozpoczecia:"/>
-                        <p:calendar id="popup1" value="#{zamowienie.date1}" mindate="#{zamowienie.date1}" required="true" requiredMessage="Musisz podac datę rozpoczęcia wynajmu">
+                        <p:calendar id="popup1" value="#{sesja.noweZamowienie.date1}" mindate="#{sesja.noweZamowienie.date1}" required="true" requiredMessage="Musisz podac datÃÂÃÂ rozpoczÃÂÃÂcia wynajmu">
                             <p:ajax event="dateSelect" update="popup2"/>
                         </p:calendar>
                         <p:outputLabel id="dataZakonczenia" value="Data zakonczenia:" />
-                        <p:calendar mindate="#{zamowienie.minDate()}" id="popup2" value="#{zamowienie.date2}" requiredMessage="Musisz podac datę zakończenia wynajmu">
+                        <p:calendar mindate="#{sesja.noweZamowienie.minDate()}" id="popup2" value="#{sesja.noweZamowienie.date2}" requiredMessage="Musisz podac datÃÂÃÂ zakoÃÂÃÂczenia wynajmu">
                             <p:ajax event="dateSelect"/>
                         </p:calendar> 
                     </h:panelGrid>
-                    <p:commandButton actionListener="#{zamowienie.sprawdzDostepnosc()}" action="index" value="Kontynuuj"/>
+                    <p:commandButton actionListener="#{sesja.noweZamowienie.sprawdzDostepnosc()}" action="dodajAkcesoria.xhtml" value="Kontynuuj" ajax="false"/>
                 </h:form>
             </ui:define>
         </ui:composition>

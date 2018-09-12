@@ -18,7 +18,7 @@ and open the template in the editor.
             <link rel="stylesheet" type="text/css" href="resources/css/img.css"></link> 
             <div style="background-color: #423e3e">
                 <div class="divider rigth"><h:button outcome="index" image="resources/images/logoo.png"/></div> 
-                <div class="divider left bottom"><h:button class="dropbtn" style="align-self: baseline" outcome="${sesja.zalogujWyloguj()}" value="Zaloguj się"/></div>
+                <div class="divider left bottom"><h:button class="dropbtn" style="align-self: baseline" outcome="zalogujWyloguj" value="#{sesja.zalogujWylogujWiadomosc()}"/></div>
                 <div class="divider left bottom"><h:button class="dropbtn" value="Moje Konto"  outcome="${sesja.mojeKontoPrzcisk()}"/></div>
                 <div class="divider left bottom"><h:button class="dropbtn" value="Złóż Zamówienie" outcome="#{sesja.zlozZamowienie()}"/></div>
             </div>

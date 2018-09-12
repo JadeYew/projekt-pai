@@ -39,12 +39,12 @@ public class AkcesoriumDoZamowienia implements Serializable {
     @NotNull
     @Column(name = "ilosc")
     private short ilosc;
-    @JoinColumn(name = "id_zamowienia", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Zamowienie zamowienie;
     @JoinColumn(name = "id_akcesorium", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Akcesorium akcesorium;
+    @JoinColumn(name = "id_zamowienia", referencedColumnName = "id", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Zamowienie zamowienie;
 
     public AkcesoriumDoZamowienia() {
     }
@@ -78,20 +78,20 @@ public class AkcesoriumDoZamowienia implements Serializable {
         this.ilosc = ilosc;
     }
 
-    public Zamowienie getZamowienie() {
-        return zamowienie;
-    }
-
-    public void setZamowienie(Zamowienie zamowienie) {
-        this.zamowienie = zamowienie;
-    }
-
     public Akcesorium getAkcesorium() {
         return akcesorium;
     }
 
     public void setAkcesorium(Akcesorium akcesorium) {
         this.akcesorium = akcesorium;
+    }
+
+    public Zamowienie getZamowienie() {
+        return zamowienie;
+    }
+
+    public void setZamowienie(Zamowienie zamowienie) {
+        this.zamowienie = zamowienie;
     }
 
     @Override

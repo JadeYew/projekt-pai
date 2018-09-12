@@ -17,8 +17,43 @@ and open the template in the editor.
         <ui:composition template="default.xhtml"> 
             <ui:define name="contents">
                 
+            <link rel="stylesheet" type="text/css" href="resources/css/table.css"></link> 
+            <div style="text-align: center"><h3>Konto uzytkownika: #{sesja.zalogowanyUzytkownik.getLogin()}</h3></div>
+            <table class="wyswietlSamochod" style="font-size: 20px">
+                        <tr>
+                            <td>Imie:</td>
+                            <td>#{sesja.klient.imie}</td>
+                        </tr>
+                        <tr>
+                            <td>Nazwisko: </td>
+                            <td>#{sesja.klient.nazwisko}</td>
+                        </tr>
+                        <tr>
+                            <td>Adres: </td>
+                            <td>#{sesja.klient.adres}</td>
+                        </tr>
+                        <tr>
+                            <td>Kod pocztowy: </td>
+                            <td>#{sesja.klient.kodPocztowy}</td>
+                        </tr>
+                        <tr>
+                            <td>Miejscowość: </td>
+                            <td>#{sesja.klient.miejscowosc}</td>
+                        </tr>
+                        <tr>
+                            <td>Województwo: </td>
+                            <td>#{sesja.klient.wojewodztwo}</td>
+                        </tr>
+                        <tr>
+                            <td>E-mail: </td>
+                            <td>#{sesja.zalogowanyUzytkownik.getEMail()}</td>
+                        </tr>
+                    </table>
+                    <div style="text-align: center">
+                    <p:link outcome="uzupelnijDane" value="Zmień dane" style="font-size:20px; align-self: center; margin-left:auto; margin-right:auto;"/><br/>
+                    <p:link outcome="#{sesja.wystietlZamowienia()}" value="Wyswietl zamowienia" style="font-size:20px; align-self: center; margin-left:auto; margin-right:auto;"/><br/>
+                    </div>
             </ui:define>
         </ui:composition>
-        <div>TODO write content</div>
     </h:body>
 </html>

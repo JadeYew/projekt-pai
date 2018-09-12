@@ -39,7 +39,8 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Zamowienie.findByDataZakonczenia", query = "SELECT z FROM Zamowienie z WHERE z.dataZakonczenia = :dataZakonczenia")
     , @NamedQuery(name = "Zamowienie.findByOplacone", query = "SELECT z FROM Zamowienie z WHERE z.oplacone = :oplacone")
     , @NamedQuery(name = "Zamowienie.findByZamkniete", query = "SELECT z FROM Zamowienie z WHERE z.zamkniete = :zamkniete")
-    , @NamedQuery(name = "Zamowienie.findByDataRozpoczecia", query = "SELECT z FROM Zamowienie z WHERE z.dataRozpoczecia = :dataRozpoczecia")})
+    , @NamedQuery(name = "Zamowienie.findByDataRozpoczecia", query = "SELECT z FROM Zamowienie z WHERE z.dataRozpoczecia = :dataRozpoczecia")
+    , @NamedQuery(name = "Zamowienie.findByAnulowane", query = "SELECT z FROM Zamowienie z WHERE z.anulowane = :anulowane")})
 public class Zamowienie implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -66,6 +67,8 @@ public class Zamowienie implements Serializable {
     @Column(name = "data_rozpoczecia")
     @Temporal(TemporalType.DATE)
     private Date dataRozpoczecia;
+    @Column(name = "anulowane")
+    private Boolean anulowane;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "zamowienie")
     private Collection<AkcesoriumDoZamowienia> akcesoriumDoZamowieniaCollection;
     @JoinColumn(name = "id_pojazd", referencedColumnName = "id")
@@ -135,6 +138,14 @@ public class Zamowienie implements Serializable {
 
     public void setDataRozpoczecia(Date dataRozpoczecia) {
         this.dataRozpoczecia = dataRozpoczecia;
+    }
+
+    public Boolean getAnulowane() {
+        return anulowane;
+    }
+
+    public void setAnulowane(Boolean anulowane) {
+        this.anulowane = anulowane;
     }
 
     @XmlTransient

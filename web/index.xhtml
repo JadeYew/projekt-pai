@@ -47,7 +47,7 @@
                         Nasze Samochody
                     </f:facet>
                     <div style="padding: 10px; text-align: center">
-                        <h4>#{s.marka} #{s.model}<br/>Cena od: #{s.cenaPodstawowa}zł/dzien</h4><br/>
+                        <h4>#{s.marka} #{s.model} #{s.id} <br/>Cena od: #{s.cenaPodstawowa}zł/dzien</h4><br/>
                         <h:form><h:commandLink  action="#{sesja.wyswietlanieSamochodu(s.id)}"><p:graphicImage  value="resources/images/cars/#{s.obrazPlik}"/></h:commandLink></h:form>
                     </div>
                 </p:dataGrid>

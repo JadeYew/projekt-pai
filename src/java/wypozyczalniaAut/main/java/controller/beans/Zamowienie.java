@@ -152,8 +152,7 @@ public class Zamowienie implements Serializable{
     
     public Date getDate1() {
         if(date1 == null){
-            Calendar c = Calendar.getInstance();
-            date1 = c.getTime();
+            date1 = new Date();
         }
         return date1;
     }
@@ -163,6 +162,9 @@ public class Zamowienie implements Serializable{
     }
  
     public Date getDate2() {
+        if(date2 == null){
+            date2 = minDate();
+        }
         return date2;
     }
  
@@ -172,7 +174,7 @@ public class Zamowienie implements Serializable{
     
     public Date minDate(){
         Calendar c = Calendar.getInstance();
-        c.setTime(date1);
+        c.setTime(getDate1());
         c.add(Calendar.DATE, 1);
         return c.getTime();
     }

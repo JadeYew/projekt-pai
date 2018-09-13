@@ -20,7 +20,7 @@ and open the template in the editor.
                 <h:form id="noweZamowienie">
                     <h3>ZAMOWIENIE</h3>
                     <h:panelGrid columns="2">
-                        <h:selectOneMenu id="marka" value="#{sesja.noweZamowienie.marka}" required="true" requiredMessage="Musisz podac markÃÂ samochodu" style="font-size: 18px">
+                        <h:selectOneMenu id="marka" value="#{sesja.noweZamowienie.marka}" required="true" requiredMessage="Musisz podac markÃÂÃÂ samochodu" style="font-size: 18px">
                                 <f:selectItem  itemLabel="wybiarz marke" noSelectionOption="true"/>
                                 <f:selectItems value="#{sesja.noweZamowienie.markaList}" var="wybranomarke"/>
                                 <p:ajax update="model"/>
@@ -34,11 +34,11 @@ and open the template in the editor.
                         <br/>
                         
                         <p:outputLabel id="dataRozpoczecia" value="Data rozpoczecia:"/>
-                        <p:calendar id="popup1" value="#{sesja.noweZamowienie.date1}" mindate="#{sesja.noweZamowienie.date1}" required="true" requiredMessage="Musisz podac datÃÂÃÂ rozpoczÃÂÃÂcia wynajmu">
+                        <p:calendar id="popup1" value="#{sesja.noweZamowienie.date1}" mindate="#{sesja.noweZamowienie.date1}" required="true" requiredMessage="Musisz podac datę rozpoczęcia wynajmu">
                             <p:ajax event="dateSelect" update="popup2"/>
                         </p:calendar>
                         <p:outputLabel id="dataZakonczenia" value="Data zakonczenia:" />
-                        <p:calendar mindate="#{sesja.noweZamowienie.minDate()}" id="popup2" value="#{sesja.noweZamowienie.date2}" requiredMessage="Musisz podac datÃÂÃÂ zakoÃÂÃÂczenia wynajmu">
+                        <p:calendar mindate="#{sesja.noweZamowienie.minDate()}" id="popup2" value="#{sesja.noweZamowienie.date2}" requiredMessage="Musisz podac datę datę zakończenia wynajmu">
                             <p:ajax event="dateSelect"/>
                         </p:calendar> 
                     </h:panelGrid>

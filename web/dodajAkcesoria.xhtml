@@ -17,6 +17,9 @@ and open the template in the editor.
     <body>
         <ui:composition template="default.xhtml"> 
             <ui:define name="contents">
+        <f:metadata>
+            <f:viewAction action="#{sesja.uprawnienia(1)}" />
+        </f:metadata>
                 <h:form>
                     <p:dataGrid value="#{wyborAkcesorii.getAkcesoria()}" var="a" columns="1">
                         <f:facet name="header">

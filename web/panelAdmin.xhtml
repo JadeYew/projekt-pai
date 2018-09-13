@@ -12,6 +12,21 @@
         <ui:composition template="default.xhtml"> 
             <ui:define name="contents">
                 
+        <f:metadata>
+            <f:viewAction action="#{sesja.uprawnienia(3)}" />
+        </f:metadata>
+                #{panelAdmin.wczytajAdmin(sesja.admin)}
+                <h:form>
+                    <br/><br/>
+                    <p:commandButton value="Dodaj pracownika" ajax="false" action="dodajPracownika.xhtml"/><br/><br/>
+                    <p:commandButton value="Dodaj Admina" ajax="false" action="dodajAdmina.xhtml"/><br/><br/>
+                    <p:commandButton value="Usun Pracownika" ajax="false" action="usunPracownika.xhtml"/><br/><br/>
+                    <p:commandButton value="Usun Admina" ajax="false" action="usunAdmina.xhtml"/><br/><br/>
+                    <p:commandButton value="Dodaj akcesorium" ajax="false" action="noweAkcesorium.xhtml"/><br/><br/>
+                    <p:commandButton value="Usun akcesorium" ajax="false" action="usunAkcesorium.xhtml"/><br/><br/>
+                    <p:commandButton value="Dodaj Samochod" ajax="false" action="dodajSamochod.xhtml"/><br/><br/>
+                    <p:commandButton value="Usun samochod" ajax="false" action="usunSamochod.xhtml"/>
+                </h:form>
             </ui:define>
         </ui:composition>
     </h:body>

@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="default.xhtml"> 
+            <ui:define name="contents">
+                <f:metadata>
+                    <f:viewAction action="#{sesja.uprawnienia(3)}" />
+                </f:metadata>
+                
+                <h2>Dodaj pracownika</h2>
+                <h:form>
+                    <p:panelGrid columns="2">
+                        <p:outputLabel for="imie" value="Imie:"/>
+                        <p:inputText value="#{panelAdmin.nowyKlient.imie}"
+                                      id="imie" required="true"
+                                     requiredMessage="Podaj imie"/>
+                        <p:outputLabel for="nazwisko" value="Naziwisko:"/>
+                        <p:inputText value="#{panelAdmin.nowyKlient.nazwisko}"
+                                      id="nazwisko" required="true"
+                                     requiredMessage="Podaj nazwisko"/>
+                        <p:outputLabel for="ueMail" value="E-mail:"/>
+                        <p:inputText value="#{panelAdmin.nowyUzytkownik.EMail}" 
+                                     id="ueMail" required="true" 
+                                     requiredMessage="Podaj e-mail"
+                                     validatorMessage="Nieprawidłowy format e-mail">
+                            <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                        </p:inputText>
+                        <p:outputLabel for="adres" value="Adres:"/>
+                        <p:inputText value="#{panelAdmin.nowyKlient.adres}"
+                                      id="adres" required="true"
+                                     requiredMessage="Podaj adres"/>
+                        <p:outputLabel for="kod" value="Kod Pocztowy:"/>
+                        <p:inputMask value="#{panelAdmin.nowyKlient.kodPocztowy}"
+                                     id="kod" required="true" 
+                                     requiredMessage="Podaj kod pocztowy"
+                                     mask="99-999"/>
+                        <p:outputLabel for="miesjscowosc" value="Miejscowosc:"/>
+                        <p:inputText value="#{panelAdmin.nowyKlient.miejscowosc}"
+                                     id="miesjscowosc" required="true" 
+                                     requiredMessage="Podaj miejscowosc"/>
+                        <p:outputLabel for="wojewodztwo" value="Wojewodztwo:"/>
+                        <p:inputText value="#{panelAdmin.nowyKlient.wojewodztwo}"
+                                     id="wojewodztwo" required="true" 
+                                     requiredMessage="Podaj wojewodztwo"/>
+                        <br/>
+                        <p:commandButton value="Dodaj pracownika" ajax="false" action="#{panelAdmin.dodajPracownika()}"/>
+                    </p:panelGrid>
+                    
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

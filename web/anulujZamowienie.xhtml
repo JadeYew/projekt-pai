@@ -17,6 +17,9 @@ and open the template in the editor.
     <body>
         <ui:composition template="default.xhtml"> 
             <ui:define name="contents">
+        <f:metadata>
+            <f:viewAction action="#{sesja.uprawnienia(2)}" />
+        </f:metadata>
                 <h3>Czy jesteś pewien że chcesz anulować zamówienie?</h3>
                 <table class="wyswietlSamochod" style="font-size: 20px">
                         <tr>

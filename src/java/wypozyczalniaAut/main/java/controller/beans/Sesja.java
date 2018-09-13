@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.Vector;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -24,6 +25,7 @@ import wypozyczalniaAut.main.java.controller.Connect;
 import wypozyczalniaAut.main.java.model.Admin;
 import wypozyczalniaAut.main.java.model.Akcesorium;
 import wypozyczalniaAut.main.java.model.Klient;
+import wypozyczalniaAut.main.java.model.Pojazd;
 import wypozyczalniaAut.main.java.model.Pracownik;
 import wypozyczalniaAut.main.java.model.Samochod;
 import wypozyczalniaAut.main.java.model.Uzytkownik;
@@ -176,6 +178,8 @@ public class Sesja implements Serializable {
         if(zalogowany == true){
             zalogowany = false;
             zalogowanyUzytkownik = null;
+            admin = null;
+            pracownik = null;
         }
     }
     
@@ -304,5 +308,45 @@ public class Sesja implements Serializable {
             return "panelPracownik.xhtml";
         }
         return "mojeKonto";
+    }
+    
+    public String dodajPojazd(List <Samochod> samochodList){
+        Samochod s = samochodList.get(0);
+        Pojazd p = new Pojazd();
+        EntityManager em = Connect.createEntityManager();
+        Query q;
+        Random r = new Random();
+        do{
+            p.setId(r.nextInt(10000000));
+            q = em.createNamedQuery("Pojazd.findById").setParameter("id", p.getId());
+        }while(!q.getResultList().isEmpty());
+        p.setIdSamochod(s);
+        p.setDostepnosc(true);
+        em.getTransaction().begin();
+        em.persist(p);
+        em.getTransaction().commit();
+        em.close();
+        return null;
+    }
+    
+    public String uprawnienia(int jakie){
+        switch(jakie){
+            case 1:
+                if(zalogowanyUzytkownik != null){
+                    return null;
+                }
+                break;
+            case 2:
+                if(zalogowanyUzytkownik != null && (pracownik != null || admin != null)){
+                    return null;
+                }
+                break;
+            case 3:
+                if(zalogowanyUzytkownik != null && admin != null){
+                    return null;
+                }
+                break;
+        }
+        return "index.xhtml";
     }
 }

@@ -26,32 +26,38 @@ import wypozyczalniaAut.main.java.model.Zamowienie;
 @SessionScoped
 public class PanelPracownik implements Serializable{
     Pracownik pracownik;
-    Klient klient;
+    String nazwisko;
+    String imie;
     wypozyczalniaAut.main.java.model.Zamowienie zamowienie;
     List<wypozyczalniaAut.main.java.model.Zamowienie> zamowieniaDoPotwierdznia = new ArrayList();
     List<wypozyczalniaAut.main.java.model.Zamowienie> zamowieniaDoAnulowania = new ArrayList();
     List<wypozyczalniaAut.main.java.model.Zamowienie> zamowieniaDoZamkniecia = new ArrayList();
 
+    public String getNazwisko() {
+        return nazwisko;
+    }
+
+    public void setNazwisko(String nazwisko) {
+        this.nazwisko = nazwisko;
+    }
+
+    public String getImie() {
+        return imie;
+    }
+
+    public void setImie(String imie) {
+        this.imie = imie;
+    }
+
     public Zamowienie getZamowienie() {
+        if(zamowienie == null){
+            zamowienie = new Zamowienie();
+        }
         return zamowienie;
     }
 
     public void setZamowienie(Zamowienie zamowienie) {
-        if(zamowienie == null){
-            zamowienie = new Zamowienie();
-        }
         this.zamowienie = zamowienie;
-    }
-
-    public Klient getKlient() {
-        if(klient == null){
-            klient = new Klient();
-        }
-        return klient;
-    }
-
-    public void setKlient(Klient klient) {
-        this.klient = klient;
     }
 
     public List<Zamowienie> getZamowieniaDoPotwierdznia() {
@@ -64,9 +70,7 @@ public class PanelPracownik implements Serializable{
     }
 
     public List<Zamowienie> getZamowieniaDoAnulowania() {
-        if(zamowieniaDoAnulowania == null){
-            zamowieniaDoAnulowania = new ArrayList();
-        }
+        wczytajZamowienia(2);
         return zamowieniaDoAnulowania;
     }
 
@@ -75,9 +79,7 @@ public class PanelPracownik implements Serializable{
     }
 
     public List<Zamowienie> getZamowieniaDoZamkniecia() {
-        if(zamowieniaDoZamkniecia == null){
-            zamowieniaDoZamkniecia = new ArrayList();
-        }
+        wczytajZamowienia(3);
         return zamowieniaDoZamkniecia;
     }
 
@@ -104,40 +106,27 @@ public class PanelPracownik implements Serializable{
         EntityManager em = Connect.createEntityManager();
         Query q = em.createNamedQuery("Zamowienie.findAll");
         List<wypozyczalniaAut.main.java.model.Zamowienie> tmp = q.getResultList();
-        if(klient != null){
-            List<wypozyczalniaAut.main.java.model.Zamowienie> poKlientach = new ArrayList();
-            if(klient.getNazwisko() != null){
-                for(Zamowienie z : tmp){
-                    if(z.getIdKlient().getNazwisko().equals(klient.getNazwisko())){
-                        poKlientach.add(z);
-                    }
+        List<wypozyczalniaAut.main.java.model.Zamowienie> tmp2 = new ArrayList();
+        if(nazwisko != null){
+            for(wypozyczalniaAut.main.java.model.Zamowienie z : tmp){
+                if(z.getIdKlient().getNazwisko().equals(nazwisko)){
+                    tmp2.add(z);
                 }
-                tmp = poKlientach;
-                poKlientach = new ArrayList();
             }
-            if(klient.getImie() != null){
-                for(Zamowienie z : tmp){
-                    if(z.getIdKlient().getImie().equals(klient.getImie())){
-                        poKlientach.add(z);
-                    }
-                }
-                tmp = poKlientach;
-                poKlientach = new ArrayList();
-            }
+            tmp = tmp2;
         }
-        if(zamowienie != null){
-            List<wypozyczalniaAut.main.java.model.Zamowienie> poNumerach = new ArrayList();
-            if(zamowienie.getId() != null){
-                for(Zamowienie z : tmp){
-                    if(z.getId().equals(zamowienie.getId())){
-                        poNumerach.add(z);
-                    }
+        tmp2 = new ArrayList();
+        if(imie != null){
+            for(wypozyczalniaAut.main.java.model.Zamowienie z : tmp){
+                if(z.getIdKlient().getImie().equals(imie)){
+                    tmp2.add(z);
                 }
-                tmp = poNumerach;
             }
+            tmp = tmp2;
         }
         switch(ktore){
             case 1:
+                zamowieniaDoPotwierdznia = new ArrayList();
                 for(Zamowienie z : tmp){
                     if(z.getOplacone() == false && z.getAnulowane() == false){
                         zamowieniaDoPotwierdznia.add(z);
@@ -145,19 +134,67 @@ public class PanelPracownik implements Serializable{
                 }
                 break;
             case 2:
+                zamowieniaDoAnulowania = new ArrayList();
                 for(Zamowienie z : tmp){
-                    if(z.getAnulowane() == true){
+                    if(z.getAnulowane() == true && z.getZamkniete()== false){
                         zamowieniaDoAnulowania.add(z);
                     }
                 }
                 break;
             case 3:
+                zamowieniaDoZamkniecia = new ArrayList();
                 for(Zamowienie z : tmp){
-                    if(z.getOplacone() == true && z.getAnulowane() == false){
+                    if(z.getOplacone() == true && z.getAnulowane() == false && z.getZamkniete()== false){
                         zamowieniaDoZamkniecia.add(z);
                     }
                 }
                 break;
         }
+    }
+    
+    public String wyszukajZamowienia(int ktore){
+        if(imie == "")
+        {
+            imie = null;
+        }
+        if(nazwisko == "")
+        {
+            nazwisko = null;
+        }
+        wczytajZamowienia(ktore);
+        return null;
+    }
+    
+    public String zatwierdz(int zamowieniaId){
+        EntityManager em = Connect.createEntityManager();
+        em.getTransaction().begin();
+        zamowienie = em.find(wypozyczalniaAut.main.java.model.Zamowienie.class, zamowieniaId);
+        zamowienie.setOplacone(Boolean.TRUE);
+        em.getTransaction().commit();
+        em.close();
+        wczytajZamowienia(1);
+        return "";
+    }
+    
+    public String zamknij(int zamowieniaId){
+        EntityManager em = Connect.createEntityManager();
+        em.getTransaction().begin();
+        zamowienie = em.find(wypozyczalniaAut.main.java.model.Zamowienie.class, zamowieniaId);
+        zamowienie.setZamkniete(Boolean.TRUE);
+        em.getTransaction().commit();
+        em.close();
+        wczytajZamowienia(3);
+        return "";
+    }
+    
+    public String anuluj(int zamowieniaId){
+        EntityManager em = Connect.createEntityManager();
+        em.getTransaction().begin();
+        zamowienie = em.find(wypozyczalniaAut.main.java.model.Zamowienie.class, zamowieniaId);
+        zamowienie.setZamkniete(Boolean.TRUE);
+        em.getTransaction().commit();
+        em.close();
+        wczytajZamowienia(2);
+        return "";
     }
 }

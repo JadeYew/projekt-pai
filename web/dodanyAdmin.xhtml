@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="default.xhtml"> 
+            <ui:define name="contents">
+                <f:metadata>
+                    <f:viewAction action="#{sesja.uprawnienia(3)}" />
+                </f:metadata>
+                <div style="align-self: center; margin-left: auto; margin-right: auto">
+                    Dodany admin
+                    <p:panelGrid columns="2">
+                        <p:outputLabel value="Imie:"/>
+                        <p:outputLabel value="#{panelAdmin.nowyKlient.imie}"/>
+                        <p:outputLabel value="Nazwisko:"/>
+                        <p:outputLabel value="#{panelAdmin.nowyKlient.nazwisko}"/>
+                        <p:outputLabel value="E-mail:"/>
+                        <p:outputLabel value="#{panelAdmin.nowyUzytkownik.EMail}"/>
+                    </p:panelGrid>
+                </div>
+                #{panelAdmin.clear()}
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

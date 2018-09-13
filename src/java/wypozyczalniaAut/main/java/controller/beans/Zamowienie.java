@@ -64,6 +64,15 @@ public class Zamowienie implements Serializable{
             for(Samochod s: samochody){
                 markaList.add(s.getMarka());
             }
+            for(int i = 0; i < markaList.size() - 1; i++){
+                String tmp = markaList.get(i);
+                for(int j = i + 1; j < markaList.size(); j++){
+                    if(markaList.get(j).equals(tmp)){
+                        markaList.remove(j);
+                        j--;
+                    }
+                }
+            }
             em.close();
     }
     

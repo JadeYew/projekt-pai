@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <head>
+        <title>TODO supply a title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <body>
+        <ui:composition template="default.xhtml">
+            <ui:define name="contents">
+                
+        <f:metadata>
+            <f:viewAction action="#{sesja.uprawnienia(2)}" />
+        </f:metadata>
+                <div><h2>Dodaj nowy pojazd</h2></div>
+                <h:form>
+                    <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+                        <p:outputLabel for="marka" value="Marka:" />
+                        <p:selectOneMenu id="marka" value="#{sesja.wyszukiwanie.marka}" style="width:150px" required="true" requiredMessage="Musisz wybrać markę samochodu">
+                        <f:selectItem  itemLabel="wybiarz marke" noSelectionOption="true"/>
+                        <f:selectItems value="#{sesja.wyszukiwanie.markaList}" var="wybranomarke"/>
+                        </p:selectOneMenu>
+                        
+                        <p:outputLabel for="typ" value="Model:" />
+                        <p:selectOneMenu id="typ" value="#{sesja.wyszukiwanie.model}" style="width:150px" required="true" requiredMessage="Musisz wybrać model samochodu">
+                        <f:selectItem  itemLabel="wybiarz model" noSelectionOption="true"/>
+                        <f:selectItems value="#{sesja.wyszukiwanie.modelList}" var="wybranotyp"/>
+                        </p:selectOneMenu>
+                        
+                        <br/>
+                        <p:commandButton value="Dodaj pojazd" action="#{sesja.dodajPojazd(sesja.wyszukiwanie.samochodList)}" ajax="false" style="width:150px"/>
+                    </h:panelGrid> 
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

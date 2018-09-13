@@ -1,0 +1,115 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="default.xhtml"> 
+            <ui:define name="contents">
+                <f:metadata>
+                    <f:viewAction action="#{sesja.uprawnienia(3)}" />
+                </f:metadata>
+                <h2>Dodaj Samochod</h2>
+                <h:form>
+                    <p:panelGrid columns="2">
+                        <p:outputLabel for="marka" value="Marka samochodu:"/>
+                        <p:inputText value="#{panelAdmin.samochod.marka}"
+                                          id="marka" required="true"
+                                         requiredMessage="Podaj markę"/>
+
+                        <p:outputLabel for="model" value="Model samochodu:"/>
+                        <p:inputText value="#{panelAdmin.samochod.model}"
+                                          id="model" required="true"
+                                         requiredMessage="Podaj model"/>
+
+                        <p:outputLabel for="zamek" value="Zamek centralny"/>
+                        <p:selectBooleanCheckbox id="zamek" value="#{panelAdmin.samochod.centralnyZamek}"/>
+
+                        <p:outputLabel for="komp" value="Komputer pokładowy"/>
+                        <p:selectBooleanCheckbox id="komp" value="#{panelAdmin.samochod.komputerPokladowy}"/>
+
+                        <p:outputLabel for="eles" value="Elektryczne szyby"/>
+                        <p:selectBooleanCheckbox id="eles" value="#{panelAdmin.samochod.elektryczneSzyby}"/>
+
+                        <p:outputLabel for="elel" value="Elektryczne lusterka"/>
+                        <p:selectBooleanCheckbox id="elel" value="#{panelAdmin.samochod.elektryczneLusterka}"/>
+
+                        <p:outputLabel for="kliR" value="Klimatyzacja ręczna"/>
+                        <p:selectBooleanCheckbox id="kliR" value="#{panelAdmin.samochod.klimatyzacjaReczna}"/>
+
+                        <p:outputLabel for="kliA" value="Klimatyzacja automatyczna"/>
+                        <p:selectBooleanCheckbox id="kliA" value="#{panelAdmin.samochod.klimatyzacjaAutomatyczna}"/>
+
+                        <p:outputLabel for="podL" value="Podgrzewane lusterka"/>
+                        <p:selectBooleanCheckbox id="podL" value="#{panelAdmin.samochod.podgrzewaneLusterka}"/>
+
+                        <p:outputLabel for="abs" value="ABS"/>
+                        <p:selectBooleanCheckbox id="abs" value="#{panelAdmin.samochod.abs}"/>
+
+                        <p:outputLabel for="auto" value="Automatyczn skrzynia biegów"/>
+                        <p:selectBooleanCheckbox id="auto" value="#{panelAdmin.samochod.automatycznaSkrzynia}"/>
+
+                        <p:outputLabel for="podP" value="Poduszki powietrzne"/>
+                        <p:selectBooleanCheckbox id="podP" value="#{panelAdmin.samochod.poduszkiPowietrzne}"/>
+
+                        <p:outputLabel for="ileM" value="Ilość miejsc"/>
+                        <p:inputText value="#{panelAdmin.samochod.iloscMiejsc}"
+                                          id="ileM" required="true"
+                                         requiredMessage="Podaj ilość miejsc"/>
+
+                        <p:outputLabel for="ileD" value="Ilość drzwi"/>
+                        <p:inputText value="#{panelAdmin.samochod.iloscDrzwi}"
+                                          id="ileD" required="true"
+                                         requiredMessage="Podaj ilość drzwi"/>
+
+                        <p:outputLabel for="pal" value="Rodzaj paliwa"/>
+                        <p:inputText value="#{panelAdmin.samochod.rodzajPaliwa}"
+                                          id="pal" required="true"
+                                         requiredMessage="Podaj rodzaj paliwa"/>
+
+                        <p:outputLabel for="poj" value="Pojemność silnika"/>
+                        <p:inputText value="#{panelAdmin.samochod.pojemnoscSilnika}"
+                                          id="poj" required="true"
+                                         requiredMessage="Podaj sojemność silnika"/>
+
+                        <p:outputLabel for="moc" value="Moc"/>
+                        <p:inputText value="#{panelAdmin.samochod.moc}"
+                                          id="moc" required="true"
+                                         requiredMessage="Podaj moc"/>
+
+                        <p:outputLabel for="palM" value="Zużycie paliwa w mieście"/>
+                        <p:inputText value="#{panelAdmin.samochod.zuzycieMiasto}"
+                                          id="palM" required="true"
+                                         requiredMessage="Podaj zużycie paliwa w mieście"/>
+
+                        <p:outputLabel for="palT" value="Zużycie paliwa w trasie"/>
+                        <p:inputText value="#{panelAdmin.samochod.zuzycie90}"
+                                          id="palT" required="true"
+                                         requiredMessage="Podaj zużycie paliwa w trasie"/>
+
+                        <p:outputLabel for="cenaP" value="Cena podstawowa"/>
+                        <p:inputText value="#{panelAdmin.samochod.cenaPodstawowa}"
+                                          id="cenaP" required="true"
+                                         requiredMessage="Podaj cenę podstawową"/>
+
+                        <p:outputLabel for="typ" value="Typ samochodu"/>
+                        <p:selectOneMenu id="typ" value="#{panelAdmin.samochod.typ}">
+                                <f:selectItem itemLabel="osobowy" itemValue="1" />
+                                <f:selectItem itemLabel="van" itemValue="2" />
+                                <f:selectItem itemLabel="ciężarowy" itemValue="3" />
+                            </p:selectOneMenu>
+                        <br/>
+                        <p:commandButton value="Dodaj" action="#{panelAdmin.dodajSamochod()}"/>
+                        <br/>
+                        <br/>
+                    </p:panelGrid>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

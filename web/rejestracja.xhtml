@@ -41,7 +41,8 @@ and open the template in the editor.
                                     requiredMessage="Podaj hasło" 
                                     match="upasswordAgain" validatorMessage="Hasła nie są identyczne"
                                     feedback="true"
-                                    inline="true"/>
+                                    inline="true"
+                                     ><f:validateLength minimum="8" /></p:password>
                         <br/>
                         <br/>
                         <p:outputLabel for="upasswordAgain" value="Powtórz hasło:"/>

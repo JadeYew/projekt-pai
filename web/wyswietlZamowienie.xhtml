@@ -17,6 +17,10 @@ and open the template in the editor.
     <body>
         <ui:composition template="default.xhtml"> 
             <ui:define name="contents">
+                
+        <f:metadata>
+            <f:viewAction action="#{sesja.uprawnienia(2)}" />
+        </f:metadata>
                 <link rel="stylesheet" type="text/css" href="resources/css/table.css"></link> 
                 <div style="text-align: center"><h3>Twoje Zmowienie:</h3></div>
             <table class="wyswietlSamochod" style="font-size: 20px">

@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="default.xhtml"> 
+            <ui:define name="contents">
+                <f:metadata>
+                    <f:viewAction action="#{sesja.uprawnienia(3)}" />
+                </f:metadata>
+                
+                <h2>Usun Admina</h2>
+                <h:form>
+                    <p:panelGrid columns="2">
+                        <p:outputLabel for="login" value="Login pracownika:"/>
+                        <p:inputText value="#{panelAdmin.usuwany.login}"
+                                      id="login" required="true"
+                                     requiredMessage="Podaj login"/>
+                        <br/>
+                        <p:commandButton actionListener="#{panelAdmin.sprawdzUsun()}" value="Usuń admina" ajax="false" action="#{panelAdmin.usunPracownika()}"/>
+                    </p:panelGrid>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

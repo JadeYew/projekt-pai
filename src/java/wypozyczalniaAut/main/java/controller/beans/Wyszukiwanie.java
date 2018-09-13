@@ -31,15 +31,34 @@ import wypozyczalniaAut.main.java.model.Samochod;
  * @author Kamil
  */
 @Named("wyszukiwanie")
-@SessionScoped
+@ViewScoped
 @ManagedBean
 public class Wyszukiwanie implements Serializable{
 
     private List <Samochod> samochodList = new ArrayList<>();
     private String typ;
     private String marka;
+    private String model;
     private List<String> typList = new ArrayList<>();
+    private List<String> modelList = new ArrayList<>();
     private List<String> markaList = new ArrayList<>();
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public List<String> getModelList() {
+        uzupelnijModelList();
+        return modelList;
+    }
+
+    public void setModelList(List<String> modelList) {
+        this.modelList = modelList;
+    }
     
     public void uzupelnijMarkaList(){
         
@@ -49,7 +68,32 @@ public class Wyszukiwanie implements Serializable{
             samochody.forEach((s) -> {
                 markaList.add(s.getMarka());
         });
+            for(int i = 0; i < markaList.size() - 1; i++){
+                String tmp = markaList.get(i);
+                for(int j = i + 1; j < markaList.size(); j++){
+                    if(markaList.get(j).equals(tmp)){
+                        markaList.remove(j);
+                        j--;
+                    }
+                }
+            }
             em.close();
+    }
+    
+    public void uzupelnijModelList(){
+        EntityManager em = Connect.createEntityManager();
+        Query q;
+        modelList = new ArrayList<>();
+        if(marka != null){
+            q = em.createNamedQuery("Samochod.findByMarka").setParameter("marka", marka);
+        }else{
+            q = em.createNamedQuery("Samochod.findAll");
+        }
+        List <Samochod> tmp = q.getResultList();
+        for(Samochod s : tmp){
+            modelList.add(s.getModel());
+        }
+        em.close();
     }
     
     public void uzupelnijSamochodList(){
@@ -86,9 +130,6 @@ public class Wyszukiwanie implements Serializable{
         else{
             samochodList = tmp;
         }
-    }
-
-    public Wyszukiwanie(){
     }
     
     public String getTyp() {

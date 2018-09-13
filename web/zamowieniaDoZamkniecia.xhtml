@@ -30,7 +30,7 @@ and open the template in the editor.
                     </h:panelGrid>
                 </h:form>
                 <section>
-                    <p:dataList value="#{panelPracownik.zamowieniaDoPotwierdznia}" var="z" paginator="true" rows="10">
+                    <p:dataList value="#{panelPracownik.zamowieniaDoZamkniecia}" var="z" paginator="true" rows="10">
                         <f:facet name="header">
                             Zamówienia
                         </f:facet>
@@ -48,7 +48,7 @@ and open the template in the editor.
                             <h:outputText value="Data zakonczenia:" />
                             <h:outputText value="#{sesja.dataFormat(z.dataZakonczenia)}" />
                             <br/>
-                            <h:form><p:commandButton value="Zatwierdz" action="#{panelPracownik.zatwierdz(z.id)}" ajax="false"/></h:form>
+                            <h:form><p:commandButton value="Zamknij" action="#{panelPracownik.zamknij(z.id)}" ajax="false"/></h:form>
                         </p:panelGrid>
                     </p:dataList>
                 </section>

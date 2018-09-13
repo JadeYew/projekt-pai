@@ -17,6 +17,9 @@ and open the template in the editor.
         <ui:composition template="default.xhtml"> 
             <ui:define name="contents">
                 
+        <f:metadata>
+            <f:viewAction action="#{sesja.uprawnienia(1)}" />
+        </f:metadata>
             <link rel="stylesheet" type="text/css" href="resources/css/table.css"></link> 
             <div style="text-align: center"><h3>Konto uzytkownika: #{sesja.zalogowanyUzytkownik.getLogin()}</h3></div>
             <table class="wyswietlSamochod" style="font-size: 20px">
@@ -52,6 +55,7 @@ and open the template in the editor.
                     <div style="text-align: center">
                     <p:link outcome="uzupelnijDane.xhtml" value="Zmień dane" style="font-size:20px; align-self: center; margin-left:auto; margin-right:auto;"/><br/>
                     <p:link outcome="#{sesja.wystietlZamowienia()}" value="Wyswietl zamowienia" style="font-size:20px; align-self: center; margin-left:auto; margin-right:auto;"/><br/>
+                    <p:link outcome="#{sesja.wystietlZamowienia()}" value="Zmień hasło" style="font-size:20px; align-self: center; margin-left:auto; margin-right:auto;"/><br/>
                     </div>
             </ui:define>
         </ui:composition>

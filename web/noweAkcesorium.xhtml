@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="default.xhtml"> 
+            <ui:define name="contents">
+                <f:metadata>
+                    <f:viewAction action="#{sesja.uprawnienia(3)}" />
+                </f:metadata>
+                
+                <h2>Dodaj pracownika</h2>
+                <h:form>
+                    <p:panelGrid columns="2">
+                        <p:outputLabel for="nazwa" value="Nazwa akcesorium"/>
+                        <p:inputText value="#{panelAdmin.akcesorium.nazwa}"
+                                      id="nazwa" required="true"
+                                     requiredMessage="Podaj nazwę akcesorium"/>
+                        <p:outputLabel for="cena" value="Cena akcesorium"/>
+                        <p:inputText value="#{panelAdmin.akcesorium.cena}"
+                                      id="cena" required="true"
+                                     requiredMessage="Podaj cenę"/>
+                        <p:outputLabel for="ilosc" value="Ilość dodawana"/>
+                        <p:inputText value="#{panelAdmin.akcesorium.ilosc}"
+                                      id="ilosc" required="true"
+                                     requiredMessage="Podaj ilość"/>
+                        <br/>
+                        <p:commandButton value="Dodaj akcesorium" ajax="false" action="#{panelAdmin.dodajAkcesorium()}"/>
+                    </p:panelGrid>
+                    
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

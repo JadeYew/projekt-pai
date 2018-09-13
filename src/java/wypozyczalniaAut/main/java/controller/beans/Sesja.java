@@ -110,6 +110,22 @@ public class Sesja implements Serializable {
     public void setZalogowany(boolean zalogowany){
         this.zalogowany = zalogowany;
     }
+
+    public Admin getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Admin admin) {
+        this.admin = admin;
+    }
+
+    public Pracownik getPracownik() {
+        return pracownik;
+    }
+
+    public void setPracownik(Pracownik pracownik) {
+        this.pracownik = pracownik;
+    }
     
     public boolean getZalogowany(){
         return this.zalogowany;

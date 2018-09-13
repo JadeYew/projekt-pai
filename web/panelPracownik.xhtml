@@ -11,8 +11,15 @@
     <h:body>
         <ui:composition template="default.xhtml"> 
             <ui:define name="contents">
-                
+                #{panelPracownik.wczytajPracownik(sesja.pracownik)}
+                <h:form>
+                    <br/><br/>
+                    <p:commandButton value="Zatwierdz zamówienie" ajax="false" action="zamowieniaDoZatwierdzenia.xhtml"/><br/><br/>
+                    <p:commandButton value="Zamknij zamówienie" ajax="false" action="rejestracja.xhtml"/><br/><br/>
+                    <p:commandButton value="Anuluj zamówienie" ajax="false" action="rejestracja.xhtml"/><br/><br/>
+                    <p:commandButton value="Dodaj pojazd" ajax="false" action="rejestracja.xhtml"/><br/><br/>
+                </h:form>
             </ui:define>
         </ui:composition>
-    </body>
+    </h:body>
 </html>

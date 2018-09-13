@@ -312,5 +312,3 @@ public class Zamowienie implements Serializable{
         }
     }
 }
-    
-

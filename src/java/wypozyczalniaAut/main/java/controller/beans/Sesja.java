@@ -8,7 +8,9 @@ package wypozyczalniaAut.main.java.controller.beans;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 import javax.annotation.PostConstruct;
@@ -19,8 +21,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import org.apache.commons.lang3.tuple.MutablePair;
 import wypozyczalniaAut.main.java.controller.Connect;
+import wypozyczalniaAut.main.java.model.Admin;
 import wypozyczalniaAut.main.java.model.Akcesorium;
 import wypozyczalniaAut.main.java.model.Klient;
+import wypozyczalniaAut.main.java.model.Pracownik;
 import wypozyczalniaAut.main.java.model.Samochod;
 import wypozyczalniaAut.main.java.model.Uzytkownik;
 
@@ -47,14 +51,16 @@ public class Sesja implements Serializable {
 
     Uzytkownik zalogowanyUzytkownik;
     Klient klient;
+    Admin admin;
+    Pracownik pracownik;
     boolean zalogowany;
     int pageId = 0;
     
     public String mojeKontoPrzcisk(){
         if(zalogowany == true){
-            return "mojeKonto";
+            return "mojeKontoRedirect.xhtml";
         }
-        return "logowanie";
+        return "logowanie.xhtml";
     }
     
     public void setRejestracja(Rejestracja rejestracja){
@@ -140,14 +146,14 @@ public class Sesja implements Serializable {
         zalogowany = rejestracja.addUser();
         if(zalogowany){
             zalogowanyUzytkownik = rejestracja.getUzytkownik();
-            return "uzupelnijDane";
+            return "uzupelnijDane.xhtml";
         }
         return null;
     }
     
     public String nowaRejstracja(){
         wyloguj();
-        return "rejestracja";
+        return "rejestracja.xhtml";
     }
     
     public void wyloguj(){
@@ -165,7 +171,9 @@ public class Sesja implements Serializable {
             if(!zalogowanyUzytkownik.getKlientCollection().isEmpty()){
                 klient = (Klient)(zalogowanyUzytkownik.getKlientCollection().toArray())[0];
             }
-            return "index";
+            admin = zalogowanyUzytkownik.getAdmin();
+            pracownik = zalogowanyUzytkownik.getPracownik();
+            return "index.xhtml";
         }
         return null;
     }
@@ -190,30 +198,30 @@ public class Sesja implements Serializable {
             zalogowany = false;
             zalogowanyUzytkownik = null;
             klient = null;
-            return "index";
+            return "index.xhtml";
         }
-        return "logowanie";
+        return "logowanie.xhtml";
     }
     
     public String wyswietlanieSamochodu(int id){
         EntityManager em = Connect.createEntityManager();
         Query q = em.createNamedQuery("Samochod.findById").setParameter("id",id);
         getWyswietlSamochod().samochod = (Samochod)q.getSingleResult();
-        return "wyswietlSamochod";
+        return "wyswietlSamochod.xhtml";
     }
     
     public String zlozZamowienie(){
         if(!zalogowany){
             pageId = 2;
-            return "logowanie";
+            return "logowanie.xhtml";
         }
-        return "zamowienie";
+        return "zamowienie.xhtml";
     }
     
     public String zmienDane(){
         uzupelnijDane.uzupelnijDane();
         klient = uzupelnijDane.getKlient();
-        return "index";
+        return "index.xhtml";
     }
 
     public UzupelnijDane getUzupelnijDane() {
@@ -240,12 +248,12 @@ public class Sesja implements Serializable {
     }
     
     public String wystietlZamowienia(){
-        return "index";
+        return "wystietlZamowienia.xhtml";
     }
     
     public String dodajZamowienie(){
         if(noweZamowienie.isDostepnosc()){
-            return "dodajAkcesoria";
+            return "dodajAkcesoria.xhtml";
         }
         return null;
     }
@@ -266,5 +274,19 @@ public class Sesja implements Serializable {
         }
         noweZamowienie = new Zamowienie();
         return "index.xhtml";
+    }
+    
+    public String dataFormat(Date data){
+        return new SimpleDateFormat("dd-MM-yyyy").format(data);
+    }
+    
+    public String mojeKontoRedirect(){
+        if(admin != null){
+            return "panelAdmin.xhtml";
+        }
+        if(pracownik != null){
+            return "panelPracownik.xhtml";
+        }
+        return "mojeKonto";
     }
 }

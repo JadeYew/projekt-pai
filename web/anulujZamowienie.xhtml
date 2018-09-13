@@ -17,38 +17,37 @@ and open the template in the editor.
     <body>
         <ui:composition template="default.xhtml"> 
             <ui:define name="contents">
-                <link rel="stylesheet" type="text/css" href="resources/css/table.css"></link> 
-                <div style="text-align: center"><h3>Twoje Zmowienie:</h3></div>
-            <table class="wyswietlSamochod" style="font-size: 20px">
+                <h3>Czy jesteś pewien że chcesz anulować zamówienie?</h3>
+                <table class="wyswietlSamochod" style="font-size: 20px">
                         <tr>
                             <td>Samochod:</td>
-                            <td>#{sesja.noweZamowienie.marka} #{sesja.noweZamowienie.model}</td>
+                            <td>#{mojeKonto.doAnulowania.idPojazd.idSamochod.marka} #{mojeKonto.doAnulowania.idPojazd.idSamochod.model}</td>
                         </tr>
                         <tr>
                             <td>Data rozpoczęcia wynajmu:</td>
-                            <td>#{sesja.dataFormat(a.noweZamowienie.date1)}</td>
+                            <td>#{sesja.dataFormat(mojeKonto.doAnulowania.dataRozpoczecia)}</td>
                         </tr>
                         <tr>
                             <td>Data zakończenia wynajmu: </td>
-                            <td>#{sesja.dataFormat(sesja.noweZamowienie.date2)}</td>
+                            <td>#{sesja.dataFormat(mojeKonto.doAnulowania.dataZakonczenia)}</td>
                         </tr>
                         <tr>
                             <td>Wybrane akcesoria:</td>
-                            <td><p:dataGrid value="#{sesja.noweZamowienie.akcesoria}" var="a" columns="1">
-                                    <div style="font-size: 16px">#{a.nazwa}</div>
-                                </p:dataGrid></td>
+                            <td>
+                                <h:outputText value="#{mojeKonto.akcesoria(mojeKonto.doAnulowania)}" escape="false" />
+                            </td>
                         </tr>
                         <tr>
                             <td>Cena wynajmu: </td>
-                            <td>#{sesja.noweZamowienie.obliczCene()} zł</td>
+                            <td>#{mojeKonto.doAnulowania.cena} zł</td>
                         </tr>
                         <tr>
                             <h:form>
-                                <td><p:commandButton value="Anuluj" ajax="false" action="${sesja.anulujPotwierdzZamowienie(false)}"/></td>
-                            <td><p:commandButton value="Potwierdź" ajax="false" action="${sesja.anulujPotwierdzZamowienie(true)}"/></td>
+                                <td></td>
+                                <td><p:commandButton value="Anuluj zamówienie" ajax="false" action="${mojeKonto.anulujZamowienie()}"/></td>
                             </h:form>
                         </tr>
-                    </table>
+                </table>
             </ui:define>
         </ui:composition>
     </body>

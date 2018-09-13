@@ -64,7 +64,7 @@ and open the template in the editor.
                                      requiredMessage="Podaj wojewodztwo"/>
                         <br/>
                         <br/>
-                        <p:commandButton action="#{sesja.zmienDane()}" value="Rejestruj" ajax="false"/>
+                        <p:commandButton action="#{sesja.zmienDane()}" value="#{sesja.uzupelnijDane.uzupelnijDaneButton()}" ajax="false"/>
                     </h:panelGrid>
                 </h:form>
             </ui:define>

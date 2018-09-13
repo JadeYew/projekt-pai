@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <head>
+        <title>TODO supply a title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <body>
+        <ui:composition template="default.xhtml"> 
+            <ui:define name="contents">
+                <link rel="stylesheet" type="text/css" href="resources/css/table.css"></link> 
+                #{mojeKonto.setKlient(sesja.klient)}
+                #{mojeKonto.uzupelnijZamowienia()}
+                <p:dataList value="#{mojeKonto.zamowienia}" var="z">
+                    <f:facet name="header">
+                        Otwarte Zamowienia
+                    </f:facet>
+                    <table cellpadding="10">
+                        <tr>
+                            <td>
+                                Nr zamówienia:
+                            </td>
+                            <td>
+                                #{z.id}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Samochod:
+                            </td>
+                            <td>
+                                #{z.idPojazd.idSamochod.marka} #{z.idPojazd.idSamochod.model}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Data rozpoczęcia:
+                            </td>
+                            <td>
+                                #{sesja.dataFormat(z.dataRozpoczecia)}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Data zakończenia:
+                            </td>
+                            <td>
+                                #{sesja.dataFormat(z.dataZakonczenia)}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Wybrane akcesoria:
+                            </td>
+                            <td>
+                                <h:outputText value="#{mojeKonto.akcesoria(z)}" escape="false" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Cena:
+                            </td>
+                            <td>
+                                #{z.cena} zł
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <h:form>
+                                    <p:commandButton value="Anuluj Zamowienie" ajax="false" action="#{mojeKonto.anulujZamowienieRedirect(z)}"/>
+                                </h:form>
+                            </td>
+                        </tr>
+                    </table>
+                    <br/>
+                    <br/>
+                </p:dataList>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

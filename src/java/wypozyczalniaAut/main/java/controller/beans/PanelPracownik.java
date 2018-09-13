@@ -55,9 +55,7 @@ public class PanelPracownik implements Serializable{
     }
 
     public List<Zamowienie> getZamowieniaDoPotwierdznia() {
-        if(zamowieniaDoPotwierdznia == null){
-            zamowieniaDoPotwierdznia = new ArrayList();
-        }
+        wczytajZamowienia(1);
         return zamowieniaDoPotwierdznia;
     }
 

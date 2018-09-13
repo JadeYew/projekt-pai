@@ -108,17 +108,6 @@ public class MojeKonto implements Serializable{
         return ret.substring(0,ret.length() - 1);
     }
     
-    public String akcesoria(List<AkcesoriumDoZamowienia> akcesoria){
-        if(akcesoria.isEmpty()){
-            return "brak";
-        }
-        String ret = "";
-        for(AkcesoriumDoZamowienia a : akcesoria){
-            ret += a.getAkcesorium().getNazwa() + "<br />";
-        }
-        return ret.substring(0,ret.length() - 1);
-    }
-    
     public String anulujZamowienieRedirect(Zamowienie z){
         doAnulowania = z;
         return "anulujZamowienie.xhtml";

@@ -25,6 +25,7 @@ and open the template in the editor.
                         <p:inputText value="#{panelPracownik.klient.nazwisko}" id="nazwisko"/>
                         <p:outputLabel for="nr" value="Nr zamówienia:" />
                         <p:inputText value="#{panelPracownik.zamowienie.id}" id="nr"/>
+                        <p:commandButton value="Zaloguj się" ajax="false" action="${sesja.zaloguj()}"/>       
                     </h:panelGrid>
                 </h:form>
                 <section>
@@ -32,23 +33,18 @@ and open the template in the editor.
                         <f:facet name="header">
                             Zamówienia
                         </f:facet>
-                        <table>
-                            <tr>
-                                <td> Zamowienie nr: #{z.id}</td>
-                            </tr>
-                            <tr>
-                                <td> Klient: #{z.idKlient.imie} #{z.idKlient.nazwisko}</td>
-                            </tr>
-                            <tr>
-                                <td> Samochod: #{z.idPojazd.idSamochod.marka} #{z.idPojazd.idSamochod.model}</td>
-                            </tr>
-                            <tr>
-                                <td> Data rozpoczecia: #{sesja.dataFormat(z.dataRozpoczecia)}</td>
-                            </tr>
-                            <tr>
-                                <td> Data zakonczenia: #{sesja.dataFormat(z.dataZakonczenia)}</td>
-                            </tr>
-                        </table>
+                        <p:panelGrid columns="2">
+                            <h:outputText value="Zamowienie nr:" />
+                            <h:outputText value="#{z.id}" />
+                            <h:outputText value="Klient:" />
+                            <h:outputText value="#{z.idKlient.imie} #{z.idKlient.nazwisko}" />
+                            <h:outputText value="Samochod: " />
+                            <h:outputText value="#{z.idPojazd.idSamochod.marka} #{z.idPojazd.idSamochod.model}" />
+                            <h:outputText value="Data rozpoczecia:" />
+                            <h:outputText value="#{sesja.dataFormat(z.dataRozpoczecia)}" />
+                            <h:outputText value="Data zakonczenia:" />
+                            <h:outputText value="#{sesja.dataFormat(z.dataZakonczenia)}" />
+                        </p:panelGrid>
                     </p:dataList>
                 </section>
             </ui:define>

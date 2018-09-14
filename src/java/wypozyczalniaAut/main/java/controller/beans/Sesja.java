@@ -39,24 +39,23 @@ import wypozyczalniaAut.main.java.model.Uzytkownik;
 @SessionScoped
 public class Sesja implements Serializable {
     @ManagedProperty(value ="#{rejestracja}")
-    Rejestracja rejestracja;
+    private Rejestracja rejestracja;
     @ManagedProperty(value ="#{wyszukiwanie}")
-    Wyszukiwanie wyszukiwanie;
+    private Wyszukiwanie wyszukiwanie;
     @ManagedProperty(value ="#{login}")
-    Login login;
+    private Login login;
     @ManagedProperty(value ="#{wyswietlSamochod}")
-    WyswietlSamochod wyswietlSamochod;
+    private WyswietlSamochod wyswietlSamochod;
     @ManagedProperty(value ="#{uzupelnijDane}")
-    UzupelnijDane uzupelnijDane;
+    private UzupelnijDane uzupelnijDane;
     @ManagedProperty(value ="#{noweZamowienie}")
-    wypozyczalniaAut.main.java.controller.beans.Zamowienie noweZamowienie;
+    private wypozyczalniaAut.main.java.controller.beans.Zamowienie noweZamowienie;
 
-    Uzytkownik zalogowanyUzytkownik;
-    Klient klient;
-    Admin admin;
-    Pracownik pracownik;
-    boolean zalogowany;
-    int pageId = 0;
+    private Uzytkownik zalogowanyUzytkownik;
+    private Klient klient;
+    private Admin admin;
+    private Pracownik pracownik;
+    private boolean zalogowany;
     
     public String mojeKontoPrzcisk(){
         if(zalogowany == true){
@@ -133,14 +132,6 @@ public class Sesja implements Serializable {
         return this.zalogowany;
     }
     
-    public void setPageId(int pageId){
-        this.pageId = pageId;
-    }
-    
-    public int getPageId(){
-        return this.pageId;
-    }
-    
     public void setZalogowanyUzytkownik(Uzytkownik zalogowanyUzytkownik){
         this.zalogowanyUzytkownik = zalogowanyUzytkownik;
     }
@@ -213,7 +204,6 @@ public class Sesja implements Serializable {
     }
     
     public String zalogujWyloguj(){
-        pageId = 0;
         if(zalogowany){
             zalogowany = false;
             zalogowanyUzytkownik = null;
@@ -226,13 +216,12 @@ public class Sesja implements Serializable {
     public String wyswietlanieSamochodu(int id){
         EntityManager em = Connect.createEntityManager();
         Query q = em.createNamedQuery("Samochod.findById").setParameter("id",id);
-        getWyswietlSamochod().samochod = (Samochod)q.getSingleResult();
+        getWyswietlSamochod().setSamochod((Samochod)q.getSingleResult());
         return "wyswietlSamochod.xhtml";
     }
     
     public String zlozZamowienie(){
         if(!zalogowany){
-            pageId = 2;
             return "logowanie.xhtml";
         }
         return "zamowienie.xhtml";

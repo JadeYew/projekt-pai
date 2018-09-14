@@ -107,6 +107,12 @@ and open the template in the editor.
                             <p:graphicImage value="resources/images/no.png" rendered="#{!sesja.wyswietlSamochod.samochod.centralnyZamek}"/>
                         </td>
                     </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><h:form><p:commandButton   action="#{sesja.noweZamowienie.zamowSamochod(sesja.wyswietlSamochod.samochod.marka, sesja.wyswietlSamochod.samochod.model)}" value="Zamów" ajax="false"/></h:form></td>
+                    </tr>
                 </table>
             </ui:define>
         </ui:composition>

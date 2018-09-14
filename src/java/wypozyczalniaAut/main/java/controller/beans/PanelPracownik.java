@@ -25,13 +25,13 @@ import wypozyczalniaAut.main.java.model.Zamowienie;
 @Named(value = "panelPracownik")
 @SessionScoped
 public class PanelPracownik implements Serializable{
-    Pracownik pracownik;
-    String nazwisko;
-    String imie;
-    wypozyczalniaAut.main.java.model.Zamowienie zamowienie;
-    List<wypozyczalniaAut.main.java.model.Zamowienie> zamowieniaDoPotwierdznia = new ArrayList();
-    List<wypozyczalniaAut.main.java.model.Zamowienie> zamowieniaDoAnulowania = new ArrayList();
-    List<wypozyczalniaAut.main.java.model.Zamowienie> zamowieniaDoZamkniecia = new ArrayList();
+    private Pracownik pracownik;
+    private String nazwisko;
+    private String imie;
+    private wypozyczalniaAut.main.java.model.Zamowienie zamowienie;
+    private List<wypozyczalniaAut.main.java.model.Zamowienie> zamowieniaDoPotwierdznia = new ArrayList();
+    private List<wypozyczalniaAut.main.java.model.Zamowienie> zamowieniaDoAnulowania = new ArrayList();
+    private List<wypozyczalniaAut.main.java.model.Zamowienie> zamowieniaDoZamkniecia = new ArrayList();
 
     public String getNazwisko() {
         return nazwisko;

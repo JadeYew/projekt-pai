@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 import java.util.Vector;
 import javax.enterprise.context.Dependent;
@@ -217,7 +218,7 @@ public class Zamowienie implements Serializable{
         return k.getId();
     }
     
-    public void sprawdzDostepnosc(){
+    public String sprawdzDostepnosc(){
         EntityManager em = Connect.createEntityManager();
         Query q = em.createNamedQuery("Samochod.findByMarka").setParameter("marka", marka);
          Vector <Samochod> res = (Vector<Samochod>)q.getResultList();
@@ -231,26 +232,38 @@ public class Zamowienie implements Serializable{
         Vector<Pojazd> pojazdy = (Vector<Pojazd>)samochod.getPojazdCollection();
         ArrayList <Pojazd> dostepnePojazdy = new ArrayList();
         for(Pojazd p : pojazdy){
-            if(dostepnyWCzasie(p)){
+            if(dostepnyWCzasie(p.getId())){
                 dostepnePojazdy.add(p);
+                //return Integer.toString(p.getId());
             }
         }
         if(dostepnePojazdy.isEmpty()){
             FacesContext.getCurrentInstance().addMessage(null,  new FacesMessage(FacesMessage.SEVERITY_WARN, "Niestety nie ma dostępnych samochodów tego modelu w podanym przedziale czasowym", ""));
             dostepnosc = false;
-            return;
+            return null;
         }else{
             PojazdId = dostepnePojazdy.get(0).getId();
         }
         dostepnosc = true;
         em.close();
+        return "dodajAkcesoria.xhtml?faces-redirect=true";
     }
     
-    private boolean dostepnyWCzasie(Pojazd p){
-        Vector<wypozyczalniaAut.main.java.model.Zamowienie> zamowienia = (Vector<wypozyczalniaAut.main.java.model.Zamowienie>)p.getZamowienieCollection();
+    private boolean dostepnyWCzasie(int pId){
+        EntityManager em = Connect.createEntityManager();
+        Query q = em.createNamedQuery("Zamowienie.findAll");
+        List<wypozyczalniaAut.main.java.model.Zamowienie> zamowienia = (List)q.getResultList();
         for(wypozyczalniaAut.main.java.model.Zamowienie z : zamowienia){
-            if(!(z.getDataZakonczenia().after(date1) && z.getDataRozpoczecia().before(date2))){
+            if(pId == z.getIdPojazd().getId()){
+            if((z.getDataRozpoczecia().after(date1) && z.getDataRozpoczecia().before(date2) 
+                    || (z.getDataZakonczenia().after(date1) && z.getDataZakonczenia().before(date2)) 
+                    || (z.getDataRozpoczecia().before(date1) && z.getDataZakonczenia().after(date2)
+                    || z.getDataRozpoczecia().equals(date1)
+                    || z.getDataRozpoczecia().equals(date2)
+                    || z.getDataZakonczenia().equals(date1)
+                    || z.getDataZakonczenia().equals(date2)))){
                 return false;
+            }
             }
         }
         return true;
@@ -284,42 +297,50 @@ public class Zamowienie implements Serializable{
     }
 
     public void zapisz(Klient klient){
-        EntityManager em = Connect.createEntityManager();
-        Query q = em.createNamedQuery("Pojazd.findById").setParameter("id", PojazdId);
-        wypozyczalniaAut.main.java.model.Zamowienie z = new wypozyczalniaAut.main.java.model.Zamowienie();
-        z.setIdPojazd((Pojazd) q.getSingleResult());
-        z.setIdKlient(klient);
-        z.setDataRozpoczecia(date1);
-        z.setDataZakonczenia(date2);
-        z.setCena(obliczCene());
-        z.setOplacone(false);
-        z.setZamkniete(false);
-        z.setAnulowane(false);
-        Random r = new Random();
-        do{
-            z.setId(r.nextInt(10000000));
-            q = em.createNamedQuery("Zamowienie.findById").setParameter("id", z.getId());
-        }while(!q.getResultList().isEmpty());
-        em.getTransaction().begin();
-        em.persist(z);
-        em.getTransaction().commit();
-        em.close();
-        if(!akcesoria.isEmpty()){
-            for(Akcesorium a : akcesoria){
-                em = Connect.createEntityManager();
-                AkcesoriumDoZamowienia tmp = new AkcesoriumDoZamowienia();
-                AkcesoriumDoZamowieniaPK tmpPK = new AkcesoriumDoZamowieniaPK();
-                tmpPK.setIdAkcesorium(a.getId());
-                tmpPK.setIdZamowienia(z.getId());
-                tmp.setAkcesoriumDoZamowieniaPK(tmpPK);
-                tmp.setAkcesorium(a);
-                tmp.setZamowienie(z);
-                tmp.setIlosc((short)1);
-                em.getTransaction().begin();
-                em.persist(tmp);
-                em.getTransaction().commit();
-                em.close();
+        if(dostepnosc){
+            EntityManager em = Connect.createEntityManager();
+            Query q = em.createNamedQuery("Pojazd.findById").setParameter("id", PojazdId);
+            wypozyczalniaAut.main.java.model.Zamowienie z = new wypozyczalniaAut.main.java.model.Zamowienie();
+            z.setIdPojazd((Pojazd) q.getSingleResult());
+            z.setIdKlient(klient);
+            z.setDataRozpoczecia(date1);
+            z.setDataZakonczenia(date2);
+            z.setCena(obliczCene());
+            z.setOplacone(false);
+            z.setZamkniete(false);
+            z.setAnulowane(false);
+            Random r = new Random();
+            do{
+                z.setId(r.nextInt(10000000));
+                q = em.createNamedQuery("Zamowienie.findById").setParameter("id", z.getId());
+            }while(!q.getResultList().isEmpty());
+            em.getTransaction().begin();
+            em.persist(z);
+            em.getTransaction().commit();
+            em.close();
+            if(!akcesoria.isEmpty()){
+                for(Akcesorium a : akcesoria){
+                    em = Connect.createEntityManager();
+                    AkcesoriumDoZamowienia tmp = new AkcesoriumDoZamowienia();
+                    AkcesoriumDoZamowieniaPK tmpPK = new AkcesoriumDoZamowieniaPK();
+                    tmpPK.setIdAkcesorium(a.getId());
+                    tmpPK.setIdZamowienia(z.getId());
+                    tmp.setAkcesoriumDoZamowieniaPK(tmpPK);
+                    tmp.setAkcesorium(a);
+                    tmp.setZamowienie(z);
+                    tmp.setIlosc((short)1);
+                    em.getTransaction().begin();
+                    em.persist(tmp);
+                    em.getTransaction().commit();
+                    em.close();
+                }
             }
         }
+    }
+    
+    public String zamowSamochod(String marka, String model){
+        setMarka(marka);
+        setModel(model);
+        return "zamowienie.xhtml?faces-redirect=true";
     }
 }

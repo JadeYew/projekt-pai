@@ -29,10 +29,24 @@ import wypozyczalniaAut.main.java.model.Zamowienie;
 @ManagedBean
 @SessionScoped
 public class MojeKonto implements Serializable{
-    List <wypozyczalniaAut.main.java.model.Zamowienie> zamowienia = new ArrayList();
-    List <wypozyczalniaAut.main.java.model.Zamowienie> zamowieniaZamkniete = new ArrayList();
-    Klient klient;
-    wypozyczalniaAut.main.java.model.Zamowienie doAnulowania;
+
+    /**
+     * @return the zamowieniaZamkniete
+     */
+    public List <wypozyczalniaAut.main.java.model.Zamowienie> getZamowieniaZamkniete() {
+        return zamowieniaZamkniete;
+    }
+
+    /**
+     * @param zamowieniaZamkniete the zamowieniaZamkniete to set
+     */
+    public void setZamowieniaZamkniete(List <wypozyczalniaAut.main.java.model.Zamowienie> zamowieniaZamkniete) {
+        this.zamowieniaZamkniete = zamowieniaZamkniete;
+    }
+    private List <wypozyczalniaAut.main.java.model.Zamowienie> zamowienia = new ArrayList();
+    private List <wypozyczalniaAut.main.java.model.Zamowienie> zamowieniaZamkniete = new ArrayList();
+    private Klient klient;
+    private wypozyczalniaAut.main.java.model.Zamowienie doAnulowania;
 
     public Zamowienie getDoAnulowania() {
         if(doAnulowania == null){
@@ -60,14 +74,14 @@ public class MojeKonto implements Serializable{
     }
 
     public List<wypozyczalniaAut.main.java.model.Zamowienie> getZamowieniaZakonczone() {
-        if(zamowieniaZamkniete == null){
-            zamowieniaZamkniete = new ArrayList();
+        if(getZamowieniaZamkniete() == null){
+            setZamowieniaZamkniete((List<Zamowienie>) new ArrayList());
         }
-        return zamowieniaZamkniete;
+        return getZamowieniaZamkniete();
     }
 
     public void setZamowieniaZakonczone(List<wypozyczalniaAut.main.java.model.Zamowienie> zamowieniaZakonczone) {
-        this.zamowieniaZamkniete = zamowieniaZakonczone;
+        this.setZamowieniaZamkniete(zamowieniaZakonczone);
     }
 
     public List<wypozyczalniaAut.main.java.model.Zamowienie> getZamowienia() {
@@ -82,15 +96,17 @@ public class MojeKonto implements Serializable{
     }
     
     public void uzupelnijZamowienia(){
-        zamowieniaZamkniete = new ArrayList();
-        zamowienia = new ArrayList();
-        List <wypozyczalniaAut.main.java.model.Zamowienie> tmp = (List)klient.getZamowienieCollection();
+        setZamowieniaZamkniete((List<Zamowienie>) new ArrayList());
+        setZamowienia((List<Zamowienie>) new ArrayList());
+        EntityManager em = Connect.createEntityManager();
+        Query q = em.createNamedQuery("Zamowienie.findAll");
+        List <wypozyczalniaAut.main.java.model.Zamowienie> tmp = (List)q.getResultList();
         for( wypozyczalniaAut.main.java.model.Zamowienie z : tmp){
-            if(z.getAnulowane() == false){
+            if(z.getAnulowane() == false && z.getIdKlient().equals(getKlient())){
                 if(z.getZamkniete()){
-                    zamowieniaZamkniete.add(z);
+                    getZamowieniaZamkniete().add(z);
                 }else{
-                    zamowienia.add(z);
+                    getZamowienia().add(z);
                 }
             }
         }
@@ -109,15 +125,15 @@ public class MojeKonto implements Serializable{
     }
     
     public String anulujZamowienieRedirect(Zamowienie z){
-        doAnulowania = z;
+        setDoAnulowania(z);
         return "anulujZamowienie.xhtml";
     }
     
      public String anulujZamowienie(){
         EntityManager em = Connect.createEntityManager();
         em.getTransaction().begin();
-        doAnulowania = em.find(Zamowienie.class, doAnulowania.getId());
-        doAnulowania.setAnulowane(Boolean.TRUE);
+        setDoAnulowania(em.find(Zamowienie.class, getDoAnulowania().getId()));
+        getDoAnulowania().setAnulowane(Boolean.TRUE);
         em.getTransaction().commit();
         em.close();
         return "wystietlZamowienia.xhtml";

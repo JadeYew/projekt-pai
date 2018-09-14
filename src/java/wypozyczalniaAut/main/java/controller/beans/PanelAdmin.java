@@ -35,16 +35,24 @@ import wypozyczalniaAut.main.java.model.Uzytkownik;
 @Named(value = "panelAdmin")
 @SessionScoped
 public class PanelAdmin implements Serializable{
-    Admin admin;
-    Admin nowyAdmin;
-    Pracownik nowyPracownik;
-    Klient nowyKlient;
-    Uzytkownik nowyUzytkownik;
-    Uzytkownik usuwany;
-    boolean usun;
-    Akcesorium akcesorium;
-    Samochod samochod;
 
+    /**
+     * @param nowyUzytkownik the nowyUzytkownik to set
+     */
+    
+    private Admin admin;
+    private Admin nowyAdmin;
+    private Pracownik nowyPracownik;
+    private Klient nowyKlient;
+    private Uzytkownik nowyUzytkownik;
+    private Uzytkownik usuwany;
+    private boolean usun;
+    private Akcesorium akcesorium;
+    private Samochod samochod;
+    
+    public void setNowyUzytkownik(Uzytkownik nowyUzytkownik) {
+        this.nowyUzytkownik = nowyUzytkownik;
+    }
     public Samochod getSamochod() {
         if(samochod == null){
             samochod = new Samochod();
@@ -105,7 +113,7 @@ public class PanelAdmin implements Serializable{
     }
 
     public void setnowyUzytkownik(Uzytkownik nowyUzytkownik) {
-        this.nowyUzytkownik = nowyUzytkownik;
+        this.setNowyUzytkownik(nowyUzytkownik);
     }
 
     public Admin getNowyAdmin() {
@@ -142,7 +150,7 @@ public class PanelAdmin implements Serializable{
     }
     
     public void wczytajAdmin(Admin admin){
-        this.admin = admin;
+        this.setAdmin(admin);
     }
     
     public String dodajPracownika(){
@@ -151,37 +159,37 @@ public class PanelAdmin implements Serializable{
         Random r = new Random();
         getNowyUzytkownik();
         do{
-            nowyUzytkownik.setId(r.nextInt(10000000));
-            q = em.createNamedQuery("Uzytkownik.findById").setParameter("id", nowyUzytkownik.getId());
+            getNowyUzytkownik().setId(r.nextInt(10000000));
+            q = em.createNamedQuery("Uzytkownik.findById").setParameter("id", getNowyUzytkownik().getId());
         }while(!q.getResultList().isEmpty());
-        nowyUzytkownik.setLogin(nowyKlient.getImie().substring(0, 1) + nowyKlient.getNazwisko());
-        nowyUzytkownik.setSalt(BCrypt.gensalt());
-        nowyUzytkownik.setPassword(BCrypt.hashpw("pass1234", nowyUzytkownik.getSalt()));
+        getNowyUzytkownik().setLogin(getNowyKlient().getImie().substring(0, 1) + getNowyKlient().getNazwisko());
+        getNowyUzytkownik().setSalt(BCrypt.gensalt());
+        getNowyUzytkownik().setPassword(BCrypt.hashpw("pass1234", getNowyUzytkownik().getSalt()));
         do{
-            nowyKlient.setId(r.nextInt(10000000));
-            q = em.createNamedQuery("Klient.findById").setParameter("id", nowyKlient.getId());
+            getNowyKlient().setId(r.nextInt(10000000));
+            q = em.createNamedQuery("Klient.findById").setParameter("id", getNowyKlient().getId());
         }while(!q.getResultList().isEmpty());
-        nowyKlient.setIdUzytkownik(nowyUzytkownik);
+        getNowyKlient().setIdUzytkownik(getNowyUzytkownik());
         List <Klient> tmp = new ArrayList();
-        tmp.add(nowyKlient);
+        tmp.add(getNowyKlient());
         getNowyPracownik();
         do{
-            nowyPracownik.setId(r.nextInt(10000000));
-            q = em.createNamedQuery("Pracownik.findById").setParameter("id", nowyPracownik.getId());
+            getNowyPracownik().setId(r.nextInt(10000000));
+            q = em.createNamedQuery("Pracownik.findById").setParameter("id", getNowyPracownik().getId());
         }while(!q.getResultList().isEmpty());
-        nowyPracownik.setIdUzytkownik(nowyUzytkownik);
+        getNowyPracownik().setIdUzytkownik(getNowyUzytkownik());
         em.getTransaction().begin();
-        em.persist(nowyUzytkownik);
+        em.persist(getNowyUzytkownik());
         em.getTransaction().commit();
         em.close();
         em = Connect.createEntityManager();
         em.getTransaction().begin();
-        em.persist(nowyKlient);
+        em.persist(getNowyKlient());
         em.getTransaction().commit();
         em.close();
         em = Connect.createEntityManager();
         em.getTransaction().begin();
-        em.persist(nowyPracownik);
+        em.persist(getNowyPracownik());
         em.getTransaction().commit();
         em.close();
         return "success.xhtml";
@@ -194,59 +202,59 @@ public class PanelAdmin implements Serializable{
         Random r = new Random();
         getNowyAdmin();
         do{
-            nowyAdmin.setId(r.nextInt(10000000));
-            q = em.createNamedQuery("Admin.findById").setParameter("id", nowyAdmin.getId());
+            getNowyAdmin().setId(r.nextInt(10000000));
+            q = em.createNamedQuery("Admin.findById").setParameter("id", getNowyAdmin().getId());
         }while(!q.getResultList().isEmpty());
-        nowyAdmin.setIdUzytkownik(nowyUzytkownik);
+        getNowyAdmin().setIdUzytkownik(getNowyUzytkownik());
         em.getTransaction().begin();
-        em.persist(nowyAdmin);
+        em.persist(getNowyAdmin());
         em.getTransaction().commit();
         em.close();
         return null;
     }
     
     public void clear(){
-        nowyAdmin = null;
-        nowyPracownik = null;
-        nowyKlient = null;
-        nowyUzytkownik = null;
+        setNowyAdmin(null);
+        setNowyPracownik(null);
+        setNowyKlient(null);
+        setNowyUzytkownik(null);
     }
     
     public void sprawdzUsun(){
         EntityManager em = Connect.createEntityManager();
-        Query q = em.createNamedQuery("Uzytkownik.findByLogin").setParameter("login", usuwany.getLogin());
+        Query q = em.createNamedQuery("Uzytkownik.findByLogin").setParameter("login", getUsuwany().getLogin());
         if(q.getResultList().isEmpty()){
-            FacesContext.getCurrentInstance().addMessage(null,  new FacesMessage(FacesMessage.SEVERITY_WARN, "Nie ma pracownika o podanym loginie", usuwany.getLogin()));
-            usun = false;
+            FacesContext.getCurrentInstance().addMessage(null,  new FacesMessage(FacesMessage.SEVERITY_WARN, "Nie ma pracownika o podanym loginie", getUsuwany().getLogin()));
+            setUsun(false);
             return;
         }
-        usun = true;
+        setUsun(true);
     }
     
     public String usunPracownika(){
-        if(usun){
+        if(isUsun()){
              EntityManager em = Connect.createEntityManager();
-             Query q = em.createNamedQuery("Uzytkownik.findByLogin").setParameter("login", usuwany.getLogin());
-             usuwany = (Uzytkownik)q.getSingleResult();
-             if(usuwany.getPracownik() != null){
+             Query q = em.createNamedQuery("Uzytkownik.findByLogin").setParameter("login", getUsuwany().getLogin());
+             setUsuwany((Uzytkownik)q.getSingleResult());
+             if(getUsuwany().getPracownik() != null){
                  em.getTransaction().begin();
-                em.remove(usuwany.getPracownik());
+                em.remove(getUsuwany().getPracownik());
                 em.getTransaction().commit();
              }
-             List <Klient> tmp = (List)usuwany.getKlientCollection();
+             List <Klient> tmp = (List)getUsuwany().getKlientCollection();
              if(!tmp.isEmpty()){
                  em.getTransaction().begin();
                  em.remove(tmp.get(0));
                 em.getTransaction().commit();
              }
-             if(usuwany.getAdmin() != null)
+             if(getUsuwany().getAdmin() != null)
              {
                 em.getTransaction().begin();
-                em.remove(usuwany.getAdmin());
+                em.remove(getUsuwany().getAdmin());
                 em.getTransaction().commit();
              }
              em.getTransaction().begin();
-             em.remove(usuwany);
+             em.remove(getUsuwany());
              em.getTransaction().commit();
              em.close();
         }
@@ -258,12 +266,12 @@ public class PanelAdmin implements Serializable{
         Query q;
         Random r = new Random();
         do{
-            akcesorium.setId(r.nextInt(10000000));
-            q = em.createNamedQuery("Akcesorium.findById").setParameter("id", akcesorium.getId());
+            getAkcesorium().setId(r.nextInt(10000000));
+            q = em.createNamedQuery("Akcesorium.findById").setParameter("id", getAkcesorium().getId());
         }while(!q.getResultList().isEmpty());
-        akcesorium.setIloscDostepna(akcesorium.getIlosc());
+        getAkcesorium().setIloscDostepna(getAkcesorium().getIlosc());
         em.getTransaction().begin();
-        em.persist(akcesorium);
+        em.persist(getAkcesorium());
         em.getTransaction().commit();
         em.close();
         return "success.xhtml";
@@ -304,12 +312,12 @@ public class PanelAdmin implements Serializable{
         Query q;
         Random r = new Random();
         do{
-            samochod.setId(r.nextInt(10000000));
-            q = em.createNamedQuery("Samochod.findById").setParameter("id", samochod.getId());
+            getSamochod().setId(r.nextInt(10000000));
+            q = em.createNamedQuery("Samochod.findById").setParameter("id", getSamochod().getId());
         }while(!q.getResultList().isEmpty());
-        samochod.setCenaPrzygotowania((short)0);
+        getSamochod().setCenaPrzygotowania((short)0);
         em.getTransaction().begin();
-        em.persist(samochod);
+        em.persist(getSamochod());
         em.getTransaction().commit();
         em.close();
         return "success.xhtml";
@@ -331,7 +339,9 @@ public class PanelAdmin implements Serializable{
                     break;
                 }
             }
-            ret.add(tmp);
+            if(tmp.getUzytkownik().getAdmin() == null){
+                ret.add(tmp);
+            }
         }
         return ret;
     }

@@ -22,7 +22,7 @@ import wypozyczalniaAut.main.java.model.Samochod;
 @SessionScoped
 @ManagedBean
 public class WyswietlSamochod implements Serializable {
-    Samochod samochod;
+    private Samochod samochod;
     
     public Samochod getSamochod() {
         return samochod;

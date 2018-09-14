@@ -18,7 +18,9 @@ import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import wypozyczalniaAut.main.java.BCrypt;
+import wypozyczalniaAut.main.java.controller.APKU;
 import wypozyczalniaAut.main.java.controller.Connect;
+import wypozyczalniaAut.main.java.controller.PKU;
 import wypozyczalniaAut.main.java.model.Admin;
 import wypozyczalniaAut.main.java.model.Akcesorium;
 import wypozyczalniaAut.main.java.model.Klient;
@@ -147,6 +149,7 @@ public class PanelAdmin implements Serializable{
         EntityManager em = Connect.createEntityManager();
         Query q;
         Random r = new Random();
+        getNowyUzytkownik();
         do{
             nowyUzytkownik.setId(r.nextInt(10000000));
             q = em.createNamedQuery("Uzytkownik.findById").setParameter("id", nowyUzytkownik.getId());
@@ -189,6 +192,7 @@ public class PanelAdmin implements Serializable{
         EntityManager em = Connect.createEntityManager();
         Query q;
         Random r = new Random();
+        getNowyAdmin();
         do{
             nowyAdmin.setId(r.nextInt(10000000));
             q = em.createNamedQuery("Admin.findById").setParameter("id", nowyAdmin.getId());
@@ -306,6 +310,80 @@ public class PanelAdmin implements Serializable{
         samochod.setCenaPrzygotowania((short)0);
         em.getTransaction().begin();
         em.persist(samochod);
+        em.getTransaction().commit();
+        em.close();
+        return "success.xhtml";
+    }
+    
+    public List<PKU> getPUKList(){
+        EntityManager em = Connect.createEntityManager();
+        Query q = em.createNamedQuery("Pracownik.findAll");
+        List<PKU> ret = new ArrayList();
+        List<Pracownik> list = q.getResultList();
+        for(Pracownik p : list){
+            PKU tmp = new PKU();
+            tmp.setPracownik(p);
+            tmp.setUzytkownik(p.getIdUzytkownik());
+            q = em.createNamedQuery("Klient.findAll");
+            for(Klient k: (List<Klient>)q.getResultList()){
+                if(k.getIdUzytkownik().getId().equals(tmp.getUzytkownik().getId())){
+                    tmp.setKlient(k);
+                    break;
+                }
+            }
+            ret.add(tmp);
+        }
+        return ret;
+    }
+    public List<APKU> getAPUKList(){
+        EntityManager em = Connect.createEntityManager();
+        Query q = em.createNamedQuery("Admin.findAll");
+        List<APKU> ret = new ArrayList();
+        List<Admin> list = q.getResultList();
+        for(Admin a : list){
+            APKU tmp = new APKU();
+            tmp.setAdmin(a);
+            tmp.setUzytkownik(a.getIdUzytkownik());
+            tmp.setPracownik(tmp.getUzytkownik().getPracownik());
+            q = em.createNamedQuery("Klient.findAll");
+            for(Klient k: (List<Klient>)q.getResultList()){
+                if(k.getIdUzytkownik().getId().equals(tmp.getUzytkownik().getId())){
+                    tmp.setKlient(k);
+                    break;
+                }
+            }
+            tmp.setAdmin(tmp.getUzytkownik().getAdmin());
+            ret.add(tmp);
+        }
+        return ret;
+    }
+    public String usunPKU(PKU pku){
+        EntityManager em = Connect.createEntityManager();
+        em.getTransaction().begin();
+        em.remove(pku.getPracownik());
+        em.getTransaction().commit();
+        em.getTransaction().begin();
+        em.remove(pku.getKlient());
+        em.getTransaction().commit();
+        em.getTransaction().begin();
+        em.remove(pku.getUzytkownik());
+        em.getTransaction().commit();
+        em.close();
+        return "success.xhtml";
+    }
+    public String usunAPKU(APKU pku){
+        EntityManager em = Connect.createEntityManager();
+        em.getTransaction().begin();
+        em.remove(pku.getAdmin());
+        em.getTransaction().commit();
+        em.getTransaction().begin();
+        em.remove(pku.getPracownik());
+        em.getTransaction().commit();
+        em.getTransaction().begin();
+        em.remove(pku.getKlient());
+        em.getTransaction().commit();
+        em.getTransaction().begin();
+        em.remove(pku.getUzytkownik());
         em.getTransaction().commit();
         em.close();
         return "success.xhtml";

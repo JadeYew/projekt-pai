@@ -18,7 +18,7 @@
                 <h2>Usun Admina</h2>
                 <h:form>
                     <p:panelGrid columns="2">
-                        <p:outputLabel for="login" value="Login pracownika:"/>
+                        <p:outputLabel for="login" value="Login admina"/>
                         <p:inputText value="#{panelAdmin.usuwany.login}"
                                       id="login" required="true"
                                      requiredMessage="Podaj login"/>
@@ -26,6 +26,18 @@
                         <p:commandButton actionListener="#{panelAdmin.sprawdzUsun()}" value="Usuń admina" ajax="false" action="#{panelAdmin.usunPracownika()}"/>
                     </p:panelGrid>
                 </h:form>
+                <p:dataList value="#{panelAdmin.APUKList}" var="a" paginator="true" rows="10">
+                    <h:form>
+                        <p:panelGrid columns="2" style="column-width: 200px">
+                            <p:outputLabel value="Admin"/>
+                            <p:outputLabel value="#{a.klient.imie} #{a.klient.nazwisko}"/>
+                            <p:outputLabel value="Nr"/>
+                            <p:outputLabel value="#{a.admin.id}"/>
+                            <br/>
+                            <p:commandButton value="Usun" action="#{panelAdmin.usunAPKU(a)}"/>
+                        </p:panelGrid>
+                    </h:form>
+                </p:dataList>
             </ui:define>
         </ui:composition>
     </h:body>

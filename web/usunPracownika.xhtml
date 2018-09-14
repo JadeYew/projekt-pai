@@ -26,6 +26,18 @@
                         <p:commandButton actionListener="#{panelAdmin.sprawdzUsun()}" value="Usuń pracownika" ajax="false" action="#{panelAdmin.usunPracownika()}"/>
                     </p:panelGrid>
                 </h:form>
+                <p:dataList value="#{panelAdmin.PUKList}" var="a" paginator="true" rows="10">
+                    <h:form>
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Pracownik:"/>
+                            <p:outputLabel value="#{a.klient.imie} #{a.klient.nazwisko}"/>
+                            <p:outputLabel value="Nr"/>
+                            <p:outputLabel value="#{a.pracownik.id}"/>
+                            <br/>
+                            <p:commandButton value="Usun" action="#{panelAdmin.usunPKU(a)}"/>
+                        </p:panelGrid>
+                    </h:form>
+                </p:dataList>
             </ui:define>
         </ui:composition>
     </h:body>

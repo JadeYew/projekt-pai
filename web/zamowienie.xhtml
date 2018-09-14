@@ -19,11 +19,11 @@ and open the template in the editor.
             <ui:define name="contents">
                 <h:form id="noweZamowienie">
         <f:metadata>
-            <f:viewAction action="#{sesja.uprawnienia(2)}" />
+            <f:viewAction action="#{sesja.uprawnienia(1)}" />
         </f:metadata>
                     <h3>ZAMOWIENIE</h3>
                     <h:panelGrid columns="2">
-                        <h:selectOneMenu id="marka" value="#{sesja.noweZamowienie.marka}" required="true" requiredMessage="Musisz podac markÃÂÃÂÃÂÃÂ samochodu" style="font-size: 18px">
+                        <h:selectOneMenu id="marka" value="#{sesja.noweZamowienie.marka}" required="true" requiredMessage="Musisz podac markÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ samochodu" style="font-size: 18px">
                                 <f:selectItem  itemLabel="wybiarz marke" noSelectionOption="true"/>
                                 <f:selectItems value="#{sesja.noweZamowienie.markaList}" var="wybranomarke"/>
                                 <p:ajax update="model"/>
@@ -37,11 +37,11 @@ and open the template in the editor.
                         <br/>
                         
                         <p:outputLabel id="dataRozpoczecia" value="Data rozpoczecia:"/>
-                        <p:calendar id="popup1" value="#{sesja.noweZamowienie.date1}" mindate="#{sesja.noweZamowienie.date1}" required="true" requiredMessage="Musisz podac datÄ rozpoczÄcia wynajmu">
+                        <p:calendar id="popup1" value="#{sesja.noweZamowienie.date1}" mindate="#{sesja.noweZamowienie.date1}" required="true" requiredMessage="Musisz podac datÃÂ rozpoczÃÂcia wynajmu">
                             <p:ajax event="dateSelect" update="popup2"/>
                         </p:calendar>
                         <p:outputLabel id="dataZakonczenia" value="Data zakonczenia:" />
-                        <p:calendar mindate="#{sesja.noweZamowienie.minDate()}" id="popup2" value="#{sesja.noweZamowienie.date2}" requiredMessage="Musisz podac datÄ datÄ zakoÅczenia wynajmu">
+                        <p:calendar mindate="#{sesja.noweZamowienie.minDate()}" id="popup2" value="#{sesja.noweZamowienie.date2}" requiredMessage="Musisz podac datÃÂ datÃÂ zakoÃÂczenia wynajmu">
                             <p:ajax event="dateSelect"/>
                         </p:calendar> 
                     </h:panelGrid>

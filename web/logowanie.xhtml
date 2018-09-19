@@ -30,16 +30,17 @@ and open the template in the editor.
                                      requiredMessage="Podaj login"/>
                         <br/>
                         <br/>
-                        <p:outputLabel for="upassword" value="Hasło:"/>
+                        <p:outputLabel for="upassword" value="HasÅo:"/>
                         <p:password value="#{sesja.login.password}" 
                                     id="upassword" required="true" 
-                                    requiredMessage="Podaj hasło"/>
+                                    requiredMessage="Podaj hasÅo"/>
                         <br/>
                         <br/>
-                        <p:commandButton value="Zaloguj się" ajax="false" action="${sesja.zaloguj()}"/>                
+                        <p:commandButton value="Zaloguj siÄ" ajax="false" action="${sesja.zaloguj()}"/>                
                     </h:panelGrid>
                 </h:form>
-                <h:form><p:commandButton value="Zarejsetruj się" ajax="false" action="rejestracja.xhtml"/></h:form>
+                <h:form><p:commandButton value="Zarejsetruj siÄ" ajax="false" action="rejestracja.xhtml"/></h:form>
+                <h:form><p:commandButton value="Zaloguj się z Google" ajax="false" action="test.jsp"/></h:form>
             </ui:define>
         </ui:composition>
     </body>

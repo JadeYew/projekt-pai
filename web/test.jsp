@@ -28,7 +28,6 @@ pageEncoding="ISO-8859-1"%>
             var email=profile.getEmail();
             document.getElementById("myImg").src = imagurl;
             document.getElementById("name").innerHTML = name;
-            document.getElementById("ident").innerHTML = ident;
             document.getElementById("myP").style.visibility = "hidden";
             document.getElementById("status").innerHTML = 'Welcome '+name+'!<br>'+
                     '<form action="faces/googleRejestracja.xhtml" method="post">'+
@@ -38,6 +37,7 @@ pageEncoding="ISO-8859-1"%>
                     '<button type="submit">Idz dalej</button></form>';
         }
     </script>
+      <button onclick="myFunction()">Sign Out</button>
    <script>
       function myFunction() {
       gapi.auth2.getAuthInstance().disconnect();

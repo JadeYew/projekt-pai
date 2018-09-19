@@ -6,25 +6,28 @@ pageEncoding="ISO-8859-1"%>
    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
    <title>Insert title here</title>
    <script src="https://apis.google.com/js/platform.js" async defer></script>
-   <meta name="google-signin-client_id" content="452660194426-t1s46115af8lssp3hnkkcaibv7kkoqrn.apps.googleusercontent.com">
+   <meta name="google-signin-client_id" content="672705305193-vt46md0rceq4s61om3f6n21voofvae5p.apps.googleusercontent.com">
 </head>
 <body>
    <div class="g-signin2" data-onsuccess="onSignIn" id="myP"></div>
       <img id="myImg"><br>
       <p id="name"></p>
+      <p id="ident"></p>
       <div id="status">
    </div>
    <script type="text/javascript">
       function onSignIn(googleUser) {
       // window.location.href='success.jsp';
       var profile = googleUser.getBasicProfile();
+      var ident = profile.getId();
       var imagurl=profile.getImageUrl();
       var name=profile.getName();
       var email=profile.getEmail();
       document.getElementById("myImg").src = imagurl;
       document.getElementById("name").innerHTML = name;
+      document.getElementById("ident").innerHTML = ident;
       document.getElementById("myP").style.visibility = "hidden";
-      document.getElementById("status").innerHTML = 'Welcome '+name+'!<a href=sucess.jsp?email='+email+'&name='+name+'/>Continue with Google login</a></p>'
+      document.getElementById("status").innerHTML = 'Welcome '+name+'!<a href=rejestracja.xhtml?email='+email+'&name='+name+'&ident='+ident+'/>Kontynuj jako ten uzytkownik</a></p>'
    }
    </script>
    <button onclick="myFunction()">Sign Out</button>

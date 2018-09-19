@@ -341,4 +341,12 @@ public class Sesja implements Serializable {
         }
         return "index.xhtml";
     }
+    
+    public String test(String password, String passwordAgain){
+        if(password.equals("Iwo"))
+        {
+            return "index.xhtml";
+        }
+        return null;
+    }
 }

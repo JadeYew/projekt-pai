@@ -49,7 +49,56 @@ and open the template in the editor.
                         <tr>
                             <h:form>
                                 <td><p:commandButton value="Anuluj" ajax="false" action="${sesja.anulujPotwierdzZamowienie(false)}"/></td>
-                            <td><p:commandButton value="Potwierdź" ajax="false" action="${sesja.anulujPotwierdzZamowienie(true)}"/></td>
+                            <td><script type="text/javascript" src="https://www.paypalobjects.com/api/checkout.js"></script>
+            <div id="paypal-button-container"></div>
+            <script type="text/javascript">
+
+                // Render the PayPal button
+
+                paypal.Button.render({
+
+
+                    env: 'sandbox', 
+
+
+                    style: {
+                        layout: 'vertical',  // horizontal | vertical
+                        size:   'medium',    // medium | large | responsive
+                        shape:  'rect',      // pill | rect
+                        color:  'gold'       // gold | blue | silver | black
+                    },
+
+                    funding: {
+                        allowed: [ paypal.FUNDING.CARD, paypal.FUNDING.CREDIT ],
+                        disallowed: [ ]
+                    },
+
+                    client: {
+                        sandbox:    'AY32WfQkY7QuHlWlbEVYhWuvoujHt3kyeFNfAK46wIipj9dJ5HDg78bDMZxdlmVyQPNDJ3De0PkzF1Eg',
+                        production: 'AveZZfTWyFK1d1TrkBaIc7Xg7gKFAPaFmmmnfuNf0dpUvzJDkR5ar5TV'
+                    },
+
+                    payment: function(data, actions) {
+                        return actions.payment.create({
+                            payment: {
+                                transactions: [
+                                    {
+                                        amount: { total: '#{sesja.noweZamowienie.obliczCene()}', currency: 'PLN' }
+                                    }
+                                ]
+                            }
+                        });
+                    },
+
+                    onAuthorize: function(data, actions) {
+                        return actions.payment.execute().then(function() {
+                            window.location.replace("http://localhost:8080/wypozyczalnia/");
+                        });
+                    }
+
+                }, '#paypal-button-container');
+
+            </script></td>
                             </h:form>
                         </tr>
                     </table>

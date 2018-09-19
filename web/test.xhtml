@@ -13,18 +13,36 @@ and open the template in the editor.
     <head>
         <title>TEST</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <style>
+        #payu-payment-form button[type=submit] {
+            border: 0px;
+            height: 35px;
+            width: 140px;
+            background: url('http://static.payu.com/pl/standard/partners/buttons/payu_account_button_long_03.png');
+            background-repeat: no-repeat;
+            cursor: pointer;
+        }
+        </style>
     </head>
     <body>
         <ui:composition template="default.xhtml">
             <ui:define name="contents">
-                <p:dataGrid value="#{sesja.noweZamowienie.akcesoria}" var="a" columns="1">
-                        <f:facet name="header">
-                            Akcesoria
-                        </f:facet>
-                        <div style="align-self: center; margin-left:auto; margin-right:auto; text-align: center">
-                            #{a.nazwa}
-                        </div>
-                    </p:dataGrid>
+                <link rel="stylesheet" type="text/css" href="resources/css/img.css"></link> 
+                <form  method="post" action="https://secure.payu.com/api/v2_1/orders">
+                    <input type="hidden" name="continueUrl" value="http://localhost.pl:8080/wypozyczalnia/faces/index.xhtml"/>
+                    <input type="hidden" name="currencyCode" value="PLN"/>
+                    <input type="hidden" name="customerIp" value="123.123.123.123"/>
+                    <input type="hidden" name="description" value="#{sesja.noweZamowienie.opis()}"/>
+                    <input type="hidden" name="merchantPosId" value="145227"/>
+                    <input type="hidden" name="products[0].name" value="#{sesja.noweZamowienie.nazwa()}"/>
+                    <input type="hidden" name="products[0].quantity" value="1"/>
+                    <input type="hidden" name="products[0].unitPrice" value="#{sesja.noweZamowienie.cena()}"/>
+                    <input type="hidden" name="totalAmount" value="#{sesja.noweZamowienie.cena()}"/>
+                    <input type="hidden" name="OpenPayu-Signature" value="sender=145227;algorithm=SHA-256;signature=#{sesja.noweZamowienie.signature()}"/>
+                    <button type="submit" formtarget="_blank">Pay with PayU</button>
+                </form>
+        #{sesja.noweZamowienie.signature2()}<br/>
+        #{sesja.noweZamowienie.signature()}
             </ui:define>
         </ui:composition>
     </body>

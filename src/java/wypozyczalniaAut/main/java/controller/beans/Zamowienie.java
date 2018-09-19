@@ -5,10 +5,16 @@
  */
 package wypozyczalniaAut.main.java.controller.beans;
 
+import com.google.common.hash.Hashing;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.io.IOException;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -17,6 +23,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.Dependent;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
@@ -27,6 +35,13 @@ import javax.faces.flow.FlowScoped;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.client.*;
+import javax.ws.rs.core.*;
+import org.glassfish.jersey.apache.connector.ApacheConnectorProvider;
+import org.apache.http.client.HttpClient;
+import org.glassfish.jersey.client.ClientConfig;
+import org.glassfish.jersey.client.spi.ConnectorProvider;
 import org.primefaces.event.SelectEvent;
 import wypozyczalniaAut.main.java.controller.Connect;
 import wypozyczalniaAut.main.java.model.Akcesorium;
@@ -55,10 +70,18 @@ public class Zamowienie implements Serializable{
     private List<String> markaList = new ArrayList();
     private List<String> modelList = new ArrayList();
     private List<Akcesorium> akcesoria = new ArrayList();
+    wypozyczalniaAut.main.java.model.Zamowienie zamowienie = new wypozyczalniaAut.main.java.model.Zamowienie();
+
+    public wypozyczalniaAut.main.java.model.Zamowienie getZamowienie() {
+        return zamowienie;
+    }
+
+    public void setZamowienie(wypozyczalniaAut.main.java.model.Zamowienie zamowienie) {
+        this.zamowienie = zamowienie;
+    }
 
     
     public void uzupelnijMarkaList(){
-        
             EntityManager em = Connect.createEntityManager();
             Query q = em.createNamedQuery("Samochod.findAll");
             Vector <Samochod> samochody = (Vector)q.getResultList();
@@ -300,22 +323,22 @@ public class Zamowienie implements Serializable{
         if(dostepnosc){
             EntityManager em = Connect.createEntityManager();
             Query q = em.createNamedQuery("Pojazd.findById").setParameter("id", PojazdId);
-            wypozyczalniaAut.main.java.model.Zamowienie z = new wypozyczalniaAut.main.java.model.Zamowienie();
-            z.setIdPojazd((Pojazd) q.getSingleResult());
-            z.setIdKlient(klient);
-            z.setDataRozpoczecia(date1);
-            z.setDataZakonczenia(date2);
-            z.setCena(obliczCene());
-            z.setOplacone(false);
-            z.setZamkniete(false);
-            z.setAnulowane(false);
+            zamowienie = new wypozyczalniaAut.main.java.model.Zamowienie();
+            zamowienie.setIdPojazd((Pojazd) q.getSingleResult());
+            zamowienie.setIdKlient(klient);
+            zamowienie.setDataRozpoczecia(date1);
+            zamowienie.setDataZakonczenia(date2);
+            zamowienie.setCena(obliczCene());
+            zamowienie.setOplacone(false);
+            zamowienie.setZamkniete(false);
+            zamowienie.setAnulowane(false);
             Random r = new Random();
             do{
-                z.setId(r.nextInt(10000000));
-                q = em.createNamedQuery("Zamowienie.findById").setParameter("id", z.getId());
+                zamowienie.setId(r.nextInt(10000000));
+                q = em.createNamedQuery("Zamowienie.findById").setParameter("id", zamowienie.getId());
             }while(!q.getResultList().isEmpty());
             em.getTransaction().begin();
-            em.persist(z);
+            em.persist(zamowienie);
             em.getTransaction().commit();
             em.close();
             if(!akcesoria.isEmpty()){
@@ -324,10 +347,10 @@ public class Zamowienie implements Serializable{
                     AkcesoriumDoZamowienia tmp = new AkcesoriumDoZamowienia();
                     AkcesoriumDoZamowieniaPK tmpPK = new AkcesoriumDoZamowieniaPK();
                     tmpPK.setIdAkcesorium(a.getId());
-                    tmpPK.setIdZamowienia(z.getId());
+                    tmpPK.setIdZamowienia(zamowienie.getId());
                     tmp.setAkcesoriumDoZamowieniaPK(tmpPK);
                     tmp.setAkcesorium(a);
-                    tmp.setZamowienie(z);
+                    tmp.setZamowienie(zamowienie);
                     tmp.setIlosc((short)1);
                     em.getTransaction().begin();
                     em.persist(tmp);
@@ -342,5 +365,57 @@ public class Zamowienie implements Serializable{
         setMarka(marka);
         setModel(model);
         return "zamowienie.xhtml?faces-redirect=true";
+    }
+    
+    public String ipClient(){
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        String ipAddress = request.getHeader("X-FORWARDED-FOR");
+        if (ipAddress == null) {
+            ipAddress = request.getRemoteAddr();
+        }
+        return ipAddress;
+    }
+    
+    public String cena(){
+        return Integer.toString(zamowienie.getCena() * 100);
+    }
+    
+    public String opis(){
+        String opis = "Wynajem samochodu: " + zamowienie.getIdPojazd().getIdSamochod().getMarka()
+                + " " + zamowienie.getIdPojazd().getIdSamochod().getModel()
+                + " od " + zamowienie.getDataRozpoczecia()
+                + " do " + zamowienie.getDataZakonczenia() + ".";
+        return opis;
+    }
+    
+    public String nazwa(){
+        String nazwa = zamowienie.getIdPojazd().getIdSamochod().getMarka()
+                + " " + zamowienie.getIdPojazd().getIdSamochod().getModel();
+        return nazwa;
+    }
+    
+    public void signature(){/*
+        Client client = ClientBuilder.newClient();
+        Entity payload = Entity.json("{  'customerIp': '127.0.0.1',  'merchantPosId': '145227',  'description': '"+ opis() + "',  'currencyCode': 'PLN',  'totalAmount': '" + cena() + "',  'products': [    {      'name': '" + nazwa() + "',      'unitPrice': '" + cena() + "',      'quantity': '1'    }  ]}");
+        Response response = client.target("https://secure.payu.com/api/v2_1/orders/")
+          .request(MediaType.APPLICATION_JSON_TYPE)
+          .header("Authorization", "Bearer 3e5cac39-7e38-4139-8fd6-30adc06a61bd")
+          .post(payload);
+        System.out.println("status: " + response.getStatus());
+        System.out.println("headers: " + response.getHeaders());
+        System.out.println("body:" + response.readEntity(String.class));*/
+        ConnectorProvider connectorProvider = new ApacheConnectorProvider();
+        ClientConfig clientConfig = new ClientConfig();
+        clientConfig.connectorProvider(connectorProvider);
+        ClientBuilder builder = ClientBuilder.newBuilder().withConfig(clientConfig);
+        Client client = builder.build();
+        Entity<String> payload = Entity.text("grant_type=client_credentials&#38client_id=340629&#38client_secret=11633334403f533562b0ad62dde43048");
+        Response response = client.target("https://secure.payu.com/pl/standard/user/oauth/authorize")
+          .request(MediaType.TEXT_PLAIN_TYPE)
+          .post(payload);
+
+        System.out.println("status: " + response.getStatus());
+        System.out.println("headers: " + response.getHeaders());
+        System.out.println("body:" + response.readEntity(String.class));
     }
 }

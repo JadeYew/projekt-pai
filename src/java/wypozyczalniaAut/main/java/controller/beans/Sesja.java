@@ -17,9 +17,11 @@ import java.util.Vector;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.tuple.MutablePair;
 import wypozyczalniaAut.main.java.controller.Connect;
 import wypozyczalniaAut.main.java.model.Admin;
@@ -281,8 +283,9 @@ public class Sesja implements Serializable {
         if(decyzja){
             noweZamowienie.zapisz(klient);
         }
-        noweZamowienie = new Zamowienie();
-        return "index.xhtml";
+        noweZamowienie.signature();
+        //noweZamowienie = new Zamowienie();
+        return null;
     }
     
     public String dataFormat(Date data){

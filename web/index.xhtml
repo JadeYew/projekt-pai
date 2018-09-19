@@ -11,6 +11,14 @@
     <h:body>
         <ui:composition template="default.xhtml"> 
             <ui:define name="contents">
+            <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+            <script type="text/javascript">
+                $(document).ready(function() {
+                    setInterval(function() {
+                        $.get("${pageContext.request.contextPath}/poll");
+                    }, ${(pageContext.session.maxInactiveInterval - 10) * 1000});
+                });
+            </script>
                 <link rel="stylesheet" type="text/css" href="resources/css/contents.css"></link> 
             <section id="main" class="no-margin">
                 <div class="item" style="background-image: url(resources/images/background.jpg)">

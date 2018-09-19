@@ -393,29 +393,4 @@ public class Zamowienie implements Serializable{
                 + " " + zamowienie.getIdPojazd().getIdSamochod().getModel();
         return nazwa;
     }
-    
-    public void signature(){/*
-        Client client = ClientBuilder.newClient();
-        Entity payload = Entity.json("{  'customerIp': '127.0.0.1',  'merchantPosId': '145227',  'description': '"+ opis() + "',  'currencyCode': 'PLN',  'totalAmount': '" + cena() + "',  'products': [    {      'name': '" + nazwa() + "',      'unitPrice': '" + cena() + "',      'quantity': '1'    }  ]}");
-        Response response = client.target("https://secure.payu.com/api/v2_1/orders/")
-          .request(MediaType.APPLICATION_JSON_TYPE)
-          .header("Authorization", "Bearer 3e5cac39-7e38-4139-8fd6-30adc06a61bd")
-          .post(payload);
-        System.out.println("status: " + response.getStatus());
-        System.out.println("headers: " + response.getHeaders());
-        System.out.println("body:" + response.readEntity(String.class));*/
-        ConnectorProvider connectorProvider = new ApacheConnectorProvider();
-        ClientConfig clientConfig = new ClientConfig();
-        clientConfig.connectorProvider(connectorProvider);
-        ClientBuilder builder = ClientBuilder.newBuilder().withConfig(clientConfig);
-        Client client = builder.build();
-        Entity<String> payload = Entity.text("grant_type=client_credentials&#38client_id=340629&#38client_secret=11633334403f533562b0ad62dde43048");
-        Response response = client.target("https://secure.payu.com/pl/standard/user/oauth/authorize")
-          .request(MediaType.TEXT_PLAIN_TYPE)
-          .post(payload);
-
-        System.out.println("status: " + response.getStatus());
-        System.out.println("headers: " + response.getHeaders());
-        System.out.println("body:" + response.readEntity(String.class));
-    }
 }

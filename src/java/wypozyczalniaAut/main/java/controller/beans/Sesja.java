@@ -282,10 +282,10 @@ public class Sesja implements Serializable {
     public String anulujPotwierdzZamowienie(boolean decyzja){
         if(decyzja){
             noweZamowienie.zapisz(klient);
+            return null;
         }
-        noweZamowienie.signature();
-        //noweZamowienie = new Zamowienie();
-        return null;
+        noweZamowienie = new Zamowienie();
+        return "index.xhtml";
     }
     
     public String dataFormat(Date data){

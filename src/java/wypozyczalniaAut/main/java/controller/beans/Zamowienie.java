@@ -5,43 +5,23 @@
  */
 package wypozyczalniaAut.main.java.controller.beans;
 
-import com.google.common.hash.Hashing;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.io.IOException;
+
 import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 import java.util.Random;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.enterprise.context.Dependent;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.flow.FlowScoped;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.client.*;
-import javax.ws.rs.core.*;
-import org.glassfish.jersey.apache.connector.ApacheConnectorProvider;
-import org.apache.http.client.HttpClient;
-import org.glassfish.jersey.client.ClientConfig;
-import org.glassfish.jersey.client.spi.ConnectorProvider;
 import org.primefaces.event.SelectEvent;
 import wypozyczalniaAut.main.java.controller.Connect;
 import wypozyczalniaAut.main.java.model.Akcesorium;
@@ -50,7 +30,6 @@ import wypozyczalniaAut.main.java.model.AkcesoriumDoZamowieniaPK;
 import wypozyczalniaAut.main.java.model.Klient;
 import wypozyczalniaAut.main.java.model.Pojazd;
 import wypozyczalniaAut.main.java.model.Samochod;
-import wypozyczalniaAut.main.java.model.Uzytkownik;
 
 
 /**
